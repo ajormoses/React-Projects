@@ -78,6 +78,7 @@ const Product: React.FC<ProductProps> = ({
         </p>
         {btn && (
           <Btn
+            onClick={() => console.log("clicked")}
             customClass={`mt-4 w-full !bg-transparent !border !border-black !text-black ${customBtn}`}
             label={btnLabel || `Shop Now`}
           />
