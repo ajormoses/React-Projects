@@ -4,11 +4,30 @@
 
 body {
   @apply bg-white transition-all duration-100 ease-linear m-0 p-0;
+  font-family: "Inter", sans-serif;
 }
 
 @layer components {
   /* CONFIG STYLE */
   .container {
     @apply w-[90%] md:w-4/5 lg:w-[90%] 2xl:w-[1500px] m-auto max-w-[90%] overflow-hidden;
+  }
+
+  .section {
+    @apply py-16 px-4;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* For Firefox */
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+
+  /* For Edge & Internet Explorer */
+  .no-scrollbar {
+    -ms-overflow-style: none;
   }
 }
