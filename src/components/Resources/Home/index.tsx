@@ -1,4 +1,4 @@
-import MainScreen from "./MainScreen";
+import MainScreen from "./mainScreen";
 import HomeCategory from "./HomeCategory";
 import HomeProducts from "./HomeProducts";
 import HomeSell from "./HomeSell";
