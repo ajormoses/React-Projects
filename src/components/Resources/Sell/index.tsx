@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import Product from "../Products";
+import Product from "../Products/ProductInfo";
 
 interface Props {
   products: {
