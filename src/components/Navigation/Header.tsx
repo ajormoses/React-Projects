@@ -1,5 +1,6 @@
 import { IoClose, IoReorderThreeOutline } from "react-icons/io5";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import cyberLogo from "../../assets/img/cyber-logo.svg";
 
 const Navbar = () => {
@@ -11,11 +12,18 @@ const Navbar = () => {
     { name: "Contact" },
   ];
 
+  const navigate = useNavigate();
+
   return (
     <>
       {/* Fixed Top Navbar */}
       <div className="px-4 py-6 flex justify-between items-center border-b border-gray-300 bg-white fixed top-0 left-0 w-full z-50">
-        <img src={cyberLogo} alt="Cyber Logo" className="h-[23px] w-[65px]" />
+        <img
+          onClick={() => navigate("/")}
+          src={cyberLogo}
+          alt="Cyber Logo"
+          className="h-[23px] w-[65px]"
+        />
         <div onClick={() => setShowMenu(!showMenu)} className="cursor-pointer">
           {showMenu ? (
             <IoClose className="w-10 h-10 transform transition-transform duration-300 ease-in-out rotate-180" />
