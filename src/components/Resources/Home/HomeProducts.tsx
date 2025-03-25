@@ -1,4 +1,4 @@
-import Product from "../Products";
+import Product from "../Products/ProductInfo";
 import Airpod from "../../../assets/img/airpod.svg";
 import AppleVision from "../../../assets/img/apple-vision.svg";
 import PlayStation from "../../../assets/img/play-station.svg";
