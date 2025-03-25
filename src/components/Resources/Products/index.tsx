@@ -2,6 +2,8 @@ import { useState } from "react";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import Btn from "../../Ui/Btn";
 import useTruncateText from "../../../composables/useTruncateText";
+import { useNavigate } from "react-router";
+import clsx from "clsx";
 
 interface ProductProps {
   image: string;
@@ -42,13 +44,17 @@ const Product: React.FC<ProductProps> = ({
 }) => {
   const [like, setLike] = useState(false);
   const { truncateText } = useTruncateText();
+  const navigate = useNavigate();
 
   return (
     <>
       <div
-        className={`py-10 px-4 flex justify-center items-center flex-col relative ${customClass} ${
-          showLike && "!pt-12"
-        }`}
+        className={clsx(
+          `py-10 px-4 flex justify-center items-center flex-col relative ${
+            showLike && "!pt-12"
+          }`,
+          customClass
+        )}
         style={{ background: bgColor || "white" }}
       >
         {showLike && (
@@ -66,20 +72,28 @@ const Product: React.FC<ProductProps> = ({
             )}
           </div>
         )}
-        <img className={`${customImage}`} src={image} alt="image" />
+        <img className={clsx(customImage)} src={image} alt="image" />
         <p
-          className={`${customTitle} text-[34px] font-light  mt-2 text-center`}
+          className={clsx(
+            ` text-[34px] font-light  mt-2 text-center`,
+            customTitle
+          )}
         >
           {truncateTitle ? truncateText(title, truncateLimit || 0) : title}{" "}
-          <span className={`${customSubTitle} font-medium`}>{subTitle}</span>
+          <span className={clsx(`font-medium`, customSubTitle)}>
+            {subTitle}
+          </span>
         </p>
-        <p className={`${customDescription}text-gray text-center `}>
+        <p className={clsx(`text-gray text-center`, customDescription)}>
           {description}
         </p>
         {btn && (
           <Btn
-            onClick={() => console.log("clicked")}
-            customClass={`mt-4 w-full !bg-transparent !border !border-black !text-black ${customBtn}`}
+            onClick={() => navigate("/product")}
+            customClass={clsx(
+              `mt-4 w-full bg-transparent border border-black text-black`,
+              customBtn
+            )}
             label={btnLabel || `Shop Now`}
           />
         )}
