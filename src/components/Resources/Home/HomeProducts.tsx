@@ -55,6 +55,7 @@ const HomeProducts = () => {
             subTitle={product.subTitle}
             description={product.description}
             bgColor={product.bgColor}
+            customBtn="!bg-transparent !border !border-black !text-black"
           />
         ))}
       </div>
