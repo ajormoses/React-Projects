@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import clsx from "clsx";
 import Product from "../Products/ProductInfo";
 
 interface Props {
@@ -49,7 +50,7 @@ const HomeSell: React.FC<Props> = ({
             customClass={customClass}
             customTitle={customTitle}
             customDescription={customDescription}
-            customBtn={customBtn}
+            customBtn={clsx(customBtn)}
             customImage={customImage}
             title={product.title}
             truncateLimit={truncateLimit}
