@@ -90,10 +90,7 @@ const Product: React.FC<ProductProps> = ({
         {btn && (
           <Btn
             onClick={() => navigate("/product")}
-            customClass={clsx(
-              `mt-4 w-full bg-transparent border border-black text-black`,
-              customBtn
-            )}
+            customClass={clsx(`mt-4 w-full`, customBtn)}
             label={btnLabel || `Shop Now`}
           />
         )}
