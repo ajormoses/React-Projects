@@ -73,7 +73,7 @@ const HomeSell = () => {
         customClass="rounded-[9px] py-6 px-3"
         customTitle="text-base mb-3"
         customDescription="text-2xl font-medium"
-        customBtn="h-[48px] py-3 px-0 rounded-lg text-sm bg-primary text-white"
+        customBtn="!h-[48px] !py-3 !px-0 !rounded-lg !text-sm !bg-primary !text-white"
         customImage="h-[104px] w-[104px]"
         truncateLimit={30}
         bgColor="#F6F6F6"
