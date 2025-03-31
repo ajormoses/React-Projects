@@ -13,6 +13,7 @@ import battery from "../../../assets/img/icon/battery.svg";
 import delivery from "../../../assets/img/icon/delivery.svg";
 import stock from "../../../assets/img/icon/stock.svg";
 import guarantee from "../../../assets/img/icon/guaranteed.svg";
+import RelatedProducts from "./RelatedProducts";
 
 const ProductDetails = () => {
   const text: string =
@@ -303,9 +304,13 @@ const ProductDetails = () => {
           </div>
         </div>
 
-        {/* Product Review */}
+        {/* Product Review  and Related Products */}
         <div className="bg-white section">
           <ProductReviews />
+        </div>
+
+        <div className="bg-white">
+          <RelatedProducts />
         </div>
       </div>
     </>
