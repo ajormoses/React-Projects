@@ -12,10 +12,12 @@ export default {
         border: "#B5B5B5",
         gray: "#909090",
         priGray: "#6C6C6C",
+        secGray: "#FAFAFA",
         lightGray: "#EDEDED",
         secLightGray: "#F9F9F9",
         primary: "#211C24",
         darkPri: "#181313",
+        rating: "#FFB547",
       },
       // backgroundImage: {
       //   primary: "linear-gradient(90.7deg, #211C24 0.64%, #211C24 101%)",
