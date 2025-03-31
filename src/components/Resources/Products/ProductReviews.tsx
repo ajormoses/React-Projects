@@ -21,14 +21,14 @@ const ProductReviews = () => {
 
   const totalReviews = ratings.reduce((sum, r) => sum + r.count, 0);
 
-  const ratingComments = [
+  const [ratingComments, setRatingComments] = useState([
     {
       avatar: userPic1,
       name: "Grace Carey",
       date: "24 January,2023",
       rating: rating2,
       comment:
-        "I was a bit nervous to be buying a secondhand phone from Amazon, but I couldn't be happier with my purchase!! I have a pre-paid data plan so I was worried that this phone wouldn't connect with my data plan, since the new phones don't have the physical Sim tray anymore, but couldn't have been easier! I bought an Unlocked black iPhone 14 Pro Max in excellent condition and everything is PERFECT. It was super easy to set up and the phone works and looks great. It truly was in excellent condition. Highly recommend!!!🖤",
+        "I was a bit nervous to be buying a secondhand phone from Amazon, but I couldn't be happier with my purchase!!...",
     },
     {
       avatar: userPic2,
@@ -36,7 +36,7 @@ const ProductReviews = () => {
       date: "24 January,2023",
       rating: rating3,
       comment:
-        "This phone has 1T storage and is durable. Plus all the new iPhones have a C port! Apple is phasing out the current ones! (All about the Benjamin’s) So if you want a phone that’s going to last grab an iPhone 14 pro max and get several cords and plugs.",
+        "This phone has 1T storage and is durable. Plus all the new iPhones have a C port! Apple is phasing out the current ones!...",
     },
     {
       avatar: userPic3,
@@ -54,9 +54,31 @@ const ProductReviews = () => {
       comment:
         "In Washington, it is already difficult to surprise with the opening of a new institution, but it is still possible. Especially if it is a True Cost project. Here you pay an entrance fee and get meals at cost price. ",
     },
-  ];
+  ]);
 
   const [showMore, setShowMore] = useState(2);
+  const [newComment, setNewComment] = useState("");
+
+  const handleKeyDown = (e: any) => {
+    if (e.key === "Enter" && !e.shiftKey && newComment.trim()) {
+      e.preventDefault(); // Prevents adding a new line in the textarea
+      const newCommentObj = {
+        avatar: userPic4, // Replace with a default avatar if needed
+        name: "Anonymous", // You can get the user's name dynamically
+        date: new Date().toLocaleDateString("en-US", {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        }),
+        rating: rating2, // Default rating, or allow user input
+        comment: newComment,
+      };
+
+      setRatingComments([newCommentObj, ...ratingComments]); // Add the comment to the top
+      setNewComment(""); // Clear the input field
+    }
+  };
+
   return (
     <div className="flex flex-col gap-5">
       <h1 className="font-medium leading-6 text-black text-2xl">Reviews</h1>
@@ -83,10 +105,13 @@ const ProductReviews = () => {
         </div>
       ))}
 
-      <input
-        type="textarea"
+      <textarea
         placeholder="Leave Comment"
-        className="border border-[#D9D9D9] rounded-[7px] p-3 w-full focus:outline-none my-4"
+        value={newComment}
+        onChange={(e) => setNewComment(e.target.value)}
+        onKeyDown={handleKeyDown}
+        className="border border-[#D9D9D9] rounded-[7px] p-3 w-full focus:outline-none my-4 resize-none"
+        rows={2}
       />
 
       {ratingComments?.slice(0, showMore).map((r, index) => (
