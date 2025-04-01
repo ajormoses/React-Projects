@@ -1,0 +1,41 @@
+import ItemCart from "../Cart/itemCart";
+import img1 from "../../../assets/img/newArrivals/img1.svg";
+import img3 from "../../../assets/img/newArrivals/img3.svg";
+import img4 from "../../../assets/img/newArrivals/img4.svg";
+
+const ShoppingCart = () => {
+  const carts = [
+    {
+      item: img1,
+      price: 1099,
+      title: "iPhone 14",
+      ref: "SKU: 987654321",
+    },
+    {
+      item: img4,
+      price: 699,
+      title: "OnePlus 9",
+      ref: "SKU: 789123456",
+    },
+    {
+      item: img3,
+      price: 799,
+      title: "Google Pixel 6",
+      ref: "SKU: 456789123",
+    },
+  ];
+  return (
+    <>
+      <div className="section">
+        <div className="flex flex-col gap-10 pt-14">
+          <h1 className="text-black font-semibold text-2xl leading-6">
+            Shopping Cart
+          </h1>
+          <ItemCart carts={carts} />
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default ShoppingCart;
