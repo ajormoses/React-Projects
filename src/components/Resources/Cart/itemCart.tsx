@@ -2,6 +2,7 @@ import { TfiClose } from "react-icons/tfi";
 import { useState, useCallback } from "react";
 import useCurrencyFormatter from "../../../composables/useCurrencyFormatter";
 import Btn from "../../Ui/Btn";
+import { motion } from "framer-motion";
 
 interface CartItem {
   item: string;
@@ -34,7 +35,19 @@ const ItemCart: React.FC<Props> = ({ carts: initialCarts }) => {
           }`}
           key={index}
         >
-          <img className="h-[90px] w-[90px]" src={cart.item} />
+          {/* <img className="h-[90px] w-[90px]" src={cart.item} /> */}
+          <motion.img
+            className="h-[90px] w-[90px]"
+            src={cart.item}
+            alt={cart.title}
+            animate={{ rotateY: [0, 15, -10, 0] }} // Rotates back and forth
+            transition={{
+              duration: 1.5, // Smooth transition
+              repeat: Infinity, // Loop animation
+              repeatType: "reverse", // Moves back and forth
+              ease: "easeInOut", // Smooth easing
+            }}
+          />
           <div className="flex flex-col gap-2.5 basis-full">
             <p className="font-medium max-w-[200px]">{cart.title}</p>
             <p className="text-sm">{cart.ref}</p>
