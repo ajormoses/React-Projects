@@ -1,4 +1,5 @@
-import ItemCart from "../Cart/itemCart";
+import ItemCart from "./ItemCart";
+import OrderSummary from "./OrderSummary";
 import img1 from "../../../assets/img/newArrivals/img1.svg";
 import img3 from "../../../assets/img/newArrivals/img3.svg";
 import img4 from "../../../assets/img/newArrivals/img4.svg";
@@ -28,10 +29,16 @@ const ShoppingCart = () => {
     <>
       <div className="section">
         <div className="flex flex-col gap-10 pt-14">
+          {/* Cart Title */}
           <h1 className="text-black font-semibold text-2xl leading-6">
             Shopping Cart
           </h1>
+
+          {/* Item Cart */}
           <ItemCart carts={carts} />
+
+          {/* Order Summary */}
+          <OrderSummary />
         </div>
       </div>
     </>
