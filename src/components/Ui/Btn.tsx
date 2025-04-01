@@ -7,6 +7,7 @@ interface BtnProps {
   onClick?: () => void;
   prependIcon?: ReactNode;
   appendIcon?: ReactNode;
+  type?: "button" | "submit" | "reset";
 }
 
 const Btn: React.FC<BtnProps> = ({
@@ -15,6 +16,7 @@ const Btn: React.FC<BtnProps> = ({
   onClick,
   prependIcon,
   appendIcon,
+  type,
 }) => {
   return (
     <>
@@ -25,7 +27,7 @@ const Btn: React.FC<BtnProps> = ({
           (prependIcon || appendIcon) && "gap-4",
           customClass
         )}
-        type="button"
+        type={type || "button"}
       >
         {/* Prepend Icon */}
         {prependIcon && prependIcon}
