@@ -1,5 +1,6 @@
 import { IoIosArrowDown } from "react-icons/io";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import clsx from "clsx";
 import ProductThumbnails from "./ProductThumbnails";
 import ProductReviews from "./ProductReviews";
@@ -16,6 +17,8 @@ import guarantee from "../../../assets/img/icon/guaranteed.svg";
 import RelatedProducts from "./RelatedProducts";
 
 const ProductDetails = () => {
+  const navigate = useNavigate();
+
   const text: string =
     "Enhanced capabilities thanks toan enlarged display of 6.7 inchesand work without rechargingthroughout the day. Incredible photosas in weak, yesand in bright lightusing the new systemwith two cameras";
   const [selectedColor, setSelectedColor] = useState("");
@@ -233,10 +236,14 @@ const ProductDetails = () => {
           {/* Add to wishlist and card buttons */}
           <div className="flex flex-col gap-4">
             <Btn
+              onClick={() => navigate("/shopping-carts")}
               label="Add to Wishlist"
               customClass="bg-white font-medium border !border-primary !text-primary"
             />
-            <Btn label="Add to Card" />
+            <Btn
+              onClick={() => navigate("/shopping-carts")}
+              label="Add to Card"
+            />
           </div>
 
           {/* Product Stats */}
