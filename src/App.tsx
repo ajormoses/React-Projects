@@ -2,6 +2,7 @@ import { Routes, Route, useLocation } from "react-router";
 import { useEffect } from "react";
 import Home from "./pages/Home";
 import Product from "./pages/Product";
+import ShoppingCarts from "./pages/ShoppingCarts";
 import "./assets/tailwind.css";
 import "@mdi/font/css/materialdesignicons.css";
 
@@ -22,6 +23,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/product" element={<Product />} />
+        <Route path="/shopping-carts" element={<ShoppingCarts />} />
       </Routes>
     </>
   );
