@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useNavigate } from "react-router";
 import * as yup from "yup";
 import InputField from "../../Ui/InputField";
 import Btn from "../../Ui/Btn";
@@ -12,6 +13,7 @@ interface FormData {
 
 const OrderSummary = () => {
   const { formatCurrency } = useCurrencyFormatter();
+  const navigate = useNavigate();
 
   const schema = yup
     .object({
@@ -104,7 +106,12 @@ const OrderSummary = () => {
             ))}
           </div>
 
-          <Btn customClass="mt-5" type="submit" label="Checkout" />
+          <Btn
+            onClick={() => navigate("/checkout")}
+            customClass="mt-5"
+            type="submit"
+            label="Checkout"
+          />
         </form>
       </div>
     </>
