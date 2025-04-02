@@ -18,6 +18,7 @@ export default {
         primary: "#211C24",
         darkPri: "#181313",
         rating: "#FFB547",
+        darkBlue: "#17183B",
       },
       // backgroundImage: {
       //   primary: "linear-gradient(90.7deg, #211C24 0.64%, #211C24 101%)",
