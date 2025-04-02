@@ -1,5 +1,5 @@
 import { TfiClose } from "react-icons/tfi";
-import { useState, useCallback } from "react";
+import { useState, useEffect } from "react";
 import useCurrencyFormatter from "../../../composables/useCurrencyFormatter";
 import Btn from "../../Ui/Btn";
 import { motion } from "framer-motion";
@@ -17,12 +17,26 @@ interface Props {
 
 const ItemCart: React.FC<Props> = ({ carts: initialCarts }) => {
   const [carts, setCarts] = useState<CartItem[]>(initialCarts);
-  const [count, setCount] = useState(1);
+  const [count, setCount] = useState<number[]>(initialCarts.map(() => 1));
   const { formatCurrency } = useCurrencyFormatter();
 
-  const RemoveCart = useCallback((index: number) => {
+  // Update count state when carts change
+  useEffect(() => {
+    setCount(initialCarts.map(() => 1));
+  }, [initialCarts]);
+
+  // Function to update count while ensuring it doesn't go below 1
+  const handleCount = (index: number, value: number) => {
+    setCount((prevCount) =>
+      prevCount.map((c, i) => (i === index ? Math.max(1, value) : c))
+    );
+  };
+
+  // Function to remove an item from the cart
+  const RemoveCart = (index: number) => {
     setCarts((prevCarts) => prevCarts.filter((_, i) => i !== index));
-  }, []);
+    setCount((prevCount) => prevCount.filter((_, i) => i !== index)); // Ensure count updates correctly
+  };
 
   return (
     <>
@@ -35,17 +49,16 @@ const ItemCart: React.FC<Props> = ({ carts: initialCarts }) => {
           }`}
           key={index}
         >
-          {/* <img className="h-[90px] w-[90px]" src={cart.item} /> */}
           <motion.img
             className="h-[90px] w-[90px]"
             src={cart.item}
             alt={cart.title}
-            animate={{ rotateY: [0, 15, -10, 0] }} // Rotates back and forth
+            animate={{ rotateY: [0, 15, -10, 0] }}
             transition={{
-              duration: 1.5, // Smooth transition
-              repeat: Infinity, // Loop animation
-              repeatType: "reverse", // Moves back and forth
-              ease: "easeInOut", // Smooth easing
+              duration: 1.5,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut",
             }}
           />
           <div className="flex flex-col gap-2.5 basis-full">
@@ -55,15 +68,15 @@ const ItemCart: React.FC<Props> = ({ carts: initialCarts }) => {
               <div className="flex items-center gap-0.5">
                 <Btn
                   customClass="!w-6 !h-6 !p-4 !bg-transparent !text-black !text-xl"
-                  onClick={() => setCount(Math.max(1, count - 1))}
+                  onClick={() => handleCount(index, count[index] - 1)}
                   label="-"
                 />
                 <p className="text-black py-2 px-4 border-[0.5px] w-[40px] h-[32px] flex justify-center items-center border-[#D9D9D9] rounded">
-                  {count}
+                  {count[index]}
                 </p>
                 <Btn
                   customClass="!w-6 !h-6 !p-4 !bg-transparent !text-black !text-xl"
-                  onClick={() => setCount(count + 1)}
+                  onClick={() => handleCount(index, count[index] + 1)}
                   label="+"
                 />
                 <p className="text-black font-medium text-xl pl-1">
