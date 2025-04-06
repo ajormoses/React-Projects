@@ -242,7 +242,7 @@ const ProductDetails = () => {
             />
             <Btn
               onClick={() => navigate("/shopping-carts")}
-              label="Add to Card"
+              label="Add to Cart"
             />
           </div>
 
