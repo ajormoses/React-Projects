@@ -35,7 +35,8 @@ body {
   .form-group {
     @apply flex flex-col gap-2;
   }
-  .form-group .inputField {
+  .form-group .inputField,
+  .date-picker {
     @apply w-full placeholder:text-sm px-4 py-2 h-[56px] border-[0.5px] border-[#9F9F9F] rounded-lg focus:outline-none focus:ring-[1px] focus:ring-primary focus:border-transparent;
   }
   .form-group .input-error {
