@@ -3,7 +3,7 @@ import Btn from "./Btn";
 import clsx from "clsx";
 
 interface InputFieldProps {
-  label: string;
+  label?: string;
   type: string;
   placeholder?: string;
   register: object;
