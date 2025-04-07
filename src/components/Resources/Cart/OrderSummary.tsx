@@ -31,7 +31,7 @@ const OrderSummary = () => {
     resolver: yupResolver(schema),
   });
 
-  const handleFormData = (data: FormData) => console.log(data);
+  const handleFormData = () => navigate("/checkout");
 
   const summary: {
     label: string;
@@ -106,12 +106,7 @@ const OrderSummary = () => {
             ))}
           </div>
 
-          <Btn
-            onClick={() => navigate("/checkout")}
-            customClass="mt-5"
-            type="submit"
-            label="Checkout"
-          />
+          <Btn customClass="mt-5" type="submit" label="Checkout" />
         </form>
       </div>
     </>
