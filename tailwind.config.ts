@@ -20,6 +20,15 @@ export default {
         rating: "#FFB547",
         darkBlue: "#17183B",
       },
+      keyframes: {
+        slideFadeIn: {
+          "0%": { opacity: 0, transform: "translateY(10px)" },
+          "100%": { opacity: 1, transform: "translateY(0)" },
+        },
+      },
+      animation: {
+        slideFadeIn: "slideFadeIn 0.4s ease-out forwards",
+      },
       // backgroundImage: {
       //   primary: "linear-gradient(90.7deg, #211C24 0.64%, #211C24 101%)",
       // },
