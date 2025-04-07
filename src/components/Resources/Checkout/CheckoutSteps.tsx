@@ -1,4 +1,6 @@
 import { useForm } from "react-hook-form";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { useState, useEffect } from "react";
 import { BiSolidPencil } from "react-icons/bi";
 import { TfiClose } from "react-icons/tfi";
@@ -7,11 +9,16 @@ import InputField from "../../Ui/InputField";
 import Btn from "../../Ui/Btn";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useNavigate } from "react-router";
 import Modal from "../../Ui/DialogModal";
 import location from "../.../../../../assets/img/steps-icon/location.svg";
 import shipping from "../.../../../../assets/img/steps-icon/shipping.svg";
 
 const checkoutSteps = () => {
+  const navigate = useNavigate();
+  // Date Picker
+  const [startDate, setStartDate] = useState(new Date());
+
   // Modal
   const [openModal, setOpenModal] = useState(false);
 
@@ -66,9 +73,11 @@ const checkoutSteps = () => {
   }
 
   // Steps
-  const checkoutStepOne: boolean = true;
-  const checkoutStepTwo: boolean = false;
-  const checkoutStepThree: boolean = false;
+  const [checkoutStepOne, setCheckoutStepOne] = useState<boolean>(false);
+  const [checkoutStepTwo, setCheckoutStepTwo] = useState<boolean>(true);
+  const [checkoutStepThree, setCheckoutStepThree] = useState<boolean>(false);
+  const [selectedRadio, setSelectedRadio] = useState<string | null>(null);
+  const [radioError, setRadioError] = useState<string | null>(null);
 
   // Addresses
   const addresses: {
@@ -108,6 +117,59 @@ const checkoutSteps = () => {
     setAddress((prev) => prev.filter((_, i) => i !== index));
   }
 
+  // Shipping method
+  const shippingMethods: {
+    grade: string;
+    desc: string;
+    date?: string;
+  }[] = [
+    {
+      grade: "Free",
+      desc: "Regular shipment",
+      date: "17 Oct, 2023",
+    },
+    {
+      grade: "$8.50",
+      desc: "Get your delivery as soon as possible",
+      date: "1 Oct, 2023",
+    },
+    {
+      grade: "Schedule",
+      desc: "Pick a date when you want to get your delivery",
+    },
+  ];
+
+  // Back and Next buttons
+  const back = () => {
+    if (checkoutStepOne) {
+      navigate(-1);
+    } else if (checkoutStepTwo) {
+      setCheckoutStepOne(true);
+      setCheckoutStepTwo(false);
+    } else if (checkoutStepThree) {
+      setCheckoutStepTwo(true);
+      setCheckoutStepThree(false);
+    }
+  };
+
+  const next = () => {
+    if (checkoutStepOne) {
+      if (!selectedRadio) {
+        setRadioError("Please select an address");
+        return;
+      }
+      setCheckoutStepOne(false);
+      setCheckoutStepTwo(true);
+    } else if (checkoutStepTwo) {
+      if (!selectedRadio) {
+        setRadioError("Please select shipping method");
+        return;
+      }
+      setCheckoutStepTwo(false);
+      setCheckoutStepThree(true);
+    }
+  };
+
   return (
     <>
       <div className="pt-16">
@@ -133,82 +195,146 @@ const checkoutSteps = () => {
 
           {/* Form */}
           <form className="pt-10" onSubmit={handleSubmit(handleFormData)}>
-            {checkoutStepOne && (
-              <div className=" flex flex-col gap-5">
-                <p className="font-semibold text-xl leading-6 text-[#17183B] pb-3">
-                  Select Address
+            <div className=" flex flex-col gap-5">
+              {/* Error Message */}
+              {radioError && (
+                <p className="text-red-500 text-sm -mt-2 transition-all duration-300 ease-in-out animate-slideFadeIn">
+                  {radioError}
                 </p>
-                {address.map((item, index) => (
-                  <div
-                    key={index}
-                    className="flex gap-4 rounded-lg p-4 bg-[#F6F6F6] group/edit"
-                  >
-                    <input
-                      type="radio"
-                      name="address"
-                      className="mt-1.5 w-4 h-4 accent-primary"
-                      value={item.title}
-                      onChange={(e) => console.log(e.target.value)}
-                    />
-                    <div className="flex flex-col gap-2.5 basis-full">
-                      <div className="flex gap-5 items-center">
-                        <p className="text-darkBlue text-lg">{item.title}</p>
-                        <div className="text-white text-xs rounded bg-black py-1 px-2 w-fit uppercase">
-                          {item.name}
-                        </div>
-                      </div>
-                      <div className="flex items-center justify-between gap-4">
-                        <div className="flex items-center w-[200px]">
-                          <p className="text-darkBlue group-hover/edit:mr-1.5">
-                            {item.address}
-                          </p>
-                          <BiSolidPencil
-                            onClick={() => {
-                              setSelectedAddress(item);
-                              setOpenModal(true);
-                            }}
-                            className="cursor-pointer invisible opacity-0 group-hover/edit:visible group-hover/edit:opacity-100 transition-all duration-150 w-6 h-6"
-                          />
-                        </div>
-                        <TfiClose onClick={() => removeAddress(index)} />
-                      </div>
-                      <p className="text-darkBlue">{item.tel}</p>
-                    </div>
-                  </div>
-                ))}
+              )}
+              <p className="font-semibold text-xl leading-6 text-[#17183B] pb-3">
+                {checkoutStepOne
+                  ? "Select Address"
+                  : checkoutStepTwo
+                  ? "Shipping Method"
+                  : "Payment"}
+              </p>
 
-                {/* Add address */}
-                <div className="flex flex-col gap-3">
-                  <div className="relative">
+              {/* Step 1 */}
+              {checkoutStepOne && (
+                <>
+                  {address.map((item, index) => (
                     <div
-                      style={{
-                        border: "0.5px dashed black",
-                        background:
-                          "linear-gradient(270deg, #000000 -1.3%, #E6E6E6 100%)",
-                        WebkitMask:
-                          "linear-gradient(270deg, #000000 -1.3%, #E6E6E6 100%)",
-                        mask: "linear-gradient(270deg, #000000 -1.3%, #E6E6E6 100%)",
-                      }}
-                    ></div>
-                    <IoIosAddCircle
-                      onClick={() => {
-                        setSelectedAddress(null);
-                        setOpenModal(true);
-                      }}
-                      className="absolute z-10 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6"
-                    />
+                      key={index}
+                      className="flex gap-4 rounded-lg p-4 bg-[#F6F6F6] group/edit"
+                    >
+                      <input
+                        type="radio"
+                        name="address"
+                        className="mt-1.5 w-4 h-4 accent-primary"
+                        value={item.title}
+                        onChange={(e) => {
+                          setSelectedRadio(e.target.value);
+                          setRadioError(null); // clear error on selection
+                        }}
+                      />
+                      <div className="flex flex-col gap-2.5 basis-full">
+                        <div className="flex gap-5 items-center">
+                          <p className="text-darkBlue text-lg">{item.title}</p>
+                          <div className="text-white text-xs rounded bg-black py-1 px-2 w-fit uppercase">
+                            {item.name}
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-between gap-4">
+                          <div className="flex items-center w-[200px]">
+                            <p className="text-darkBlue group-hover/edit:mr-1.5">
+                              {item.address}
+                            </p>
+                            <BiSolidPencil
+                              onClick={() => {
+                                setSelectedAddress(item);
+                                setOpenModal(true);
+                              }}
+                              className="cursor-pointer invisible opacity-0 group-hover/edit:visible group-hover/edit:opacity-100 transition-all duration-150 w-6 h-6"
+                            />
+                          </div>
+                          <TfiClose onClick={() => removeAddress(index)} />
+                        </div>
+                        <p className="text-darkBlue">{item.tel}</p>
+                      </div>
+                    </div>
+                  ))}
+
+                  {/* Add address */}
+                  <div className="flex flex-col gap-3">
+                    <div className="relative">
+                      <div
+                        style={{
+                          border: "0.5px dashed black",
+                          background:
+                            "linear-gradient(270deg, #000000 -1.3%, #E6E6E6 100%)",
+                          WebkitMask:
+                            "linear-gradient(270deg, #000000 -1.3%, #E6E6E6 100%)",
+                          mask: "linear-gradient(270deg, #000000 -1.3%, #E6E6E6 100%)",
+                        }}
+                      ></div>
+                      <IoIosAddCircle
+                        onClick={() => {
+                          setSelectedAddress(null);
+                          setOpenModal(true);
+                        }}
+                        className="absolute z-10 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6"
+                      />
+                    </div>
+                    <p className="text-sm text-center">Add New Address</p>
                   </div>
-                  <p className="text-sm text-center">Add New Address</p>
-                </div>
-              </div>
-            )}
+                </>
+              )}
+
+              {/* Step 2 */}
+              {checkoutStepTwo && (
+                <>
+                  {shippingMethods.map((item, index) => (
+                    <div
+                      key={index}
+                      className="flex justify-between items-center overflow-hidden gap-4 rounded-lg p-4 border border-[#F6F6F6]"
+                    >
+                      <div className="flex flex-col gap-2.5 basis-1/2">
+                        <input
+                          type="radio"
+                          name="shipping"
+                          className="mt-1.5 w-4 h-4 accent-primary"
+                          value={item.grade}
+                          onChange={(e) => {
+                            setSelectedRadio(e.target.value);
+                            setRadioError(null); // clear error on selection
+                          }}
+                        />
+                        <p className={`${index !== 0 && "text-[#A2A3B1]"}`}>
+                          {item.grade}
+                        </p>
+                        <p className={`${index !== 0 && "text-[#A2A3B1]"}`}>
+                          {item.desc}
+                        </p>
+                      </div>
+                      {index !== 2 ? (
+                        <p className={` ${index !== 0 && "text-[#A2A3B1]"}`}>
+                          {item.date}
+                        </p>
+                      ) : (
+                        <DatePicker
+                          className="w-[100px] border border-gray-300 p-2 rounded-md"
+                          selected={startDate}
+                          onChange={(date) => {
+                            if (date) setStartDate(date);
+                          }}
+                        />
+                      )}
+                    </div>
+                  ))}
+                </>
+              )}
+
+              {/* Step 3 */}
+            </div>
 
             <div className="grid grid-cols-2 gap-5  items-center mt-10">
               <Btn
+                onClick={() => back()}
                 label="Back"
                 customClass="!bg-white !text-primary !border !border-primary"
               />
-              <Btn label="Next" />
+              <Btn onClick={() => next()} label="Next" />
             </div>
           </form>
 
