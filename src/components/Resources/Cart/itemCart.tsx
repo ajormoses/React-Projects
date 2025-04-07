@@ -80,7 +80,7 @@ const ItemCart: React.FC<Props> = ({ carts: initialCarts }) => {
                   label="+"
                 />
                 <p className="text-black font-medium text-xl pl-1">
-                  {formatCurrency(cart.price)}
+                  {formatCurrency(cart.price * count[index])}
                 </p>
               </div>
 
