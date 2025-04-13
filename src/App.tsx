@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Product from "./pages/Product";
 import ShoppingCarts from "./pages/ShoppingCarts";
 import Checkout from "./pages/Checkout";
+import Filters from "./pages/Filters";
 import "./assets/tailwind.css";
 import "@mdi/font/css/materialdesignicons.css";
 
@@ -26,6 +27,7 @@ function App() {
         <Route path="/product" element={<Product />} />
         <Route path="/shopping-carts" element={<ShoppingCarts />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/filters" element={<Filters />} />
       </Routes>
     </>
   );
