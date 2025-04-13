@@ -42,7 +42,8 @@ body {
   .form-group .input-error {
     @apply !border !border-red-500 placeholder-red-200;
   }
-  .form-group .error {
+  .form-group .error,
+  .p-error {
     @apply !text-red-500;
   }
   .form-group .error-message {
@@ -50,5 +51,14 @@ body {
   }
   .form-group span.required-mark {
     @apply text-red-500;
+  }
+
+  /* global styles */
+  :where(.custom-dropdown .p-dropdown) {
+    @apply bg-red-400 text-white border border-red-300 rounded-md;
+  }
+
+  :where(.custom-dropdown .p-dropdown-label) {
+    @apply text-sm;
   }
 }
