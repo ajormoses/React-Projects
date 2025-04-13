@@ -9,8 +9,12 @@ import UiSideSheet from "../../Ui/SideSheet";
 import UiAccordion from "../../Ui/Accordion";
 import UiSearch from "../../Ui/Search";
 import { useState } from "react";
+import UiDualSlider from "../../Ui/DialSlider";
 
 const HomeFilters = () => {
+  const [visible, setVisible] = useState(false);
+
+  // Products
   const products: {
     title: string;
     description: string;
@@ -48,15 +52,16 @@ const HomeFilters = () => {
     },
   ];
 
-  const ratings = [
-    { label: "1 Star", value: "1" },
-    { label: "2 Stars", value: "2" },
-    { label: "3 Stars", value: "3" },
+  // Rating
+  const ratings: {
+    label: string;
+    value: string;
+  }[] = [
+    { label: "4.5 Stars", value: "4.5" },
     { label: "4 Stars", value: "4" },
-    { label: "5 Stars", value: "5" },
+    { label: "3 Stars", value: "3" },
+    { label: "2 Stars", value: "2" },
   ];
-
-  const [visible, setVisible] = useState(false);
 
   //   Brand
   const brands: {
@@ -157,7 +162,10 @@ const HomeFilters = () => {
         visible={visible}
         onClose={() => setVisible(false)}
       >
-        <UiAccordion title="Price"></UiAccordion>
+        {/* Price */}
+        <UiAccordion title="Price">
+          <UiDualSlider />
+        </UiAccordion>
 
         {/* Brands */}
         <UiAccordion title="Brand">
