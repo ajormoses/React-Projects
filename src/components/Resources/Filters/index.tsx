@@ -125,13 +125,12 @@ const HomeFilters = () => {
     <>
       <div className="flex flex-col gap-6 section">
         <div className="grid grid-cols-2 gap-4 items-center pt-20">
-          <div className="border-[0.5px] border-[#D4D4D4] rounded-lg p-2 flex justify-between items-center cursor-pointer">
+          <div
+            onClick={() => setVisible(!visible)}
+            className="border-[0.5px] border-[#D4D4D4] rounded-lg p-2 flex justify-between items-center cursor-pointer"
+          >
             <p className="text-sm">Filters</p>
-            <img
-              onClick={() => setVisible(!visible)}
-              src={FilterIcon}
-              alt={FilterIcon}
-            />
+            <img src={FilterIcon} alt={FilterIcon} />
           </div>
           <UiDropdown options={ratings} placeholder="By Rating" showClear />
         </div>
