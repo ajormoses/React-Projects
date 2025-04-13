@@ -1,3 +1,4 @@
+import { PrimeReactProvider } from "primereact/api";
 import { Routes, Route, useLocation } from "react-router";
 import { useEffect } from "react";
 import Home from "./pages/Home";
@@ -20,16 +21,18 @@ function App() {
   };
 
   return (
-    <>
-      <ScrollToTop />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/product" element={<Product />} />
-        <Route path="/shopping-carts" element={<ShoppingCarts />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/filters" element={<Filters />} />
-      </Routes>
-    </>
+    <PrimeReactProvider value={{ unstyled: true }}>
+      <>
+        <ScrollToTop />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/product" element={<Product />} />
+          <Route path="/shopping-carts" element={<ShoppingCarts />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/filters" element={<Filters />} />
+        </Routes>
+      </>
+    </PrimeReactProvider>
   );
 }
 
