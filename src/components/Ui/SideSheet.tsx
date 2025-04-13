@@ -10,6 +10,7 @@ interface Props {
   children?: ReactNode;
   customHeader?: string;
   title: string;
+  customChildren?: string;
   onClose: () => void;
 }
 
@@ -21,6 +22,7 @@ const UiSideSheet: React.FC<Props> = ({
   children,
   customHeader,
   title,
+  customChildren,
   onClose,
 }) => {
   return (
@@ -35,7 +37,7 @@ const UiSideSheet: React.FC<Props> = ({
     >
       <div
         className={clsx(
-          "flex flex-col gap-6 bg-white h-full overflow-auto transform transition-transform duration-300 ease-in-out ml-auto section",
+          "flex flex-col gap-6 bg-white h-full transform transition-transform duration-300 ease-in-out ml-auto section",
           {
             "translate-x-0": visible,
             "translate-x-full": !visible,
@@ -51,14 +53,22 @@ const UiSideSheet: React.FC<Props> = ({
           modalWidth
         )}
       >
-        <div className={`${customHeader}`}>
+        {/* header */}
+        <div className={clsx(`${customHeader}`)}>
           <div className="flex gap-3 items-center ">
             <FiChevronLeft className="text-2xl" onClick={onClose} />
             <p className="text-2xl font-medium">{title}</p>
           </div>
         </div>
 
-        {children}
+        {/* children */}
+        <div
+          className={clsx(
+            `overflow-y-auto flex flex-col gap-6 relative no-scrollbar ${customChildren}`
+          )}
+        >
+          {children}
+        </div>
       </div>
     </div>
   );
