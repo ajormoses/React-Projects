@@ -30,7 +30,7 @@ const Footer = () => {
   ];
   return (
     <>
-      <div className="section bg-darkPri flex flex-col gap-4 justify-center items-center">
+      <div className="section bg-darkPri flex flex-col gap-4 justify-center items-center relative z-40">
         <img src={Logo} alt="logo" className="w-[65.4px] h-[22.87px" />
         <p className="text-[#CFCFCF] text-[13px] text-center">
           We are a residential interior design firm located in Portland. Our
