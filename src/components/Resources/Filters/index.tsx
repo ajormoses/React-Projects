@@ -5,6 +5,8 @@ import img2 from "../../../assets/img/iphone14.svg";
 import img3 from "../../../assets/img/newArrivals/img3.svg";
 import img4 from "../../../assets/img/newArrivals/img4.svg";
 import FilterIcon from "../../../assets/img/Filters.svg";
+import UiSideSheet from "../../Ui/SideSheet";
+import { useState } from "react";
 
 const HomeFilters = () => {
   const products: {
@@ -52,13 +54,19 @@ const HomeFilters = () => {
     { label: "5 Stars", value: "5" },
   ];
 
+  const [visible, setVisible] = useState(false);
+
   return (
     <>
       <div className="flex flex-col gap-6 section">
         <div className="grid grid-cols-2 gap-4 items-center pt-20">
           <div className="border-[0.5px] border-[#D4D4D4] rounded-lg p-2 flex justify-between items-center">
             <p className="text-sm">Filters</p>
-            <img src={FilterIcon} alt={FilterIcon} />
+            <img
+              onClick={() => setVisible(!visible)}
+              src={FilterIcon}
+              alt={FilterIcon}
+            />
           </div>
           <UiDropdown options={ratings} placeholder="By Rating" showClear />
         </div>
@@ -84,6 +92,15 @@ const HomeFilters = () => {
           btnLabel="Buy Now"
         />
       </div>
+
+      <UiSideSheet
+        customHeader="!pt-12"
+        title="Filters"
+        visible={visible}
+        onClose={() => setVisible(false)}
+      >
+        <div>djjdjd</div>
+      </UiSideSheet>
     </>
   );
 };
