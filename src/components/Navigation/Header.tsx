@@ -8,8 +8,8 @@ const Navbar = () => {
   const navLinks = [
     { name: "Home" },
     { name: "About" },
-    { name: "Services" },
-    { name: "Contact" },
+    { name: "Contact Us" },
+    { name: "Blog" },
   ];
 
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ const Navbar = () => {
           showMenu ? "translate-y-0" : "-translate-y-full"
         }`}
       >
-        <ul className="flex flex-col gap-4 p-6">
+        <ul className="flex flex-col gap-4 p-6 pt-10">
           {navLinks.map((link, index) => (
             <li
               key={index}
