@@ -12,6 +12,7 @@ import { useState } from "react";
 import UiDualSlider from "../../Ui/DialSlider";
 import UiSideSheetAction from "../../Ui/SideSheetAction";
 import Btn from "../../Ui/Btn";
+import UiPagination from "../../Ui/Pagination";
 
 const HomeFilters = () => {
   const [visible, setVisible] = useState(false);
@@ -140,7 +141,8 @@ const HomeFilters = () => {
           products={products}
           header={
             <p>
-              <span className="text-priGray">Product Result:</span> <b>85</b>
+              <span className="text-priGray">Product Result:</span>
+              <b>{products?.length}</b>
             </p>
           }
           btn
@@ -155,6 +157,7 @@ const HomeFilters = () => {
           bgColor="#F6F6F6"
           btnLabel="Buy Now"
         />
+        <UiPagination />
       </div>
 
       <UiSideSheet
