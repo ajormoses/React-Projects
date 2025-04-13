@@ -57,6 +57,7 @@ const UiSideSheet: React.FC<Props> = ({
             <p className="text-2xl font-medium">{title}</p>
           </div>
         </div>
+
         {children}
       </div>
     </div>
