@@ -1,4 +1,5 @@
 import ResourceSell from "../../Resources/Sell";
+import UiDropdown from "../../Ui/Dropdown";
 import img1 from "../../../assets/img/newArrivals/img1.svg";
 import img2 from "../../../assets/img/iphone14.svg";
 import img3 from "../../../assets/img/newArrivals/img3.svg";
@@ -43,14 +44,23 @@ const HomeFilters = () => {
     },
   ];
 
+  const ratings = [
+    { label: "1 Star", value: "1" },
+    { label: "2 Stars", value: "2" },
+    { label: "3 Stars", value: "3" },
+    { label: "4 Stars", value: "4" },
+    { label: "5 Stars", value: "5" },
+  ];
+
   return (
     <>
-      <div className="flex flex-col gap-10 section">
-        <div className="grid grid-cols-2 items-center pt-20">
+      <div className="flex flex-col gap-6 section">
+        <div className="grid grid-cols-2 gap-4 items-center pt-20">
           <div className="border-[0.5px] border-[#D4D4D4] rounded-lg p-2 flex justify-between items-center">
             <p className="text-sm">Filters</p>
             <img src={FilterIcon} alt={FilterIcon} />
           </div>
+          <UiDropdown options={ratings} placeholder="By Rating" showClear />
         </div>
 
         <ResourceSell
