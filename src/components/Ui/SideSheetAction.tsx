@@ -1,16 +1,16 @@
 import React from "react";
 import clsx from "clsx";
 
-interface FooterProps {
+interface Props {
   outerClass?: string;
   children: React.ReactNode;
 }
 
-const Footer: React.FC<FooterProps> = ({ outerClass, children }) => {
+const UiSideSheetAction: React.FC<Props> = ({ outerClass, children }) => {
   return (
     <div
       className={clsx(
-        "footer fixed sm:absolute bottom-0 sm:bottom-8 xl:bottom-0 right-0 left-0 bg-white px-8 py-2 flex justify-end border-t z-40",
+        "fixed bottom-0 left-0 right-0 bg-white px-8 py-2 flex justify-end border-t z-40",
         outerClass
       )}
     >
@@ -19,4 +19,4 @@ const Footer: React.FC<FooterProps> = ({ outerClass, children }) => {
   );
 };
 
-export default Footer;
+export default UiSideSheetAction;
