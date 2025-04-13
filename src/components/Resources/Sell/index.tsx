@@ -20,6 +20,7 @@ interface Props {
   btn?: boolean;
   bgColor?: string;
   header?: ReactNode; // Slot equivalent
+  customSell?: string;
 }
 
 const HomeSell: React.FC<Props> = ({
@@ -36,9 +37,10 @@ const HomeSell: React.FC<Props> = ({
   btn,
   bgColor,
   header, // Accept slot content
+  customSell,
 }) => {
   return (
-    <div className="section">
+    <div className={clsx(`section ${customSell}`)}>
       {header && <>{header}</>} {/* Slot Content Here */}
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3 py-6">
         {products.map((product, index) => (
