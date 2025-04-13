@@ -162,6 +162,7 @@ const HomeFilters = () => {
 
       <UiSideSheet
         customHeader="!pt-12"
+        customChildren="!pb-12"
         title="Filters"
         visible={visible}
         onClose={() => setVisible(false)}
@@ -328,7 +329,7 @@ const HomeFilters = () => {
         </UiAccordion>
 
         {/* Apply */}
-        <UiSideSheetAction outerClass="!justify-center !border-none">
+        <UiSideSheetAction outerClass="!justify-center !border-none !px-4">
           <Btn customClass="!w-full" label="Apply" />
         </UiSideSheetAction>
       </UiSideSheet>
