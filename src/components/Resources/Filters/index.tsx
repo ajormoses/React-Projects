@@ -10,6 +10,8 @@ import UiAccordion from "../../Ui/Accordion";
 import UiSearch from "../../Ui/Search";
 import { useState } from "react";
 import UiDualSlider from "../../Ui/DialSlider";
+import UiSideSheetAction from "../../Ui/SideSheetAction";
+import Btn from "../../Ui/Btn";
 
 const HomeFilters = () => {
   const [visible, setVisible] = useState(false);
@@ -322,6 +324,11 @@ const HomeFilters = () => {
             ))}
           </div>
         </UiAccordion>
+
+        {/* Apply */}
+        <UiSideSheetAction outerClass="!justify-center !border-none">
+          <Btn customClass="!w-full" label="Apply" />
+        </UiSideSheetAction>
       </UiSideSheet>
     </>
   );
