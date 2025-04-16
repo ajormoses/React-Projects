@@ -35,7 +35,7 @@ const Navbar = () => {
   return (
     <>
       {/* Fixed Top Navbar */}
-      <div className=" bg-white fixed top-0 left-0 right-0 w-full z-50 border-b border-[#B5B5B5]">
+      <div className=" bg-white fixed top-0 left-0 right-0 w-full z-50 border-b border-[#B5B5B5] h-[">
         <div className="py-6 lg:py-4 flex justify-between items-center container">
           <div className="flex lg:gap-8 lg:items-center xl:gap-10">
             <img
