@@ -31,7 +31,7 @@ const UiSearch: React.FC<Props> = ({
         <input
           type="text"
           value={value}
-          onChange={() => onChange}
+          onChange={onChange}
           placeholder={placeholder || "Search"}
           disabled={disabled}
           className="w-full bg-transparent focus:outline-none text-sm ml-6"
