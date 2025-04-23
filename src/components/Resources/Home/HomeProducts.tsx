@@ -3,8 +3,12 @@ import Airpod from "../../../assets/img/airpod.svg";
 import AppleVision from "../../../assets/img/apple-vision.svg";
 import PlayStation from "../../../assets/img/play-station.svg";
 import Macbook from "../../../assets/img/macbook.svg";
+import Btn from "../../Ui/Btn";
+import { useNavigate } from "react-router";
 
 const HomeProducts = () => {
+  const navigate = useNavigate();
+
   const products: {
     image: string;
     title: string;
@@ -46,6 +50,7 @@ const HomeProducts = () => {
       <div className="flex flex-col">
         {products.map((product, index) => (
           <Product
+            customClass="xl:hidden"
             key={index}
             customSubTitle={index === 3 ? "!font-light" : ""}
             customTitle={index === 3 ? "!font-medium" : ""}
@@ -58,6 +63,98 @@ const HomeProducts = () => {
             customBtn="!bg-transparent !border !border-black !text-black"
           />
         ))}
+
+        <div className="hidden xl:grid xl:grid-cols-2  2xl:w-[1500px] m-auto">
+          {/* First 3 products in a single grid container */}
+          <div className="grid grid-cols-2 ">
+            {products[2] && (
+              <div className="col-span-2 flex flex-col justify-center items-end h-[328px] max-w-[650px] relative overflow-hidden">
+                <img
+                  className="w-[360px] h-[343px] object-cover absolute top-0 -left-[90px]"
+                  src={products[2].image}
+                  alt="image"
+                />
+
+                <div className="flex flex-col justify-center items-start max-w-[338px]">
+                  <p className="text-[49px] font-medium">
+                    {products[2].title + " " + products[2].subTitle}
+                  </p>
+                  <p className="text-gray text-sm">{products[2].description}</p>
+                </div>
+              </div>
+            )}
+
+            {/* Items at index 0 and 1 below in two columns */}
+            {[products[0], products[1]].map(
+              (product, index) =>
+                product && (
+                  <div
+                    key={index}
+                    className={`${
+                      index === 0 ? "bg-lightGray " : "bg-darkGray "
+                    }`}
+                  >
+                    <div
+                      className={`flex flex-col justify-center items-end h-[272px] max-w-[360px] relative overflow-hidden `}
+                    >
+                      <img
+                        className={`h-[272px] absolute top-0 ${
+                          index === 0 ? "-left-[160px]" : "-left-[180px]"
+                        } `}
+                        src={product.image}
+                        alt="image"
+                      />
+                      <div className="flex flex-col justify-center items-center w-[160px] mr-5">
+                        <p
+                          className={`text-[29px] font-light ${
+                            index === 0 ? "text-black" : "text-white"
+                          }`}
+                        >
+                          {product.title}{" "}
+                          <span className="font-medium">
+                            {product.subTitle}
+                          </span>
+                        </p>
+                        <p className="text-gray text-sm">
+                          {product.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )
+            )}
+          </div>
+
+          {/* Remaining products */}
+          <div className="grid grid-cols-1 gap-4">
+            {products?.slice(3).map((product, index) => (
+              <div
+                key={index}
+                className="flex flex-col justify-center items-center bg-lightGray relative pl-10 overflow-hidden"
+              >
+                <div className="grid grid-cols-2 place-items-center">
+                  <img
+                    className="w-[90%] h-[470px] object-cover absolute top-1/2 -right-[300px]  -translate-y-1/2"
+                    src={product.image}
+                    alt="image"
+                  />
+                  <div className="flex flex-col justify-center items-start">
+                    <p className="text-[64px] font-thin leading-tight">
+                      {product.title}{" "}
+                      <span className="font-medium">{product.subTitle}</span>
+                    </p>
+                    <p className="text-gray text-sm">{product.description}</p>
+                    <Btn
+                      onClick={() => navigate("/product")}
+                      customClass="mt-4 w-[191px] !bg-transparent !border !border-black !text-black"
+                      label="Shop Now"
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </>
   );
