@@ -70,7 +70,8 @@ const HomeSell = () => {
         btn
         showLike
         truncateTitle
-        customClass="rounded-[9px] py-6 px-3"
+        customSell="md:container"
+        customClass="rounded-[9px] py-6 px-3 "
         customTitle="text-base mb-3"
         customDescription="text-2xl font-medium"
         customBtn="!h-[48px] !py-3 !px-0 !rounded-lg !text-sm !bg-primary !text-white"
