@@ -19,6 +19,7 @@ export default {
         darkPri: "#181313",
         rating: "#FFB547",
         darkBlue: "#17183B",
+        darkGray: "#353535",
       },
       keyframes: {
         slideFadeIn: {
