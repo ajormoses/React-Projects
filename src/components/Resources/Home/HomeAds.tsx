@@ -33,7 +33,7 @@ const HomeAds = () => {
   ];
   return (
     <>
-      <div className="section bg-secLightGray ">
+      <div className="section bg-secLightGray md:p-0 2xl:w-[1500px] 2xl:m-auto">
         <Slider
           slides={slides}
           customImage="!w-[321px] !h-[331px]"
