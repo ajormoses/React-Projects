@@ -4,6 +4,7 @@ import Btn from "../../Ui/Btn";
 import useTruncateText from "../../../composables/useTruncateText";
 import { useNavigate } from "react-router";
 import clsx from "clsx";
+import { useMediaQuery } from "../../../composables/useMediaQuery";
 
 interface ProductProps {
   image: string;
@@ -46,6 +47,21 @@ const Product: React.FC<ProductProps> = ({
   const { truncateText } = useTruncateText();
   const navigate = useNavigate();
 
+  const truncatingTitle: React.FC<{
+    title: string;
+    truncateLimit?: number;
+  }> = ({ title, truncateLimit }) => {
+    const isMdUp = useMediaQuery("(min-width: 768px)"); // md in Tailwind
+
+    const finalTitle = truncateTitle
+      ? isMdUp
+        ? title
+        : truncateText(title, truncateLimit || 0)
+      : title;
+
+    return <p>{finalTitle}</p>;
+  };
+
   return (
     <>
       <div
@@ -79,7 +95,7 @@ const Product: React.FC<ProductProps> = ({
             customTitle
           )}
         >
-          {truncateTitle ? truncateText(title, truncateLimit || 0) : title}{" "}
+          {truncatingTitle({ title, truncateLimit })}{" "}
           <span className={clsx(`font-medium`, customSubTitle)}>
             {subTitle}
           </span>
