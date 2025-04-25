@@ -33,25 +33,27 @@ const HomeDiscount = () => {
   ];
   return (
     <>
-      <ResourceSell
-        products={products}
-        header={
-          <h2 className="text-2xl font-medium text-primary">
-            Discounts up to -50%
-          </h2>
-        }
-        btn
-        showLike
-        truncateTitle
-        customClass="!rounded-[9px] !py-6 !px-3"
-        customTitle="!text-base !mb-3"
-        customDescription="!text-2xl !font-medium"
-        customBtn="!h-[48px] !py-3 !px-0 !rounded-lg !text-sm !bg-[#211C24] !text-white"
-        customImage="!h-[104px] !w-[104px]"
-        truncateLimit={30}
-        bgColor="#F6F6F6"
-        btnLabel="Buy Now"
-      />
+      <div className="container">
+        <ResourceSell
+          products={products}
+          header={
+            <h2 className="text-2xl font-medium text-primary">
+              Discounts up to -50%
+            </h2>
+          }
+          btn
+          showLike
+          truncateTitle
+          customClass="!rounded-[9px] !py-6 !px-3"
+          customTitle="!text-base !mb-3"
+          customDescription="!text-2xl !font-medium"
+          customBtn="!h-[48px] !py-3 !px-0 !rounded-lg !text-sm !bg-[#211C24] !text-white"
+          customImage="!h-[104px] !w-[104px]"
+          truncateLimit={30}
+          bgColor="#F6F6F6"
+          btnLabel="Buy Now"
+        />
+      </div>
     </>
   );
 };
