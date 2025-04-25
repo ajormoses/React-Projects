@@ -21,6 +21,7 @@ interface Props {
   bgColor?: string;
   header?: ReactNode; // Slot equivalent
   customSell?: string;
+  mainClass?: string;
 }
 
 const HomeSell: React.FC<Props> = ({
@@ -38,11 +39,14 @@ const HomeSell: React.FC<Props> = ({
   bgColor,
   header, // Accept slot content
   customSell,
+  mainClass,
 }) => {
   return (
     <div className={clsx(`section ${customSell}`)}>
       {header && <>{header}</>} {/* Slot Content Here */}
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 py-6">
+      <div
+        className={`grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 py-6 ${mainClass}`}
+      >
         {products.map((product, index) => (
           <Product
             key={index}
