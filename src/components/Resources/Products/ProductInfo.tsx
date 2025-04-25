@@ -66,10 +66,10 @@ const Product: React.FC<ProductProps> = ({
     <>
       <div
         className={clsx(
+          customClass,
           `py-10 px-4 flex justify-center items-center flex-col relative ${
             showLike && "!pt-12"
-          }`,
-          customClass
+          }`
         )}
         style={{ background: bgColor || "white" }}
       >
@@ -91,8 +91,8 @@ const Product: React.FC<ProductProps> = ({
         <img className={clsx(customImage)} src={image} alt="image" />
         <p
           className={clsx(
-            ` text-[34px] font-light  mt-2 text-center`,
-            customTitle
+            customTitle,
+            `text-[34px] font-light  mt-2 text-center`
           )}
         >
           {truncatingTitle({ title, truncateLimit })}{" "}
