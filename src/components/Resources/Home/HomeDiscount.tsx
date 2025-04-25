@@ -16,7 +16,7 @@ const HomeDiscount = () => {
       image: img2,
     },
     {
-      title: "AirPods Max Silver",
+      title: "AirPods Max Silver Starlight Aluminium",
       description: "$2535",
       image: img4,
     },
@@ -44,6 +44,7 @@ const HomeDiscount = () => {
           btn
           showLike
           truncateTitle
+          mainClass="md:!grid-cols-2 lg:!grid-cols-4"
           customClass="!rounded-[9px] !py-6 !px-3"
           customTitle="!text-base !mb-3"
           customDescription="!text-2xl !font-medium"
