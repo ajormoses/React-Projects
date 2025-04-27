@@ -1,15 +1,24 @@
 import SummerSaleBannerMobile from "../../../assets/img/summer-sale-mobile.svg";
+import SummerSaleBannerDesktop from "../../../assets/img/summer-sale-desktop.svg";
+import { useMediaQuery } from "../../../composables/useMediaQuery";
+
 import Btn from "../../Ui/Btn";
 
 const HomeSummerSales = () => {
+  const isMdUp = useMediaQuery("(min-width: 768px)"); // md in Tailwind
+
+  const backgroundImage = isMdUp
+    ? SummerSaleBannerDesktop
+    : SummerSaleBannerMobile;
+
   return (
     <>
-      <div className="section relative h-[512px] flex justify-center items-center">
+      <div className="section 2xl:w-[1500px] m-auto relative h-[512px] flex justify-center items-center">
         {/* Mobile Background Image */}
         <img
-          src={SummerSaleBannerMobile}
+          src={backgroundImage}
           alt="Summer Sale"
-          className="w-full h-full object-cover absolute top-0 left-0 md:hidden"
+          className="w-full h-full object-cover absolute top-0 left-0"
         />
 
         <div className="z-10 relative flex flex-col justify-center items-center text-center">
