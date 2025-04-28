@@ -89,7 +89,7 @@ const Product: React.FC<ProductProps> = ({
         />
         <p
           className={clsx(
-            "text-[34px] font-light mt-2 text-center h-[48px] overflow-hidden text-ellipsis line-clamp-2",
+            "text-[34px] font-light md:font-medium mt-2 text-center h-[48px] overflow-hidden text-ellipsis line-clamp-2",
             customTitle
           )}
         >
@@ -100,13 +100,18 @@ const Product: React.FC<ProductProps> = ({
             </span>
           )}
         </p>
-        <p className={clsx(`text-gray text-center`, customDescription)}>
+        <p
+          className={clsx(
+            `text-gray md:text-black text-center`,
+            customDescription
+          )}
+        >
           {description}
         </p>
         {btn && (
           <Btn
             onClick={() => navigate("/product")}
-            customClass={clsx(`mt-4 w-full`, customBtn)}
+            customClass={clsx(`mt-4 w-full max-w-[90%] text-sm`, customBtn)}
             label={btnLabel || `Shop Now`}
           />
         )}
