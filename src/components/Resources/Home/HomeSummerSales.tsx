@@ -1,10 +1,12 @@
 import SummerSaleBannerMobile from "../../../assets/img/summer-sale-mobile.svg";
 import SummerSaleBannerDesktop from "../../../assets/img/summer-sale-desktop.svg";
 import { useMediaQuery } from "../../../composables/useMediaQuery";
+import { useNavigate } from "react-router";
 
 import Btn from "../../Ui/Btn";
 
 const HomeSummerSales = () => {
+  const navigate = useNavigate();
   const isMdUp = useMediaQuery("(min-width: 768px)"); // md in Tailwind
 
   const backgroundImage = isMdUp
@@ -29,7 +31,11 @@ const HomeSummerSales = () => {
           <p className="text-[#787878] mt-4">
             Commodo fames vitae vitae leo mauris in. Eu consequat.
           </p>
-          <Btn customClass="!mt-8 !bg-[#353535]" label="Shop Now" />
+          <Btn
+            onClick={() => navigate("/product")}
+            customClass="!mt-8 !bg-[#353535]"
+            label="Shop Now"
+          />
         </div>
       </div>
     </>
