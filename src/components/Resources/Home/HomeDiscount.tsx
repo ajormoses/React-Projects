@@ -49,7 +49,7 @@ const HomeDiscount = () => {
           customTitle="!text-base !mb-3"
           customDescription="!text-2xl !font-medium"
           customBtn="!h-[48px] !py-3 !px-0 !rounded-lg !text-sm !bg-[#211C24] !text-white"
-          customImage="!h-[104px] !w-[104px]"
+          customImage="!h-[104px] !w-[104px] md:!h-[160px] md:!w-[160px]"
           truncateLimit={30}
           bgColor="#F6F6F6"
           btnLabel="Buy Now"
