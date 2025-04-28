@@ -17,9 +17,14 @@ import Btn from "../../Ui/Btn";
 import UiPagination from "../../Ui/Pagination";
 import UiBreadCrumbs from "../../Ui/BreadCrumbs";
 import { useMediaQuery } from "../../../composables/useMediaQuery";
+import { useLocation } from "react-router";
 
 const HomeFilters = () => {
   const [visible, setVisible] = useState(false);
+
+  const { search: searchQueryString } = useLocation();
+  const queryParams = new URLSearchParams(searchQueryString);
+  const search = queryParams.get("search");
 
   // Products
   const products: {
@@ -152,7 +157,7 @@ const HomeFilters = () => {
       label: "Catalog",
     },
     {
-      label: "Smartphones",
+      label: search as string,
     },
   ];
 
