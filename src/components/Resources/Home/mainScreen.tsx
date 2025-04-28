@@ -2,8 +2,11 @@ import Header from "../../Navigation/Header";
 import Btn from "../../Ui/Btn";
 import homeIphone from "../../../assets/img/home-iphone.svg";
 import homeIphone2 from "../../../assets/img/home-iphone-desktop.svg";
+import { useNavigate } from "react-router";
 
 const mainScreen = () => {
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="bg-primary">
@@ -33,7 +36,11 @@ const mainScreen = () => {
             <p className="font-medium text-lg leading-6 text-[#909090] text-center">
               Created to change everything for the better. For everyone
             </p>
-            <Btn customClass="mt-4" label="Shop Now" />
+            <Btn
+              onClick={() => navigate("/product")}
+              customClass="mt-4"
+              label="Shop Now"
+            />
           </div>
         </div>
       </div>
