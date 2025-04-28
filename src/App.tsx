@@ -1,5 +1,5 @@
 import { PrimeReactProvider } from "primereact/api";
-import { Routes, Route, useLocation } from "react-router";
+import { Routes, Route, useLocation, Navigate } from "react-router";
 import { useEffect } from "react";
 import Home from "./pages/Home";
 import Product from "./pages/Product";
@@ -30,6 +30,9 @@ function App() {
           <Route path="/shopping-carts" element={<ShoppingCarts />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/filters" element={<Filters />} />
+
+          {/* Catch-all route */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </>
     </PrimeReactProvider>
