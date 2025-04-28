@@ -50,10 +50,10 @@ const UiDropdown: React.FC<Props> = ({
         pt={{
           root: {
             className:
-              "flex justify-between item-center border border-[#D4D4D4] text-primary rounded-md h-[42px] pt-2 px-3",
+              "flex justify-between item-center border border-[#D4D4D4] text-primary rounded-md h-[42px] pt-2 px-3 relative",
           },
           clearIcon: {
-            class: "absolute right-[45px] mt-1.5",
+            class: "absolute right-[30px] mt-1.5",
           },
           trigger: {
             className: "text-primary mt-1.5",
