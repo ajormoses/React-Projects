@@ -353,7 +353,7 @@ const HomeFilters = () => {
                     <span className="text-priGray">
                       {isMdUp ? "Selected Products" : "Product Result"}:
                     </span>
-                    <b> {products?.length}</b>
+                    <b className="ml-1"> {products?.length}</b>
                   </p>
                   <UiDropdown
                     customField="!hidden md:!flex md:!w-[256px] lg:ml-auto"
