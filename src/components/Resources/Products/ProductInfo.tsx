@@ -47,20 +47,14 @@ const Product: React.FC<ProductProps> = ({
   const { truncateText } = useTruncateText();
   const navigate = useNavigate();
 
-  const truncatingTitle: React.FC<{
-    title: string;
-    truncateLimit?: number;
-  }> = ({ title, truncateLimit }) => {
-    const isMdUp = useMediaQuery("(min-width: 768px)"); // md in Tailwind
+  const isMdUp = useMediaQuery("(min-width: 768px)"); // md breakpoint
 
-    const finalTitle = truncateTitle
-      ? isMdUp
-        ? title
-        : truncateText(title, truncateLimit || 0)
-      : title;
-
-    return <p>{finalTitle}</p>;
-  };
+  // Handle title truncation
+  const finalTitle = truncateTitle
+    ? isMdUp
+      ? title
+      : truncateText(title, truncateLimit || 0)
+    : title;
 
   return (
     <>
@@ -88,17 +82,23 @@ const Product: React.FC<ProductProps> = ({
             )}
           </div>
         )}
-        <img className={clsx(customImage)} src={image} alt="image" />
+        <img
+          className={clsx(`h-[160px] w-[160px]`, customImage)}
+          src={image}
+          alt="image"
+        />
         <p
           className={clsx(
-            customTitle,
-            `text-[34px] font-light  mt-2 text-center`
+            "text-[34px] font-light mt-2 text-center h-[48px] overflow-hidden text-ellipsis line-clamp-2",
+            customTitle
           )}
         >
-          {truncatingTitle({ title, truncateLimit })}{" "}
-          <span className={clsx(`font-medium`, customSubTitle)}>
-            {subTitle}
-          </span>
+          {finalTitle}
+          {subTitle && (
+            <span className={clsx("font-medium", customSubTitle)}>
+              {subTitle}
+            </span>
+          )}
         </p>
         <p className={clsx(`text-gray text-center`, customDescription)}>
           {description}
