@@ -299,7 +299,7 @@ const ProductDetails = () => {
         {/* Product Details */}
         <div className="bg-[#FAFAFA] section">
           <div className="!max-w-[1120px] container">
-            <div className="bg-white rounded-lg section md:px-10">
+            <div className="bg-white rounded-lg section px-5 md:px-10">
               <h1 className="font-medium leading-6 text-black text-2xl ">
                 Details
               </h1>
