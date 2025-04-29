@@ -15,6 +15,7 @@ import delivery from "../../../assets/img/icon/delivery.svg";
 import stock from "../../../assets/img/icon/stock.svg";
 import guarantee from "../../../assets/img/icon/guaranteed.svg";
 import RelatedProducts from "./RelatedProducts";
+import UiBreadCrumbs from "../../Ui/BreadCrumbs";
 
 const ProductDetails = () => {
   const navigate = useNavigate();
@@ -134,130 +135,164 @@ const ProductDetails = () => {
     },
   ];
 
+  // BreadCrumbs
+  const breadCrumbs = [
+    {
+      label: "Home",
+      url: "/",
+    },
+    {
+      label: "Catalog",
+    },
+    {
+      label: "smartphones",
+    },
+    {
+      label: "Apple",
+    },
+    {
+      label: "iPhone 14 Pro Max",
+    },
+  ];
+
   return (
     <>
       <div className="flex flex-col gap-5">
-        <div className="flex flex-col gap-4 section bg-white">
-          <ProductThumbnails />
-          <p className="font-bold text-[40px] text-black leading-10 mt-4">
-            Apple iPhone 14 Pro Max
-          </p>
-          <p className="flex gap-x-3 items-center">
-            <span className="text-black text-[32px] leading-[48px] font-medium ">
-              $1399
-            </span>
-            <span className="text-2xl leading-8 text-[#A0A0A0] line-through">
-              $1499
-            </span>
-          </p>
-          {/* Product Color */}
-          <div className="flex items-center gap-2.5 flex-wrap">
-            <p className="text-[#0C0C0C] text-[15px] leading-6">
-              Select Color :
-            </p>
-            <div className="flex gap-2">
-              {colors.map((color, index) => (
-                <div
-                  key={index}
-                  className="p-1 rounded-full cursor-pointer transition-all"
-                  style={{
-                    border:
-                      selectedColor === color
-                        ? `1.5px solid ${color}`
-                        : "1.5px solid transparent",
-                  }}
-                  onClick={() => setSelectedColor(color)}
-                >
-                  <div
-                    className="w-8 h-8 rounded-full"
-                    style={{ backgroundColor: color }}
-                  ></div>
-                </div>
-              ))}
-            </div>
-          </div>
-          {/* Product Storage */}
-          <div className="grid grid-cols-4 gap-2.5 ">
-            {dataStorage.map((storage, index) => (
-              <div
-                key={index}
-                className="py-4 px-6 rounded-lg cursor-pointer transition-all h-12 w-[79.25px] flex items-center justify-center"
-                style={{
-                  border:
-                    selectedStorage === storage
-                      ? `1.5px solid #000000`
-                      : "1.5px solid #D5D5D5",
-                }}
-                onClick={() => setSelectedStorage(storage)}
-              >
-                <p
-                  className="text-sm"
-                  style={{
-                    color: selectedStorage === storage ? "#000000" : "#D5D5D5",
-                  }}
-                >
-                  {storage}
+        <div className="section bg-white container !px-0">
+          <UiBreadCrumbs
+            items={breadCrumbs}
+            customClass="!hidden md:!flex pt-4"
+          />
+          <div className="flex flex-col xl:grid xl:grid-cols-2 gap-4 md:pt-16 ">
+            <ProductThumbnails />
+            <div className="flex flex-col gap-4">
+              <p className="font-bold text-[40px] text-black leading-10 mt-4">
+                Apple iPhone 14 Pro Max
+              </p>
+              <p className="flex gap-x-3 items-center">
+                <span className="text-black text-[32px] leading-[48px] font-medium ">
+                  $1399
+                </span>
+                <span className="text-2xl leading-8 text-[#A0A0A0] line-through">
+                  $1499
+                </span>
+              </p>
+              {/* Product Color */}
+              <div className="flex items-center gap-2.5 flex-wrap">
+                <p className="text-[#0C0C0C] text-[15px] leading-6">
+                  Select Color :
                 </p>
-              </div>
-            ))}
-          </div>
-          {/* Product Info  */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ">
-            {infos.map((info, index) => (
-              <div
-                key={index}
-                className="flex gap-3 items-center bg-[#F4F4F4] rounded-[7px] py-4 px-2 h-16"
-              >
-                <img className="w-6 h-6" src={info.icon} alt="icon" />
-                <div className=" text-sm leading-6 flex flex-col gap-0.5">
-                  <p className="text-[#A0A0A0] ">{info.title}</p>
-                  <p className="text-[#0C0C0C]">{info.subTitle}</p>
+                <div className="flex gap-2 md:gap-0">
+                  {colors.map((color, index) => (
+                    <div
+                      key={index}
+                      className="p-1 rounded-full cursor-pointer transition-all"
+                      style={{
+                        border:
+                          selectedColor === color
+                            ? `1.5px solid ${color}`
+                            : "1.5px solid transparent",
+                      }}
+                      onClick={() => setSelectedColor(color)}
+                    >
+                      <div
+                        className="w-8 h-8 rounded-full"
+                        style={{ backgroundColor: color }}
+                      ></div>
+                    </div>
+                  ))}
                 </div>
               </div>
-            ))}
-          </div>
-
-          <p className="text-priGray text-sm">
-            {selectedText + " "}
-            <span
-              className="underline"
-              onClick={() =>
-                setSelectedText(
-                  selectedText === text
-                    ? text + " " + "product management"
-                    : text
-                )
-              }
-            >
-              {selectedText === text ? "More.." : "Less.."}
-            </span>
-          </p>
-
-          {/* Add to wishlist and card buttons */}
-          <div className="flex flex-col gap-4">
-            <Btn
-              onClick={() => navigate("/shopping-carts")}
-              label="Add to Wishlist"
-              customClass="bg-white font-medium border !border-primary !text-primary"
-            />
-            <Btn
-              onClick={() => navigate("/shopping-carts")}
-              label="Add to Cart"
-            />
-          </div>
-
-          {/* Product Stats */}
-          <div className="grid grid-cols-3 gap-4 mt-4">
-            {productStats.map((stat, index) => (
-              <div
-                key={index}
-                className="flex flex-col items-center justify-center"
-              >
-                <img src={stat.icon} />
-                <p className="text-[#717171] text-sm mt-3">{stat.title}</p>
-                <p className="text-black text-sm">{stat.info}</p>
+              {/* Product Storage */}
+              <div className="grid grid-cols-4 gap-2.5 md:gap-4">
+                {dataStorage.map((storage, index) => (
+                  <div
+                    key={index}
+                    className="py-4 px-6 rounded-lg cursor-pointer transition-all h-12 flex items-center justify-center"
+                    style={{
+                      border:
+                        selectedStorage === storage
+                          ? `1.5px solid #000000`
+                          : "1.5px solid #D5D5D5",
+                    }}
+                    onClick={() => setSelectedStorage(storage)}
+                  >
+                    <p
+                      className="text-sm"
+                      style={{
+                        color:
+                          selectedStorage === storage ? "#000000" : "#D5D5D5",
+                      }}
+                    >
+                      {storage}
+                    </p>
+                  </div>
+                ))}
               </div>
-            ))}
+              {/* Product Info  */}
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 ">
+                {infos.map((info, index) => (
+                  <div
+                    key={index}
+                    className="flex gap-3 items-center bg-[#F4F4F4] rounded-[7px] py-4 px-2 h-16"
+                  >
+                    <img className="w-6 h-6" src={info.icon} alt="icon" />
+                    <div className=" text-sm leading-6 flex flex-col gap-0.5">
+                      <p className="text-[#A0A0A0] ">{info.title}</p>
+                      <p className="text-[#0C0C0C]">{info.subTitle}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <p className="text-priGray text-sm">
+                {selectedText + " "}
+                <span
+                  className="underline cursor-pointer"
+                  onClick={() =>
+                    setSelectedText(
+                      selectedText === text
+                        ? text + " " + "product management"
+                        : text
+                    )
+                  }
+                >
+                  {selectedText === text ? "more.." : "less.."}
+                </span>
+              </p>
+
+              {/* Add to wishlist and card buttons */}
+              <div className="flex flex-col gap-4 md:flex-row md:mt-2">
+                <Btn
+                  onClick={() => navigate("/shopping-carts")}
+                  label="Add to Wishlist"
+                  customClass="bg-white font-medium border !border-primary !text-primary md:!w-full"
+                />
+                <Btn
+                  onClick={() => navigate("/shopping-carts")}
+                  label="Add to Cart"
+                  customClass="md:!w-full"
+                />
+              </div>
+
+              {/* Product Stats */}
+              <div className="grid grid-cols-3 gap-4 mt-4">
+                {productStats.map((stat, index) => (
+                  <div
+                    key={index}
+                    className="flex flex-col items-center justify-center md:flex-row md:gap-2.5"
+                  >
+                    <img src={stat.icon} />
+                    <div className="flex flex-col items-center justify-center md:items-start">
+                      <p className="text-[#717171] text-sm mt-3 md:mt-0">
+                        {stat.title}
+                      </p>
+                      <p className="text-black text-sm">{stat.info}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 
@@ -316,7 +351,7 @@ const ProductDetails = () => {
           <ProductReviews />
         </div>
 
-        <div className="bg-white">
+        <div className="bg-white container">
           <RelatedProducts />
         </div>
       </div>
