@@ -38,7 +38,7 @@ const HomeCategory = () => {
   ];
   return (
     <>
-      <div className="py-16 px-4 bg-[#FAFAFA]">
+      <div className="py-16 bg-[#FAFAFA]">
         <div className="container">
           <div className="flex justify-between items-center gap-4">
             <p className="font-medium text-2xl">Browse By Category</p>
