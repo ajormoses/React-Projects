@@ -16,7 +16,7 @@ const RelatedProducts = () => {
       image: img2,
     },
     {
-      title: "AirPods Max Silver",
+      title: "AirPods Max Silver Starlight Aluminium",
       description: "$2535",
       image: img4,
     },
