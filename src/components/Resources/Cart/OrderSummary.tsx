@@ -56,7 +56,7 @@ const OrderSummary = () => {
   ];
   return (
     <>
-      <div className="border border-[#EBEBEB] py-14 px-4 flex flex-col gap-4">
+      <div className="border border-[#EBEBEB] py-14 px-4 md:px-16 flex flex-col gap-4">
         <h1 className="font-bold text-xl text-[#111111]">Order Summary</h1>
 
         <form
