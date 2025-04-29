@@ -14,7 +14,7 @@ body {
   }
 
   .section {
-    @apply py-16 px-4;
+    @apply py-16;
   }
 
   .no-scrollbar::-webkit-scrollbar {
