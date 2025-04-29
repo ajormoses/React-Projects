@@ -82,28 +82,34 @@ const ProductReviews = () => {
   return (
     <div className="flex flex-col gap-5">
       <h1 className="font-medium leading-6 text-black text-2xl">Reviews</h1>
-      <div className="rounded-[25px] bg-[#FAFAFA] p-8 flex items-center justify-center gap-5 my-5">
-        <div className="flex flex-col justify-center items-center font-medium text-black">
-          <p className="text-[56px]">4.8</p>
-          <p className="text-[15px] text-gray -mt-1">
-            of {totalReviews} reviews
-          </p>
-        </div>
-        <img src={rating} alt="rating" />
-      </div>
-
-      {ratings.map((r, index) => (
-        <div key={index} className="flex items-center justify-between gap-5">
-          <p className="text-[#333333] text-[15px] w-28">{r.rating}</p>
-          <div className="flex-1 bg-[#D9D9D9] h-[5px] rounded-full overflow-hidden">
-            <div
-              className="bg-rating h-full"
-              style={{ width: `${(r.count / totalReviews) * 500}%` }}
-            ></div>
+      <div className="flex flex-col gap-5 md:flex-row md:items-center md:gap-16">
+        <div className="rounded-[25px] bg-[#FAFAFA] p-8 flex md:flex-col items-center justify-center gap-5 my-5 md:h-[192px] md:w-[184px] md:basis-[15%]">
+          <div className="flex flex-col justify-center items-center font-medium text-black">
+            <p className="text-[56px]">4.8</p>
+            <p className="text-[15px] text-gray -mt-1 text-center">
+              of {totalReviews} reviews
+            </p>
           </div>
-          <p className="text-gray ml-auto">{r.count}</p>
+          <img src={rating} alt="rating" />
         </div>
-      ))}
+        <div className="flex flex-col gap-5 md:basis-[85%]">
+          {ratings.map((r, index) => (
+            <div
+              key={index}
+              className="flex items-center justify-between gap-5"
+            >
+              <p className="text-[#333333] text-[15px] w-28">{r.rating}</p>
+              <div className="flex-1 bg-[#D9D9D9] h-[5px] rounded-full overflow-hidden">
+                <div
+                  className="bg-rating h-full"
+                  style={{ width: `${(r.count / totalReviews) * 500}%` }}
+                ></div>
+              </div>
+              <p className="text-gray ml-auto">{r.count}</p>
+            </div>
+          ))}
+        </div>
+      </div>
 
       <textarea
         placeholder="Leave Comment"
@@ -120,7 +126,7 @@ const ProductReviews = () => {
           className="flex items-start gap-5 bg-secGray rounded-[10px] py-6 px-[28px]"
         >
           <img src={r.avatar} alt="user" />
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 basis-full">
             <div className="flex justify-between flex-wrap items-center gap-2">
               <p className="text-black font-medium">{r.name}</p>
               <p className="text-gray text-[15px]">{r.date}</p>
