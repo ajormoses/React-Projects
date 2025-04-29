@@ -298,57 +298,61 @@ const ProductDetails = () => {
 
         {/* Product Details */}
         <div className="bg-[#FAFAFA] section">
-          <div className="bg-white rounded-lg section">
-            <h1 className="font-medium leading-6 text-black text-2xl ">
-              Details
-            </h1>
-            <p className="text-[#9D9D9D] text-sm leading-6 font-medium pt-8 pb-4">
-              Just as a book is judged by its cover, the first thing you notice
-              when you pick up a modern smartphone is the display. Nothing
-              surprising, because advanced technologies allow you to practically
-              level the display frames and cutouts for the front camera and
-              speaker, leaving no room for bold design solutions. And how good
-              that in such realities Apple everything is fine with displays.
-              Both critics and mass consumers always praise the quality of the
-              picture provided by the products of the Californian brand. And
-              last year's 6.7-inch Retina panels, which had ProMotion, caused
-              real admiration for many.
-            </p>
-            <h1 className="font-medium leading-6 text-black text-xl py-4">
-              Screen
-            </h1>
-            <div className="flex flex-col gap-4">
-              {screenDetails.map((detail, index) => (
-                <div className="flex flex-col gap-4" key={index}>
-                  {detail.header && (
-                    <h1 className="font-medium leading-6 text-black text-xl mt-4">
-                      {detail.header}
-                    </h1>
-                  )}
-                  <div className="grid grid-cols-2 pb-1 border-b-[0.5px] border-b-[#CDCDCD]">
-                    <p className="text-[#9D9D9D] text-sm leading-6 font-medium">
-                      {detail.title}
-                    </p>
-                    <p className="text-black text-sm leading-6 ml-auto text-right">
-                      {detail.info}
-                    </p>
+          <div className="!max-w-[1120px] container">
+            <div className="bg-white rounded-lg section md:px-10">
+              <h1 className="font-medium leading-6 text-black text-2xl ">
+                Details
+              </h1>
+              <p className="text-[#9D9D9D] text-sm leading-6 font-medium pt-8 pb-4">
+                Just as a book is judged by its cover, the first thing you
+                notice when you pick up a modern smartphone is the display.
+                Nothing surprising, because advanced technologies allow you to
+                practically level the display frames and cutouts for the front
+                camera and speaker, leaving no room for bold design solutions.
+                And how good that in such realities Apple everything is fine
+                with displays. Both critics and mass consumers always praise the
+                quality of the picture provided by the products of the
+                Californian brand. And last year's 6.7-inch Retina panels, which
+                had ProMotion, caused real admiration for many.
+              </p>
+              <h1 className="font-medium leading-6 text-black text-xl py-4">
+                Screen
+              </h1>
+              <div className="flex flex-col gap-4">
+                {screenDetails.map((detail, index) => (
+                  <div className="flex flex-col gap-4" key={index}>
+                    {detail.header && (
+                      <h1 className="font-medium leading-6 text-black text-xl mt-4">
+                        {detail.header}
+                      </h1>
+                    )}
+                    <div className="grid grid-cols-2 pb-1 border-b-[0.5px] border-b-[#CDCDCD]">
+                      <p className="text-[#9D9D9D] text-sm leading-6 font-medium">
+                        {detail.title}
+                      </p>
+                      <p className="text-black text-sm leading-6 ml-auto text-right max-w-[132px]">
+                        {detail.info}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+              <Btn
+                appendIcon={<IoIosArrowDown />}
+                label="View More"
+                customClass={clsx(
+                  `!bg-transparent !text-sm !flex !item-center !justify-center !mx-auto !rounded-lg font-medium mt-8 !bg-white !text-black !border !border-black !py-[12px] !px-[36px] !max-w-[230px]`
+                )}
+              />
             </div>
-            <Btn
-              appendIcon={<IoIosArrowDown />}
-              label="View More"
-              customClass={clsx(
-                `!bg-transparent !text-sm !flex !item-center !justify-center !mx-auto !rounded-lg font-medium mt-8 !bg-white !text-black !border !border-black !py-[12px] !px-[36px] !max-w-[230px]`
-              )}
-            />
           </div>
         </div>
 
         {/* Product Review  and Related Products */}
         <div className="bg-white section">
-          <ProductReviews />
+          <div className="!max-w-[1120px] container">
+            <ProductReviews />
+          </div>
         </div>
 
         <div className="bg-white container">
