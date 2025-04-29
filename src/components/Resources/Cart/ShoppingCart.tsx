@@ -27,18 +27,15 @@ const ShoppingCart = () => {
   ];
   return (
     <>
-      <div className="section">
-        <div className="flex flex-col gap-10 pt-14">
-          {/* Cart Title */}
-          <h1 className="text-black font-semibold text-2xl leading-6">
-            Shopping Cart
-          </h1>
+      <div className="pt-14 md:pt-28">
+        <div className="section container !max-w-[1120px]">
+          <div className="grid grid-cols-1 md:grid-cols-2 md:gap-20">
+            {/* Item Cart */}
+            <ItemCart carts={carts} />
 
-          {/* Item Cart */}
-          <ItemCart carts={carts} />
-
-          {/* Order Summary */}
-          <OrderSummary />
+            {/* Order Summary */}
+            <OrderSummary />
+          </div>
         </div>
       </div>
     </>
