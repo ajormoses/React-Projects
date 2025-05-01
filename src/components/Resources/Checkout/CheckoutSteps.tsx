@@ -18,6 +18,7 @@ import creditcard from "../../../assets/img/creditcard.svg";
 import TabSwitcher from "../../Ui/TabSwitcher";
 import { useMediaQuery } from "../../../composables/useMediaQuery";
 import CheckoutSummary from "./Summary";
+import UiSuccessModal from "../../Ui/SuccessModal";
 
 const checkoutSteps = () => {
   const navigate = useNavigate();
@@ -26,6 +27,9 @@ const checkoutSteps = () => {
 
   // Modal
   const [openModal, setOpenModal] = useState(false);
+
+  // Success modal
+  const [visible, setVisible] = useState(false);
 
   // Validation to add new address
   const schema = yup
@@ -151,7 +155,10 @@ const checkoutSteps = () => {
   ];
 
   const [expiryDate, setExpiryDate] = useState<Date | null>(null);
-  const handleFormData = (data: any) => console.log(data);
+  const handleFormData = (data: any) => {
+    console.log(data);
+    setVisible(true);
+  };
 
   // Validation to add new address
   const paymentSchema = yup
@@ -195,14 +202,16 @@ const checkoutSteps = () => {
     }
   };
 
-  const next = () => {
+  const next = async () => {
     if (checkoutStepOne) {
       if (!selectedRadio) {
         setRadioError("Please select an address");
         return;
+      } else {
+        setCheckoutStepOne(false);
+        setCheckoutStepTwo(true);
+        setSelectedRadio(null);
       }
-      setCheckoutStepOne(false);
-      setCheckoutStepTwo(true);
     } else if (checkoutStepTwo) {
       if (!selectedRadio) {
         setRadioError("Please select shipping method");
@@ -210,9 +219,10 @@ const checkoutSteps = () => {
       } else {
         setCheckoutStepTwo(false);
         setCheckoutStepThree(true);
+        setSelectedRadio(null);
       }
     } else if (checkoutStepThree) {
-      paymentHandleSubmit(handleFormData)();
+      await paymentHandleSubmit(handleFormData)();
     }
   };
 
@@ -623,6 +633,15 @@ const checkoutSteps = () => {
               />
             </form>
           </Modal>
+
+          {/* Success Modal */}
+          <UiSuccessModal
+            isOpen={visible}
+            onClose={() => setVisible(false)}
+            title="Payment Created Successfully!"
+            description="If you provided participant information, an invite has been sent to
+          each and every participant"
+          />
         </div>
       </div>
     </>
