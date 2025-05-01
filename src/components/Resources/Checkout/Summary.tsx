@@ -61,7 +61,7 @@ const Summary = () => {
         </div>
 
         {/* Subtotal  */}
-        <div className="flex justify-between items-center gap-2.5 my-2.5">
+        <div className="flex justify-between items-center gap-2.5 my-2">
           <p className="text-black font-medium">Subtotal</p>
           <p className="text-black leading-6 font-medium">$2347</p>
         </div>
@@ -81,7 +81,7 @@ const Summary = () => {
         </div>
 
         {/* Total */}
-        <div className="flex justify-between items-center gap-2.5 mt-2.5">
+        <div className="flex justify-between items-center gap-2.5 mt-2">
           <p className="text-black font-medium">Total</p>
           <p className="text-black leading-6 font-medium">$2426</p>
         </div>
