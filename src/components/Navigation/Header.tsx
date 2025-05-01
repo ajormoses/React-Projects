@@ -1,5 +1,5 @@
 import { IoClose, IoReorderThreeOutline } from "react-icons/io5";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
 import { GrFavorite } from "react-icons/gr";
 import { IoCartOutline } from "react-icons/io5";
