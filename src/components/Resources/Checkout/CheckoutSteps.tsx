@@ -13,8 +13,11 @@ import { useNavigate } from "react-router";
 import Modal from "../../Ui/DialogModal";
 import location from "../.../../../../assets/img/steps-icon/location.svg";
 import shipping from "../.../../../../assets/img/steps-icon/shipping.svg";
+import payment from "../../../assets/img/steps-icon/payment.svg";
 import creditcard from "../../../assets/img/creditcard.svg";
 import TabSwitcher from "../../Ui/TabSwitcher";
+import { useMediaQuery } from "../../../composables/useMediaQuery";
+import CheckoutSummary from "./Summary";
 
 const checkoutSteps = () => {
   const navigate = useNavigate();
@@ -75,8 +78,8 @@ const checkoutSteps = () => {
   }
 
   // Steps
-  const [checkoutStepOne, setCheckoutStepOne] = useState<boolean>(true);
-  const [checkoutStepTwo, setCheckoutStepTwo] = useState<boolean>(false);
+  const [checkoutStepOne, setCheckoutStepOne] = useState<boolean>(false);
+  const [checkoutStepTwo, setCheckoutStepTwo] = useState<boolean>(true);
   const [checkoutStepThree, setCheckoutStepThree] = useState<boolean>(false);
   const [selectedRadio, setSelectedRadio] = useState<string | null>(null);
   const [radioError, setRadioError] = useState<string | null>(null);
@@ -204,24 +207,32 @@ const checkoutSteps = () => {
       if (!selectedRadio) {
         setRadioError("Please select shipping method");
         return;
+      } else {
+        setCheckoutStepTwo(false);
+        setCheckoutStepThree(true);
       }
-      setCheckoutStepTwo(false);
-      setCheckoutStepThree(true);
     } else if (checkoutStepThree) {
       paymentHandleSubmit(handleFormData)();
     }
   };
 
+  // Media Query for large screen
+  const mediaLg = useMediaQuery("(min-width: 1024px)");
+
   return (
     <>
       <div className="pt-16">
-        <div className="section">
+        <div className="section container !max-w-[1120px]">
           {/* Steps */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4 lg:flex lg:justify-between lg:items-center">
             <div className="flex gap-2.5 items-center">
               <img
-                className={`${checkoutStepThree && "opacity-20"}`}
-                src={location}
+                className={`${
+                  mediaLg
+                    ? (checkoutStepTwo || checkoutStepThree) && "opacity-20"
+                    : checkoutStepThree && "opacity-20"
+                }`}
+                src={mediaLg ? location : checkoutStepOne ? location : shipping}
                 alt="Location"
               />
               <div
@@ -230,18 +241,52 @@ const checkoutSteps = () => {
                 }`}
               >
                 <p className=" text-sm capitalize">
-                  step {checkoutStepOne ? 1 : 2}
+                  step {mediaLg ? 1 : checkoutStepOne ? 1 : 2}
                 </p>
                 <p className="text-lg">
-                  {checkoutStepOne ? "Address" : "Shipping"}
+                  {mediaLg
+                    ? "Address"
+                    : checkoutStepOne
+                    ? "Address"
+                    : "Shipping"}
                 </p>
               </div>
             </div>
 
             <div className="flex gap-2.5 items-center">
               <img
+                className={`${
+                  mediaLg
+                    ? !checkoutStepTwo && "opacity-20"
+                    : !checkoutStepThree && "opacity-20"
+                }`}
+                src={mediaLg ? shipping : checkoutStepTwo ? payment : shipping}
+                alt="Shipping"
+              />
+              <div
+                className={`flex flex-col font-medium text-[#B2B2B2] ${
+                  mediaLg
+                    ? checkoutStepTwo && "text-primary"
+                    : checkoutStepThree && "text-primary"
+                }`}
+              >
+                <p className=" text-sm capitalize">
+                  step {mediaLg ? 2 : checkoutStepOne ? 2 : 3}
+                </p>
+                <p className="text-lg">
+                  {mediaLg
+                    ? "Shipping"
+                    : checkoutStepOne
+                    ? "Shipping"
+                    : "Payment"}
+                </p>
+              </div>
+            </div>
+
+            <div className="lg:flex gap-2.5 items-center hidden">
+              <img
                 className={`${!checkoutStepThree && "opacity-20"}`}
-                src={shipping}
+                src={payment}
                 alt="Shipping"
               />
               <div
@@ -249,12 +294,8 @@ const checkoutSteps = () => {
                   checkoutStepThree ? "text-primary" : "text-[#B2B2B2]"
                 }`}
               >
-                <p className=" text-sm capitalize">
-                  step {checkoutStepOne ? 2 : 3}
-                </p>
-                <p className="text-lg">
-                  {checkoutStepOne ? "Shipping" : "Payment"}
-                </p>
+                <p className=" text-sm capitalize">step 3</p>
+                <p className="text-lg">Payment</p>
               </div>
             </div>
           </div>
@@ -276,6 +317,8 @@ const checkoutSteps = () => {
                   ? "Select Address"
                   : checkoutStepTwo
                   ? "Shipping Method"
+                  : mediaLg
+                  ? ""
                   : "Payment"}
               </p>
 
@@ -356,38 +399,51 @@ const checkoutSteps = () => {
                   {shippingMethods.map((item, index) => (
                     <div
                       key={index}
-                      className="flex justify-between items-center overflow-hidden gap-4 rounded-lg p-4 border border-[#F6F6F6]"
+                      className="flex justify-between items-center overflow-hidden gap-4 rounded-lg p-4 border border-[#F6F6F6] w-full"
                     >
-                      <div className="flex flex-col gap-2.5 basis-1/2">
+                      <div className="flex flex-col gap-2.5 lg:flex-row lg:items-center basis-1/2">
                         <input
                           type="radio"
                           name="shipping"
-                          className="mt-1.5 w-4 h-4 accent-primary"
+                          className="mt-1.5 w-4 h-4 accent-primary lg:mt-0"
                           value={item.grade}
                           onChange={(e) => {
                             setSelectedRadio(e.target.value);
                             setRadioError(null); // clear error on selection
                           }}
                         />
-                        <p className={`${index !== 0 && "text-[#A2A3B1]"}`}>
-                          {item.grade}
-                        </p>
-                        <p className={`${index !== 0 && "text-[#A2A3B1]"}`}>
-                          {item.desc}
-                        </p>
+                        <div
+                          className={`flex flex-col gap-2.5 lg:flex-row lg:items-center ${
+                            item.grade === selectedRadio
+                              ? "text-black"
+                              : "text-[#A2A3B1]"
+                          }`}
+                        >
+                          <p>{item.grade}</p>
+                          <p>{item.desc}</p>
+                        </div>
                       </div>
                       {index !== 2 ? (
-                        <p className={` ${index !== 0 && "text-[#A2A3B1]"}`}>
+                        <p
+                          className={` ${
+                            item.grade === selectedRadio
+                              ? "text-black"
+                              : "text-[#A2A3B1]"
+                          }`}
+                        >
                           {item.date}
                         </p>
                       ) : (
-                        <DatePicker
-                          className="date-picker !w-[120px]"
-                          selected={startDate}
-                          onChange={(date) => {
-                            if (date) setStartDate(date);
-                          }}
-                        />
+                        <div className="!w-[120px]">
+                          <DatePicker
+                            className="date-picker  !border-none focus:outline-none"
+                            placeholderText="Select Date"
+                            selected={startDate}
+                            onChange={(date) => {
+                              if (date) setStartDate(date);
+                            }}
+                          />
+                        </div>
                       )}
                     </div>
                   ))}
@@ -396,76 +452,118 @@ const checkoutSteps = () => {
 
               {/* Step 3 */}
               {checkoutStepThree && (
-                <div className="flex flex-col ">
-                  <TabSwitcher items={tabs} />
-                  <img
-                    className="mt-8 mb-4"
-                    src={creditcard}
-                    alt="Credit Card"
-                  />
+                <div className="lg:grid lg:grid-cols-2 lg:gap-12">
+                  <div className="hidden lg:block">
+                    <CheckoutSummary />
+                  </div>
+                  <div className="flex flex-col ">
+                    <p className="font-semibold text-xl leading-6 text-[#17183B] pb-3 hidden lg:block">
+                      {checkoutStepOne
+                        ? "Select Address"
+                        : checkoutStepTwo
+                        ? "Shipping Method"
+                        : "Payment"}
+                    </p>
 
-                  <InputField
-                    type="text"
-                    placeholder="Cardholder Name"
-                    register={paymentRegister("card_name", { required: true })}
-                    error={paymentErrors.card_name?.message}
-                  />
-                  <InputField
-                    type="number"
-                    placeholder="Card Number"
-                    register={paymentRegister("card_number", {
-                      required: true,
-                    })}
-                    error={paymentErrors.card_number?.message}
-                  />
-                  <div className="grid grid-cols-2 items-center gap-4">
-                    <div className="flex flex-col gap-2">
-                      <Controller
-                        control={control}
-                        name="expiry_date"
-                        render={({ field }) => (
-                          <DatePicker
-                            className={`date-picker ${
-                              paymentErrors.expiry_date?.message &&
-                              "!border !border-red-500 placeholder-red-200 mt-2"
-                            }`}
-                            placeholderText="Expiry Date"
-                            selected={
-                              field.value ? new Date(field.value) : null
-                            }
-                            onChange={field.onChange}
-                          />
-                        )}
-                      />
+                    <TabSwitcher items={tabs} />
+                    <img
+                      className="mt-8 mb-4 lg:mb-10 max-w-[337px]"
+                      src={creditcard}
+                      alt="Credit Card"
+                    />
 
-                      {paymentErrors.expiry_date?.message && (
-                        <p className="text-red-500 text-xs">
-                          {paymentErrors.expiry_date?.message}
-                        </p>
-                      )}
-                    </div>
+                    <InputField
+                      type="text"
+                      placeholder="Cardholder Name"
+                      register={paymentRegister("card_name", {
+                        required: true,
+                      })}
+                      error={paymentErrors.card_name?.message}
+                    />
                     <InputField
                       type="number"
-                      placeholder="CVV"
-                      register={paymentRegister("cvv", { required: true })}
-                      error={paymentErrors.cvv?.message}
+                      placeholder="Card Number"
+                      register={paymentRegister("card_number", {
+                        required: true,
+                      })}
+                      error={paymentErrors.card_number?.message}
                     />
+                    <div className="grid grid-cols-2 items-center gap-4">
+                      <div className="flex flex-col gap-2">
+                        <Controller
+                          control={control}
+                          name="expiry_date"
+                          render={({ field }) => (
+                            <DatePicker
+                              className={`date-picker ${
+                                paymentErrors.expiry_date?.message &&
+                                "!border !border-red-500 placeholder-red-200 mt-2"
+                              }`}
+                              placeholderText="Expiry Date"
+                              selected={
+                                field.value ? new Date(field.value) : null
+                              }
+                              onChange={field.onChange}
+                            />
+                          )}
+                        />
+
+                        {paymentErrors.expiry_date?.message && (
+                          <p className="text-red-500 text-xs">
+                            {paymentErrors.expiry_date?.message}
+                          </p>
+                        )}
+                      </div>
+                      <InputField
+                        type="number"
+                        placeholder="CVV"
+                        register={paymentRegister("cvv", { required: true })}
+                        error={paymentErrors.cvv?.message}
+                      />
+                    </div>
+
+                    <div className="flex items-center gap-2.5 mt-5">
+                      <input
+                        type="checkbox"
+                        name="address"
+                        className=" w-4 h-4 rounded-[3px] accent-primary"
+                      />
+                      <p className="font-medium text-[15px]">
+                        Same as billing address
+                      </p>
+                    </div>
+
+                    {mediaLg && checkoutStepThree && (
+                      <div className="grid grid-cols-2 gap-4 items-center mt-10">
+                        <Btn
+                          onClick={() => back()}
+                          label="Back"
+                          customClass="!bg-white !text-primary !border !border-primary"
+                        />
+                        <Btn
+                          onClick={() => next()}
+                          label={checkoutStepThree ? "Pay" : "Next"}
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
             </div>
 
-            <div className="grid grid-cols-2 gap-5  items-center mt-10">
-              <Btn
-                onClick={() => back()}
-                label="Back"
-                customClass="!bg-white !text-primary !border !border-primary"
-              />
-              <Btn
-                onClick={() => next()}
-                label={checkoutStepThree ? "Pay" : "Next"}
-              />
-            </div>
+            {!checkoutStepThree && (
+              <div className="grid grid-cols-2 gap-5  items-center mt-10 lg:w-[500px] lg:ml-auto">
+                <Btn
+                  onClick={() => back()}
+                  label="Back"
+                  customClass="!bg-white !text-primary !border !border-primary"
+                />
+                <Btn
+                  onClick={() => next()}
+                  label={checkoutStepThree ? "Pay" : "Next"}
+                />
+              </div>
+            )}
           </form>
 
           {/* Modal */}
