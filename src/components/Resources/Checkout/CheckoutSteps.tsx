@@ -78,8 +78,8 @@ const checkoutSteps = () => {
   }
 
   // Steps
-  const [checkoutStepOne, setCheckoutStepOne] = useState<boolean>(false);
-  const [checkoutStepTwo, setCheckoutStepTwo] = useState<boolean>(true);
+  const [checkoutStepOne, setCheckoutStepOne] = useState<boolean>(true);
+  const [checkoutStepTwo, setCheckoutStepTwo] = useState<boolean>(false);
   const [checkoutStepThree, setCheckoutStepThree] = useState<boolean>(false);
   const [selectedRadio, setSelectedRadio] = useState<string | null>(null);
   const [radioError, setRadioError] = useState<string | null>(null);
@@ -533,7 +533,7 @@ const checkoutSteps = () => {
                       </p>
                     </div>
 
-                    {mediaLg && checkoutStepThree && (
+                    {checkoutStepThree && (
                       <div className="grid grid-cols-2 gap-4 items-center mt-10">
                         <Btn
                           onClick={() => back()}
