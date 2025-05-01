@@ -1,4 +1,4 @@
-import ItemCart from "./ItemCart";
+import ItemCart from "./temCart";
 import OrderSummary from "./OrderSummary";
 import img1 from "../../../assets/img/newArrivals/img1.svg";
 import img3 from "../../../assets/img/newArrivals/img3.svg";
