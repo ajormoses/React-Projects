@@ -639,8 +639,7 @@ const checkoutSteps = () => {
             isOpen={visible}
             onClose={() => setVisible(false)}
             title="Payment Created Successfully!"
-            description="If you provided participant information, an invite has been sent to
-          each and every participant"
+            description="Your payment was successful. A confirmation has been sent, and your request is now being processed."
           />
         </div>
       </div>
