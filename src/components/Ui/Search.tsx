@@ -13,6 +13,7 @@ interface Props {
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  autoFilterFocus?: boolean;
 }
 const UiSearch: React.FC<Props> = ({
   value,
@@ -20,7 +21,10 @@ const UiSearch: React.FC<Props> = ({
   disabled,
   outerclass,
   placeholder,
+  onKeyDown,
+  autoFilterFocus,
 }) => {
+  const autoFilterFocusStr = autoFilterFocus ? "true" : undefined;
   return (
     <>
       <div
@@ -35,6 +39,10 @@ const UiSearch: React.FC<Props> = ({
           placeholder={placeholder || "Search"}
           disabled={disabled}
           className="w-full bg-transparent focus:outline-none text-sm ml-6"
+          {...(autoFilterFocusStr
+            ? { "auto-filter-focus": autoFilterFocusStr }
+            : {})}
+          onKeyDown={onKeyDown}
         />
         <FiSearch className="absolute left-4 top-3 text-[#989898]" />
       </div>

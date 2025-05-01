@@ -10,17 +10,17 @@ import UiSearch from "../Ui/Search";
 const Navbar = () => {
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
-  const [showSearch, setShowSearch] = useState<string | undefined>(undefined);
+  const [showSearch, setShowSearch] = useState<string>("");
 
-  useEffect(() => {
-    if (showSearch && showSearch.trim().length > 0) {
-      const timer = setTimeout(() => {
-        navigate(`/filters?search=${showSearch}`);
-      }, 1500);
+  // useEffect(() => {
+  //   if (showSearch && showSearch.trim().length > 0) {
+  //     const timer = setTimeout(() => {
+  //       navigate(`/filters?search=${showSearch}`);
+  //     }, 1500);
 
-      return () => clearTimeout(timer); // Clear previous timer if input changes
-    }
-  }, [showSearch, navigate]);
+  //     return () => clearTimeout(timer); // Clear previous timer if input changes
+  //   }
+  // }, [showSearch, navigate]);
 
   const navLinks: {
     name: string;
@@ -49,6 +49,11 @@ const Navbar = () => {
               placeholder="Search"
               outerclass="!w-[372px] hidden lg:block"
               onChange={(e) => setShowSearch(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && showSearch?.trim()) {
+                  navigate(`/filters?search=${showSearch.trim()}`);
+                }
+              }}
             />
           </div>
 
