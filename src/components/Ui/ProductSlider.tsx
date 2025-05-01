@@ -3,7 +3,6 @@ import { Pagination, Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Product from "../Resources/Products/ProductInfo";
 import { useMediaQuery } from "../../composables/useMediaQuery";
-import { useCallback } from "react";
 
 // Import Swiper styles
 import "swiper/css";

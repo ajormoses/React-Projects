@@ -6,11 +6,6 @@ import InputField from "../../Ui/InputField";
 import Btn from "../../Ui/Btn";
 import useCurrencyFormatter from "../../../composables/useCurrencyFormatter";
 
-interface FormData {
-  promo_code: number;
-  card_number: number;
-}
-
 const OrderSummary = () => {
   const { formatCurrency } = useCurrencyFormatter();
   const navigate = useNavigate();

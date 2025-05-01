@@ -154,7 +154,6 @@ const checkoutSteps = () => {
     { title: "PayPal Credit", isActive: false },
   ];
 
-  const [expiryDate, setExpiryDate] = useState<Date | null>(null);
   const handleFormData = (data: any) => {
     console.log(data);
     setVisible(true);
