@@ -162,8 +162,8 @@ const checkoutSteps = () => {
   // Validation to add new address
   const paymentSchema = yup
     .object({
-      card_name: yup.string().required(),
-      card_number: yup.string().required(),
+      card_name: yup.string().required("Card name is required"),
+      card_number: yup.string().required("Card number is required"),
       expiry_date: yup
         .date()
         .required("Expiry date is required")
