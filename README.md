@@ -1,3 +1,39 @@
+# Cyber
+
+A modern web application built with **React** to explore and solidify core concepts in modern frontend development.  
+🚀 Live site: [https://cyberwares.netlify.app/](https://cyberwares.netlify.app/)
+
+## 📚 What I Learned
+
+Building **Cyber** was a great learning experience. I explored and applied a variety of powerful tools and techniques in the React ecosystem:
+
+### ✅ React Concepts
+
+- **useState** – Managing component-level state.
+- **useEffect** – Handling side effects like API calls and subscriptions.
+- **useCallback** – Optimizing performance with memoized callbacks.
+- **Hooks in general** – Understanding how they power modern functional components.
+
+### 🧰 Libraries & Tools
+
+- **React Icons** – For scalable, flexible icon usage across the app.
+- **Framer Motion** – For rich, declarative animations and transitions.
+- **React Hook Form (useForm)** – Simplified form state management and validation.
+- **clsx** – A powerful utility for conditionally joining Tailwind and CSS class names.
+
+> 💡 One of the biggest takeaways was realizing just how fun and expressive React development can be, especially when enhanced by modern tools!
+
+---
+
+## 🚀 Getting Started
+
+To run the project locally:
+
+1. **Clone the repository**:
+   ```bash
+   git clone <your-repository-url>
+   ```
+
 ## Getting Started
 
 To run the app locally:
@@ -11,7 +47,7 @@ To run the app locally:
    2. Navigate to the project directory:
 
       ```bash
-      cd react-todo-app
+      cd cyber
       ```
 
    3. Install the dependencies:
