@@ -68,7 +68,7 @@ const Product: React.FC<ProductProps> = ({
         style={{ background: bgColor || "white" }}
       >
         {showLike && (
-          <div className="absolute top-3 right-3">
+          <div className="absolute top-3 right-3 cursor-pointer">
             {like ? (
               <FaHeart
                 onClick={() => setLike(!like)}
