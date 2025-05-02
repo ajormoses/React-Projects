@@ -26,7 +26,7 @@ const Navbar = () => {
     if (e.key === "Enter" && showSearch?.trim()) {
       setTimeout(() => {
         navigate(`/filters?search=${showSearch.trim()}`);
-      }, 1500);
+      }, 1000);
       setShowMenu(false);
     }
   }
