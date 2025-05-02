@@ -83,7 +83,10 @@ const Product: React.FC<ProductProps> = ({
           </div>
         )}
         <img
-          className={clsx(`h-[160px] w-[160px]`, customImage)}
+          className={clsx(
+            `h-[160px] w-[160px] animate-slow-bounce`,
+            customImage
+          )}
           src={image}
           alt="image"
         />
