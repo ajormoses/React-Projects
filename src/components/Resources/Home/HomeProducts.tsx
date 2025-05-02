@@ -1,3 +1,4 @@
+import { motion, useAnimation } from "framer-motion";
 import Product from "../Products/ProductInfo";
 import Airpod from "../../../assets/img/airpod.svg";
 import AppleVision from "../../../assets/img/apple-vision.svg";
@@ -45,6 +46,9 @@ const HomeProducts = () => {
       bgColor: "#EDEDED",
     },
   ];
+
+  const controls = useAnimation();
+
   return (
     <>
       <div className="flex flex-col">
@@ -64,15 +68,32 @@ const HomeProducts = () => {
           />
         ))}
 
-        <div className="hidden xl:grid xl:grid-cols-2  2xl:w-[1500px] m-auto">
+        <div className="hidden xl:grid xl:grid-cols-2  2xl:w-[1500px] m-auto group">
           {/* First 3 products in a single grid container */}
           <div className="grid grid-cols-2 ">
             {products[2] && (
-              <div className="col-span-2 flex flex-col justify-center items-end h-[328px] max-w-[650px] relative overflow-hidden">
-                <img
+              <motion.div
+                className="col-span-2 flex flex-col justify-center items-end h-[328px] max-w-[650px] relative overflow-hidden"
+                onHoverStart={() => {
+                  controls.start({
+                    scale: [1, 1.1, 1],
+                    transition: {
+                      duration: 0.8,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    },
+                  });
+                }}
+                onHoverEnd={() => {
+                  controls.stop(); // stop animation when hover ends
+                  controls.set({ scale: 1 }); // reset to original scale
+                }}
+              >
+                <motion.img
                   className="w-[360px] h-[343px] object-cover absolute top-0 -left-[90px]"
                   src={products[2].image}
                   alt="image"
+                  animate={controls}
                 />
 
                 <div className="flex flex-col justify-center items-start max-w-[338px]">
@@ -81,29 +102,43 @@ const HomeProducts = () => {
                   </p>
                   <p className="text-gray text-sm">{products[2].description}</p>
                 </div>
-              </div>
+              </motion.div>
             )}
 
             {/* Items at index 0 and 1 below in two columns */}
             {[products[0], products[1]].map(
               (product, index) =>
                 product && (
-                  <div
+                  <motion.div
                     key={index}
                     className={`${
-                      index === 0 ? "bg-lightGray " : "bg-darkGray "
+                      index === 0 ? "bg-lightGray" : "bg-darkGray"
                     }`}
+                    onHoverStart={() =>
+                      controls.start({
+                        scale: [1, 1.1, 1],
+                        transition: {
+                          duration: 0.8,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        },
+                      })
+                    }
+                    onHoverEnd={() => {
+                      controls.stop();
+                      controls.set({ scale: 1 });
+                    }}
                   >
-                    <div
-                      className={`flex flex-col justify-center items-end h-[272px] max-w-[360px] relative overflow-hidden `}
-                    >
-                      <img
-                        className={`h-[272px] absolute top-0 ${
+                    <div className="flex flex-col justify-center items-end h-[272px] max-w-[360px] relative overflow-hidden">
+                      <motion.img
+                        className={`h-[272px] absolute top-0 transition-all duration-200 ${
                           index === 0 ? "-left-[160px]" : "-left-[180px]"
-                        } `}
+                        }`}
                         src={product.image}
                         alt="image"
+                        animate={controls}
                       />
+
                       <div className="flex flex-col justify-center items-center w-[160px] mr-5">
                         <p
                           className={`text-[29px] font-light ${
@@ -120,7 +155,7 @@ const HomeProducts = () => {
                         </p>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 )
             )}
           </div>
@@ -130,13 +165,28 @@ const HomeProducts = () => {
             {products?.slice(3).map((product, index) => (
               <div
                 key={index}
-                className="flex flex-col justify-center items-center bg-lightGray relative pl-10 overflow-hidden"
+                className="flex flex-col justify-center items-center bg-lightGray relative pl-10 overflow-hidden group"
               >
                 <div className="grid grid-cols-2 place-items-center">
-                  <img
-                    className="w-[90%] h-[470px] object-cover absolute top-1/2 -right-[300px]  -translate-y-1/2"
+                  <motion.img
+                    className="w-[90%] h-[470px] object-cover absolute -right-[300px] -translate-y-1/2"
                     src={product.image}
                     alt="image"
+                    onHoverStart={() =>
+                      controls.start({
+                        scale: [1, 1.1, 1],
+                        transition: {
+                          duration: 0.8,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        },
+                      })
+                    }
+                    onHoverEnd={() => {
+                      controls.stop();
+                      controls.set({ scale: 1 });
+                    }}
+                    animate={controls}
                   />
                   <div className="flex flex-col justify-center items-start">
                     <p className="text-[64px] font-thin leading-tight">
