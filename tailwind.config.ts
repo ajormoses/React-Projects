@@ -30,10 +30,16 @@ export default {
           "0%": { opacity: "0", transform: "translateY(20px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
+        slowBounce: {
+          "0%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.02)" },
+          "100%": { transform: "scale(1)" },
+        },
       },
       animation: {
         slideFadeIn: "slideFadeIn 0.4s ease-out forwards",
         "slide-up": "slide-up 0.4s ease-out",
+        "slow-bounce": "slowBounce 4s infinite", // Slow bounce animation
       },
       // backgroundImage: {
       //   primary: "linear-gradient(90.7deg, #211C24 0.64%, #211C24 101%)",
