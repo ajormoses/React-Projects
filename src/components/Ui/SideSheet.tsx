@@ -37,7 +37,7 @@ const UiSideSheet: React.FC<Props> = ({
     >
       <div
         className={clsx(
-          "flex flex-col gap-6 bg-white h-full transform transition-transform duration-300 ease-in-out ml-auto section",
+          "flex flex-col gap-6 bg-white h-full transform transition-transform duration-300 ease-in-out ml-auto section px-5",
           {
             "translate-x-0": visible,
             "translate-x-full": !visible,
