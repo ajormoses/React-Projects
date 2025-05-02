@@ -92,6 +92,8 @@ const HomeFilters = () => {
   ];
 
   //   Brand
+  const [searchBrand, setSearchBrand] = useState("");
+
   const brands: {
     label: string;
     value: number;
@@ -134,7 +136,13 @@ const HomeFilters = () => {
     },
   ];
 
+  const filteredBrands = brands.filter((brand) =>
+    brand.label.toLowerCase().includes(searchBrand.toLowerCase())
+  );
+
   // Built in memory
+  const [searchBuiltInMemory, setSearchBuiltInMemory] = useState("");
+
   const builtInMemory: {
     label: string;
     value: number;
@@ -146,6 +154,10 @@ const HomeFilters = () => {
     { label: "256GB", value: 24 },
     { label: "512GB", value: 8 },
   ];
+
+  const filteredBuiltInMemory = builtInMemory.filter((memory) =>
+    memory.label.toLowerCase().includes(searchBuiltInMemory.toLowerCase())
+  );
 
   // BreadCrumbs
   const breadCrumbs = [
@@ -188,8 +200,13 @@ const HomeFilters = () => {
             {/* Brand */}
             <UiAccordion title="Brand">
               <div className="flex flex-col gap-3">
-                <UiSearch />
-                {brands.map((memory) => (
+                <UiSearch
+                  value={searchBrand}
+                  placeholder="Search brands"
+                  onChange={(e) => setSearchBrand(e.target.value)}
+                  outerclass="!w-full !mb-4"
+                />
+                {filteredBrands.map((memory) => (
                   <div
                     key={memory.value}
                     className="flex items-center gap-2 cursor-pointer"
@@ -214,130 +231,186 @@ const HomeFilters = () => {
             {/* Battery Capacity */}
             <UiAccordion title="Battery capacity">
               <div className="flex flex-col gap-3">
-                <UiSearch />
-                {builtInMemory.map((memory) => (
-                  <div
-                    key={memory.value}
-                    className="flex items-center gap-2 cursor-pointer"
-                  >
-                    <input
-                      type="checkbox"
-                      id={memory.label}
-                      className="w-4 h-4 accent-primary"
-                    />
-                    <label
-                      htmlFor={memory.label}
-                      className="text-[15px] font-medium"
+                <UiSearch
+                  value={searchBuiltInMemory}
+                  placeholder="Search battery capacity"
+                  onChange={(e) => setSearchBuiltInMemory(e.target.value)}
+                  outerclass="!w-full !mb-4"
+                />
+                {filteredBuiltInMemory?.length > 0 &&
+                  filteredBuiltInMemory.map((memory) => (
+                    <div
+                      key={memory.value}
+                      className="flex items-center gap-2 cursor-pointer"
                     >
-                      {memory.label}
-                    </label>
-                    <span className="text-xs text-priGray">{memory.value}</span>
-                  </div>
-                ))}
+                      <input
+                        type="checkbox"
+                        id={memory.label}
+                        className="w-4 h-4 accent-primary"
+                      />
+                      <label
+                        htmlFor={memory.label}
+                        className="text-[15px] font-medium"
+                      >
+                        {memory.label}
+                      </label>
+                      <span className="text-xs text-priGray">
+                        {memory.value}
+                      </span>
+                    </div>
+                  ))}
+
+                {filteredBuiltInMemory?.length === 0 && (
+                  <span>No Results Found</span>
+                )}
               </div>
             </UiAccordion>
 
-            {/* Screen Type */}
+            {/* Screen type */}
             <UiAccordion title="Screen type">
               <div className="flex flex-col gap-3">
-                <UiSearch />
-                {builtInMemory.map((memory) => (
-                  <div
-                    key={memory.value}
-                    className="flex items-center gap-2 cursor-pointer"
-                  >
-                    <input
-                      type="checkbox"
-                      id={memory.label}
-                      className="w-4 h-4 accent-primary"
-                    />
-                    <label
-                      htmlFor={memory.label}
-                      className="text-[15px] font-medium"
+                <UiSearch
+                  value={searchBuiltInMemory}
+                  placeholder="Search screen type"
+                  onChange={(e) => setSearchBuiltInMemory(e.target.value)}
+                  outerclass="!w-full !mb-4"
+                />
+                {filteredBuiltInMemory.length > 0 &&
+                  filteredBuiltInMemory.map((memory) => (
+                    <div
+                      key={memory.value}
+                      className="flex items-center gap-2 cursor-pointer"
                     >
-                      {memory.label}
-                    </label>
-                    <span className="text-xs text-priGray">{memory.value}</span>
-                  </div>
-                ))}
+                      <input
+                        type="checkbox"
+                        id={memory.label}
+                        className="w-4 h-4 accent-primary"
+                      />
+                      <label
+                        htmlFor={memory.label}
+                        className="text-[15px] font-medium"
+                      >
+                        {memory.label}
+                      </label>
+                      <span className="text-xs text-priGray">
+                        {memory.value}
+                      </span>
+                    </div>
+                  ))}
+                {filteredBuiltInMemory.length === 0 && (
+                  <span>No Results Found</span>
+                )}
               </div>
             </UiAccordion>
 
-            {/* Screen Diagonal */}
+            {/* Screen diagonal */}
             <UiAccordion title="Screen diagonal">
               <div className="flex flex-col gap-3">
-                <UiSearch />
-                {builtInMemory.map((memory) => (
-                  <div
-                    key={memory.value}
-                    className="flex items-center gap-2 cursor-pointer"
-                  >
-                    <input
-                      type="checkbox"
-                      id={memory.label}
-                      className="w-4 h-4 accent-primary"
-                    />
-                    <label
-                      htmlFor={memory.label}
-                      className="text-[15px] font-medium"
+                <UiSearch
+                  value={searchBuiltInMemory}
+                  placeholder="Search screen diagonal"
+                  onChange={(e) => setSearchBuiltInMemory(e.target.value)}
+                  outerclass="!w-full !mb-4"
+                />
+                {filteredBuiltInMemory.length > 0 &&
+                  filteredBuiltInMemory.map((memory) => (
+                    <div
+                      key={memory.value}
+                      className="flex items-center gap-2 cursor-pointer"
                     >
-                      {memory.label}
-                    </label>
-                    <span className="text-xs text-priGray">{memory.value}</span>
-                  </div>
-                ))}
+                      <input
+                        type="checkbox"
+                        id={memory.label}
+                        className="w-4 h-4 accent-primary"
+                      />
+                      <label
+                        htmlFor={memory.label}
+                        className="text-[15px] font-medium"
+                      >
+                        {memory.label}
+                      </label>
+                      <span className="text-xs text-priGray">
+                        {memory.value}
+                      </span>
+                    </div>
+                  ))}
+                {filteredBuiltInMemory.length === 0 && (
+                  <span>No Results Found</span>
+                )}
               </div>
             </UiAccordion>
 
             {/* Protection Class */}
             <UiAccordion title="Protection class">
               <div className="flex flex-col gap-3">
-                <UiSearch />
-                {builtInMemory.map((memory) => (
-                  <div
-                    key={memory.value}
-                    className="flex items-center gap-2 cursor-pointer"
-                  >
-                    <input
-                      type="checkbox"
-                      id={memory.label}
-                      className="w-4 h-4 accent-primary"
-                    />
-                    <label
-                      htmlFor={memory.label}
-                      className="text-[15px] font-medium"
+                <UiSearch
+                  value={searchBuiltInMemory}
+                  placeholder="Search protection class"
+                  onChange={(e) => setSearchBuiltInMemory(e.target.value)}
+                  outerclass="!w-full !mb-4"
+                />
+                {filteredBuiltInMemory.length > 0 &&
+                  filteredBuiltInMemory.map((memory) => (
+                    <div
+                      key={memory.value}
+                      className="flex items-center gap-2 cursor-pointer"
                     >
-                      {memory.label}
-                    </label>
-                    <span className="text-xs text-priGray">{memory.value}</span>
-                  </div>
-                ))}
+                      <input
+                        type="checkbox"
+                        id={memory.label}
+                        className="w-4 h-4 accent-primary"
+                      />
+                      <label
+                        htmlFor={memory.label}
+                        className="text-[15px] font-medium"
+                      >
+                        {memory.label}
+                      </label>
+                      <span className="text-xs text-priGray">
+                        {memory.value}
+                      </span>
+                    </div>
+                  ))}
+                {filteredBuiltInMemory.length === 0 && (
+                  <span>No Results Found</span>
+                )}
               </div>
             </UiAccordion>
 
             {/* Built-in memory */}
             <UiAccordion title="Built-in memory">
               <div className="flex flex-col gap-3">
-                <UiSearch />
-                {builtInMemory.map((memory) => (
-                  <div
-                    key={memory.value}
-                    className="flex items-center gap-2 cursor-pointer"
-                  >
-                    <input
-                      type="checkbox"
-                      id={memory.label}
-                      className="w-4 h-4 accent-primary"
-                    />
-                    <label
-                      htmlFor={memory.label}
-                      className="text-[15px] font-medium"
+                <UiSearch
+                  value={searchBuiltInMemory}
+                  placeholder="Search built in memory"
+                  onChange={(e) => setSearchBuiltInMemory(e.target.value)}
+                  outerclass="!w-full !mb-4"
+                />
+                {filteredBuiltInMemory.length > 0 &&
+                  filteredBuiltInMemory.map((memory) => (
+                    <div
+                      key={memory.value}
+                      className="flex items-center gap-2 cursor-pointer"
                     >
-                      {memory.label}
-                    </label>
-                    <span className="text-xs text-priGray">{memory.value}</span>
-                  </div>
-                ))}
+                      <input
+                        type="checkbox"
+                        id={memory.label}
+                        className="w-4 h-4 accent-primary"
+                      />
+                      <label
+                        htmlFor={memory.label}
+                        className="text-[15px] font-medium"
+                      >
+                        {memory.label}
+                      </label>
+                      <span className="text-xs text-priGray">
+                        {memory.value}
+                      </span>
+                    </div>
+                  ))}
+                {filteredBuiltInMemory.length === 0 && (
+                  <span>No Results Found</span>
+                )}
               </div>
             </UiAccordion>
           </div>
@@ -395,24 +468,29 @@ const HomeFilters = () => {
         {/* Brands */}
         <UiAccordion title="Brand">
           <div className="flex flex-col gap-3">
-            <UiSearch />
-            {brands.map((brand) => (
+            <UiSearch
+              value={searchBrand}
+              placeholder="Search brands"
+              onChange={(e) => setSearchBrand(e.target.value)}
+              outerclass="!w-full !mb-4"
+            />
+            {filteredBrands.map((memory) => (
               <div
-                key={brand.value}
+                key={memory.value}
                 className="flex items-center gap-2 cursor-pointer"
               >
                 <input
                   type="checkbox"
-                  id={brand.label}
+                  id={memory.label}
                   className="w-4 h-4 accent-primary"
                 />
                 <label
-                  htmlFor={brand.label}
+                  htmlFor={memory.label}
                   className="text-[15px] font-medium"
                 >
-                  {brand.label}
+                  {memory.label}
                 </label>
-                <span className="text-xs text-priGray">{brand.value}</span>
+                <span className="text-xs text-priGray">{memory.value}</span>
               </div>
             ))}
           </div>
@@ -447,104 +525,141 @@ const HomeFilters = () => {
         {/* Protection Class */}
         <UiAccordion title="Protection class">
           <div className="flex flex-col gap-3">
-            <UiSearch />
-            {builtInMemory.map((memory) => (
-              <div
-                key={memory.value}
-                className="flex items-center gap-2 cursor-pointer"
-              >
-                <input
-                  type="checkbox"
-                  id={memory.label}
-                  className="w-4 h-4 accent-primary"
-                />
-                <label
-                  htmlFor={memory.label}
-                  className="text-[15px] font-medium"
+            <UiSearch
+              value={searchBuiltInMemory}
+              placeholder="Search protection class"
+              onChange={(e) => setSearchBuiltInMemory(e.target.value)}
+              outerclass="!w-full !mb-4"
+            />
+            {filteredBuiltInMemory.length > 0 &&
+              filteredBuiltInMemory.map((memory) => (
+                <div
+                  key={memory.value}
+                  className="flex items-center gap-2 cursor-pointer"
                 >
-                  {memory.label}
-                </label>
-                <span className="text-xs text-priGray">{memory.value}</span>
-              </div>
-            ))}
+                  <input
+                    type="checkbox"
+                    id={memory.label}
+                    className="w-4 h-4 accent-primary"
+                  />
+                  <label
+                    htmlFor={memory.label}
+                    className="text-[15px] font-medium"
+                  >
+                    {memory.label}
+                  </label>
+                  <span className="text-xs text-priGray">{memory.value}</span>
+                </div>
+              ))}
+            {filteredBuiltInMemory.length === 0 && (
+              <span>No Results Found</span>
+            )}
           </div>
         </UiAccordion>
 
-        {/* Screen Diagonal */}
+        {/* Screen diagonal */}
         <UiAccordion title="Screen diagonal">
           <div className="flex flex-col gap-3">
-            <UiSearch />
-            {builtInMemory.map((memory) => (
-              <div
-                key={memory.value}
-                className="flex items-center gap-2 cursor-pointer"
-              >
-                <input
-                  type="checkbox"
-                  id={memory.label}
-                  className="w-4 h-4 accent-primary"
-                />
-                <label
-                  htmlFor={memory.label}
-                  className="text-[15px] font-medium"
+            <UiSearch
+              value={searchBuiltInMemory}
+              placeholder="Search screen diagonal"
+              onChange={(e) => setSearchBuiltInMemory(e.target.value)}
+              outerclass="!w-full !mb-4"
+            />
+            {filteredBuiltInMemory.length > 0 &&
+              filteredBuiltInMemory.map((memory) => (
+                <div
+                  key={memory.value}
+                  className="flex items-center gap-2 cursor-pointer"
                 >
-                  {memory.label}
-                </label>
-                <span className="text-xs text-priGray">{memory.value}</span>
-              </div>
-            ))}
+                  <input
+                    type="checkbox"
+                    id={memory.label}
+                    className="w-4 h-4 accent-primary"
+                  />
+                  <label
+                    htmlFor={memory.label}
+                    className="text-[15px] font-medium"
+                  >
+                    {memory.label}
+                  </label>
+                  <span className="text-xs text-priGray">{memory.value}</span>
+                </div>
+              ))}
+            {filteredBuiltInMemory.length === 0 && (
+              <span>No Results Found</span>
+            )}
           </div>
         </UiAccordion>
 
-        {/* Screem Type */}
+        {/* Screen type */}
         <UiAccordion title="Screen type">
           <div className="flex flex-col gap-3">
-            <UiSearch />
-            {builtInMemory.map((memory) => (
-              <div
-                key={memory.value}
-                className="flex items-center gap-2 cursor-pointer"
-              >
-                <input
-                  type="checkbox"
-                  id={memory.label}
-                  className="w-4 h-4 accent-primary"
-                />
-                <label
-                  htmlFor={memory.label}
-                  className="text-[15px] font-medium"
+            <UiSearch
+              value={searchBuiltInMemory}
+              placeholder="Search screen type"
+              onChange={(e) => setSearchBuiltInMemory(e.target.value)}
+              outerclass="!w-full !mb-4"
+            />
+            {filteredBuiltInMemory.length > 0 &&
+              filteredBuiltInMemory.map((memory) => (
+                <div
+                  key={memory.value}
+                  className="flex items-center gap-2 cursor-pointer"
                 >
-                  {memory.label}
-                </label>
-                <span className="text-xs text-priGray">{memory.value}</span>
-              </div>
-            ))}
+                  <input
+                    type="checkbox"
+                    id={memory.label}
+                    className="w-4 h-4 accent-primary"
+                  />
+                  <label
+                    htmlFor={memory.label}
+                    className="text-[15px] font-medium"
+                  >
+                    {memory.label}
+                  </label>
+                  <span className="text-xs text-priGray">{memory.value}</span>
+                </div>
+              ))}
+            {filteredBuiltInMemory.length === 0 && (
+              <span>No Results Found</span>
+            )}
           </div>
         </UiAccordion>
 
         {/* Battery Capacity */}
         <UiAccordion title="Battery capacity">
           <div className="flex flex-col gap-3">
-            <UiSearch />
-            {builtInMemory.map((memory) => (
-              <div
-                key={memory.value}
-                className="flex items-center gap-2 cursor-pointer"
-              >
-                <input
-                  type="checkbox"
-                  id={memory.label}
-                  className="w-4 h-4 accent-primary"
-                />
-                <label
-                  htmlFor={memory.label}
-                  className="text-[15px] font-medium"
+            <UiSearch
+              value={searchBuiltInMemory}
+              placeholder="Search battery capacity"
+              onChange={(e) => setSearchBuiltInMemory(e.target.value)}
+              outerclass="!w-full !mb-4"
+            />
+            {filteredBuiltInMemory?.length > 0 &&
+              filteredBuiltInMemory.map((memory) => (
+                <div
+                  key={memory.value}
+                  className="flex items-center gap-2 cursor-pointer"
                 >
-                  {memory.label}
-                </label>
-                <span className="text-xs text-priGray">{memory.value}</span>
-              </div>
-            ))}
+                  <input
+                    type="checkbox"
+                    id={memory.label}
+                    className="w-4 h-4 accent-primary"
+                  />
+                  <label
+                    htmlFor={memory.label}
+                    className="text-[15px] font-medium"
+                  >
+                    {memory.label}
+                  </label>
+                  <span className="text-xs text-priGray">{memory.value}</span>
+                </div>
+              ))}
+
+            {filteredBuiltInMemory?.length === 0 && (
+              <span>No Results Found</span>
+            )}
           </div>
         </UiAccordion>
 
