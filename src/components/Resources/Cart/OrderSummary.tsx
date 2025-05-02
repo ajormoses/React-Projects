@@ -12,8 +12,14 @@ const OrderSummary = () => {
 
   const schema = yup
     .object({
-      promo_code: yup.number().required(),
-      card_number: yup.number().required(),
+      promo_code: yup
+        .number()
+        .typeError("Promo code must be a number")
+        .required("Please enter your promo code"),
+      card_number: yup
+        .number()
+        .typeError("Card number must be numeric")
+        .required("Please enter your card number"),
     })
     .required();
   type FormData = yup.InferType<typeof schema>;
