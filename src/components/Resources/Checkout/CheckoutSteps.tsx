@@ -231,7 +231,7 @@ const checkoutSteps = () => {
   return (
     <>
       <div className="pt-16">
-        <div className="section container !max-w-[1120px]">
+        <div className="section container !max-w-[1120px] 2xl:h-[70vh] 2xl:my-auto">
           {/* Steps */}
           <div className="grid grid-cols-2 gap-4 lg:flex lg:justify-between lg:items-center">
             <div className="flex gap-2.5 items-center">
