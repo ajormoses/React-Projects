@@ -128,12 +128,14 @@ const Navbar = () => {
             {navLinks.map((link, index) => (
               <li
                 key={index}
-                className={`text-white text-lg py-2.5 cursor-pointer hover:bg-gray-800 transition-transform duration-500 ease-out transform ${
+                className={`text-white text-lg py-2.5 cursor-pointer hover:bg-gray-800 transition-all duration-500 ease-out transform ${
                   showMenu
                     ? "translate-x-0 opacity-100"
                     : "-translate-x-full opacity-0"
                 }`}
-                style={{ transitionDelay: `${index * 100 + 300}ms` }}
+                style={{
+                  transitionDelay: `${index * 100 + 300}ms`, // adjust delay so last item still gets in
+                }}
               >
                 {link.name}
               </li>
