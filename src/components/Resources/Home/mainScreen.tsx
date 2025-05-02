@@ -15,15 +15,25 @@ const mainScreen = () => {
         <div className="h-[769px] md:h-[720px] lg:h-[632px] xl:h-[720px] relative lg:flex lg:flex-row-reverse items-center justify-center lg:justify-start container">
           {/* Mobile image with bounce */}
           <motion.img
-            className="absolute lg:hidden bottom-0 left-1/2 w-[321px] h-[289px]"
+            className="absolute lg:hidden -bottom-6 left-1/2 w-[321px] h-[289px]"
             src={homeIphone}
             alt="Home Iphone"
             style={{ translateX: "-50%" }} // Preserve horizontal centering
+            animate={{
+              y: [0, -20, 0],
+            }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              repeatType: "loop",
+              ease: "easeInOut",
+              delay: 0.2,
+            }}
           />
 
           {/* Desktop image with bounce */}
           <motion.img
-            className="lg:flex hidden max-w-[343px] max-h-[632px] xl:max-w-[406px] xl:max-h-[600px] absolute bottom-0 transform"
+            className="lg:flex hidden max-w-[343px] max-h-[632px] xl:max-w-[406px] xl:max-h-[600px] absolute -bottom-6 transform"
             src={homeIphone2}
             alt="Home Iphone"
             animate={{
