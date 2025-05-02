@@ -19,15 +19,6 @@ const mainScreen = () => {
             src={homeIphone}
             alt="Home Iphone"
             style={{ translateX: "-50%" }} // Preserve horizontal centering
-            animate={{
-              y: [0, -20, 0], // Bounce vertically
-            }}
-            transition={{
-              duration: 1.5,
-              repeat: Infinity,
-              repeatType: "loop",
-              ease: "easeInOut",
-            }}
           />
 
           {/* Desktop image with bounce */}
