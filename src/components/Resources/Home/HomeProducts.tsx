@@ -169,7 +169,7 @@ const HomeProducts = () => {
               >
                 <div className="grid grid-cols-2 place-items-center">
                   <motion.img
-                    className="w-[90%] h-[470px] object-cover absolute -right-[300px] -translate-y-1/2"
+                    className="w-[90%] h-[470px] object-cover absolute -right-[300px]"
                     src={product.image}
                     alt="image"
                     onHoverStart={() =>
