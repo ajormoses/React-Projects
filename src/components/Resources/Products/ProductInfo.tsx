@@ -83,10 +83,7 @@ const Product: React.FC<ProductProps> = ({
           </div>
         )}
         <img
-          className={clsx(
-            `h-[160px] w-[160px] animate-slow-bounce`,
-            customImage
-          )}
+          className={clsx(`animate-slow-bounce`, customImage)}
           src={image}
           alt="image"
         />
@@ -96,7 +93,7 @@ const Product: React.FC<ProductProps> = ({
             customTitle
           )}
         >
-          {finalTitle}
+          {finalTitle} {""}
           {subTitle && (
             <span className={clsx("font-medium", customSubTitle)}>
               {subTitle}

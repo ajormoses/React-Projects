@@ -23,13 +23,13 @@ const ProductDisplay: React.FC<Props> = ({ customClass }) => {
         className="w-[263px] h-[329.24px] md:h-[516px] md:w-[413.12px] mx-auto md:mx-0 object-cover"
       />
 
-      <div className="grid grid-cols-4 gap-2.5 md:flex md:flex-col md:gap-1">
+      <div className="grid grid-cols-4 gap-2.5 md:flex md:flex-col md:gap-2">
         {thumbnails.map((item, index) => (
           <img
             key={index}
             src={item}
             alt="Iphone"
-            className={`w-[74.26px] h-[66.34px] md:w-[74.88px] md:h-[93px] cursor-pointer transition-all ${
+            className={`w-[74.26px] h-[66.34px] md:w-[82px] md:h-[93px] cursor-pointer transition-all ${
               image === item ? "border-2 border-blue-500 rounded-md" : ""
             }`}
             onClick={() => setImage(item)}
