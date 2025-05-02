@@ -231,7 +231,7 @@ const checkoutSteps = () => {
   return (
     <>
       <div className="pt-16">
-        <div className="section container !max-w-[1120px] 2xl:h-[70vh]">
+        <div className="section container  !max-w-[1120px] 2xl:h-[70vh]">
           {/* Steps */}
           <div className="grid grid-cols-2 gap-4 lg:flex lg:justify-between lg:items-center">
             <div className="flex gap-2.5 items-center">
@@ -461,12 +461,12 @@ const checkoutSteps = () => {
 
               {/* Step 3 */}
               {checkoutStepThree && (
-                <div className="lg:grid lg:grid-cols-2 lg:gap-12">
+                <div className="lg:grid lg:grid-cols-2 lg:gap-12 px-1">
                   <div className="hidden lg:block">
                     <CheckoutSummary />
                   </div>
-                  <div className="flex flex-col ">
-                    <p className="font-semibold text-xl leading-6 text-[#17183B] pb-3 hidden lg:block">
+                  <div className="flex flex-col">
+                    <p className="font-semibold text-xl leading-6 text-[#17183B] pb-3  hidden lg:block">
                       {checkoutStepOne
                         ? "Select Address"
                         : checkoutStepTwo
