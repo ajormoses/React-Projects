@@ -499,26 +499,35 @@ const HomeFilters = () => {
         {/* Built-in memory */}
         <UiAccordion title="Built-in memory">
           <div className="flex flex-col gap-3">
-            <UiSearch />
-            {builtInMemory.map((memory) => (
-              <div
-                key={memory.value}
-                className="flex items-center gap-2 cursor-pointer"
-              >
-                <input
-                  type="checkbox"
-                  id={memory.label}
-                  className="w-4 h-4 accent-primary"
-                />
-                <label
-                  htmlFor={memory.label}
-                  className="text-[15px] font-medium"
+            <UiSearch
+              value={searchBuiltInMemory}
+              placeholder="Search protection class"
+              onChange={(e) => setSearchBuiltInMemory(e.target.value)}
+              outerclass="!w-full !mb-4"
+            />
+            {filteredBuiltInMemory.length > 0 &&
+              filteredBuiltInMemory.map((memory) => (
+                <div
+                  key={memory.value}
+                  className="flex items-center gap-2 cursor-pointer"
                 >
-                  {memory.label}
-                </label>
-                <span className="text-xs text-priGray">{memory.value}</span>
-              </div>
-            ))}
+                  <input
+                    type="checkbox"
+                    id={memory.label}
+                    className="w-4 h-4 accent-primary"
+                  />
+                  <label
+                    htmlFor={memory.label}
+                    className="text-[15px] font-medium"
+                  >
+                    {memory.label}
+                  </label>
+                  <span className="text-xs text-priGray">{memory.value}</span>
+                </div>
+              ))}
+            {filteredBuiltInMemory.length === 0 && (
+              <span>No Results Found</span>
+            )}
           </div>
         </UiAccordion>
 
