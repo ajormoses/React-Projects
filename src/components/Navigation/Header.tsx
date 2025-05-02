@@ -12,16 +12,6 @@ const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [showSearch, setShowSearch] = useState<string>("");
 
-  // useEffect(() => {
-  //   if (showSearch && showSearch.trim().length > 0) {
-  //     const timer = setTimeout(() => {
-  //       navigate(`/filters?search=${showSearch}`);
-  //     }, 1500);
-
-  //     return () => clearTimeout(timer); // Clear previous timer if input changes
-  //   }
-  // }, [showSearch, navigate]);
-
   const navLinks: {
     name: string;
     links?: string;
@@ -31,6 +21,15 @@ const Navbar = () => {
     { name: "Contact Us" },
     { name: "Blog" },
   ];
+
+  function handleKeyDown(e: any) {
+    if (e.key === "Enter" && showSearch?.trim()) {
+      setTimeout(() => {
+        navigate(`/filters?search=${showSearch.trim()}`);
+      }, 1500);
+      setShowMenu(false);
+    }
+  }
 
   return (
     <>
@@ -50,9 +49,7 @@ const Navbar = () => {
               outerclass="!w-[372px] hidden lg:block"
               onChange={(e) => setShowSearch(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === "Enter" && showSearch?.trim()) {
-                  navigate(`/filters?search=${showSearch.trim()}`);
-                }
+                handleKeyDown(e);
               }}
             />
           </div>
@@ -107,16 +104,42 @@ const Navbar = () => {
           showMenu ? "translate-y-0" : "-translate-y-full"
         }`}
       >
-        <ul className="flex flex-col gap-4  pt-10 container">
-          {navLinks.map((link, index) => (
-            <li
-              key={index}
-              className="text-white text-lg py-2.5 cursor-pointer hover:bg-gray-800 transition"
-            >
-              {link.name}
-            </li>
-          ))}
-        </ul>
+        <div className="pt-10 container">
+          {/* Search Bar Animation */}
+          <div
+            className={`transform transition-all duration-500 ${
+              showMenu
+                ? "translate-x-0 opacity-100"
+                : "-translate-x-full opacity-0"
+            }`}
+          >
+            <UiSearch
+              value={showSearch}
+              placeholder="Search for products"
+              outerclass="!w-[372px] !mb-5"
+              onChange={(e) => setShowSearch(e.target.value)}
+              onKeyDown={(e) => {
+                handleKeyDown(e);
+              }}
+            />
+          </div>
+
+          <ul className="flex flex-col gap-4">
+            {navLinks.map((link, index) => (
+              <li
+                key={index}
+                className={`text-white text-lg py-2.5 cursor-pointer hover:bg-gray-800 transition-transform duration-500 ease-out transform ${
+                  showMenu
+                    ? "translate-x-0 opacity-100"
+                    : "-translate-x-full opacity-0"
+                }`}
+                style={{ transitionDelay: `${index * 100 + 300}ms` }}
+              >
+                {link.name}
+              </li>
+            ))}
+          </ul>
+        </div>
       </nav>
     </>
   );
