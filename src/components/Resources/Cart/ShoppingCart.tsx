@@ -28,8 +28,8 @@ const ShoppingCart = () => {
   return (
     <>
       <div className="pt-14 md:pt-28">
-        <div className="section container !max-w-[1120px] 2xl:h-[70vh]">
-          <div className="grid grid-cols-1 md:grid-cols-2 md:gap-20">
+        <div className="section container !max-w-[1120px] 2xl:h-[90vh]">
+          <div className="grid grid-cols-1 lg:grid-cols-2 md:gap-20">
             {/* Item Cart */}
             <ItemCart carts={carts} />
 
