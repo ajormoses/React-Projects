@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply bg-red-500 text-white text-base transition-all duration-100 ease-linear m-0 p-0;
+  @apply bg-gray-900 text-white transition-all duration-100 ease-linear m-0 p-0;
 }
 
 @layer components {
