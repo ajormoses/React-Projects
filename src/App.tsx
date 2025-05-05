@@ -1,5 +1,11 @@
 // import { PrimeReactProvider } from "primereact/api";
-import { Routes, Route, useLocation, Navigate } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  useLocation,
+  Navigate,
+  BrowserRouter,
+} from "react-router-dom";
 import { useEffect } from "react";
 import Home from "./pages/Home";
 import "./assets/tailwind.css";
@@ -18,7 +24,7 @@ function App() {
 
   return (
     // <PrimeReactProvider value={{ unstyled: true }}>
-    <>
+    <BrowserRouter>
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -26,7 +32,7 @@ function App() {
         {/* Catch-all route */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-    </>
+    </BrowserRouter>
     // </PrimeReactProvider>
   );
 }
