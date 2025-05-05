@@ -6,6 +6,7 @@ import { useEffect } from "react";
 // import ShoppingCarts from "./pages/ShoppingCarts";
 // import Checkout from "./pages/Checkout";
 // import Filters from "./pages/Filters";
+import Home from "./pages/Home";
 import "./assets/tailwind.css";
 import "@mdi/font/css/materialdesignicons.css";
 
@@ -25,11 +26,7 @@ function App() {
     <>
       <ScrollToTop />
       <Routes>
-        {/* <Route path="/" element={<Home />} />
-          <Route path="/product" element={<Product />} />
-          <Route path="/shopping-carts" element={<ShoppingCarts />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/filters" element={<Filters />} /> */}
+        <Route path="/" element={<Home />} />
 
         {/* Catch-all route */}
         <Route path="*" element={<Navigate to="/" replace />} />
