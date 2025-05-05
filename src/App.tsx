@@ -1,11 +1,6 @@
 // import { PrimeReactProvider } from "primereact/api";
-import { Routes, Route, useLocation, Navigate } from "react-router";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { useEffect } from "react";
-// import Home from "./pages/Home";
-// import Product from "./pages/Product";
-// import ShoppingCarts from "./pages/ShoppingCarts";
-// import Checkout from "./pages/Checkout";
-// import Filters from "./pages/Filters";
 import Home from "./pages/Home";
 import "./assets/tailwind.css";
 import "@mdi/font/css/materialdesignicons.css";
