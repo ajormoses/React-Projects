@@ -1,7 +1,7 @@
 const NavigationHeader = () => {
   return (
     <>
-      <div className="bg-[121829] h-[80px]">jdjjd</div>
+      <div className="">jdjjd</div>
     </>
   );
 };
