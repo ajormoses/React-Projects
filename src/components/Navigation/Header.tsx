@@ -1,7 +1,7 @@
 const NavigationHeader = () => {
   return (
     <>
-      <div className="">jdjjd</div>
+      <div className=""></div>
     </>
   );
 };
