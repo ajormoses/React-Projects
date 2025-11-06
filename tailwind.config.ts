@@ -9,17 +9,8 @@ export default {
     },
     extend: {
       colors: {
-        border: "#B5B5B5",
-        gray: "#909090",
-        priGray: "#6C6C6C",
-        secGray: "#FAFAFA",
-        lightGray: "#EDEDED",
-        secLightGray: "#F9F9F9",
-        primary: "#211C24",
-        darkPri: "#181313",
-        rating: "#FFB547",
-        darkBlue: "#17183B",
-        darkGray: "#353535",
+        lightGray: "#FAFAFA",
+        primary: "#633CFF",
       },
       keyframes: {
         slideFadeIn: {
