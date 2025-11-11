@@ -1,4 +1,20 @@
+import { useForm } from "react-hook-form";
+import InputField from "../Ui/InputField";
+import { string, object } from "yup";
+import Btn from "../Ui/Btn";
+
 const SignIn = () => {
+  const { register, handleSubmit } = useForm();
+
+  // Validation to add new address
+  const schema = object({
+    email: string().email("Invalid email").required("Email is required"),
+    password: string().min(6, "Password must be at least 6 characters"),
+  });
+
+  const handleFormData = (data: any) => {
+    console.log(data);
+  };
   return (
     <>
       <div className="h-screen flex justify-center items-center ">
@@ -11,12 +27,26 @@ const SignIn = () => {
             />
             <h1 className="font-bold text-4xl">devlinks</h1>
           </div>
-          <div className="bg-white w-full max-w-[476px] px-8 py-10 flex flex-col gap-5 rounded-lg">
+          <form
+            className="bg-white w-full max-w-[500px] p-10 flex flex-col gap-5 rounded-lg shadow-sm"
+            onSubmit={handleSubmit(handleFormData)}
+          >
             <h1 className="font-bold text-[32px]">Login</h1>
             <p className="text-grey">
               Add your details below to get back into the app
             </p>
-          </div>
+
+            <InputField
+              type="text"
+              label="Email Address"
+              placeholder="Cardholder Name"
+              register={register("email", {
+                required: true,
+              })}
+            />
+
+            <Btn type="submit" label="Login" />
+          </form>
         </div>
       </div>
     </>
