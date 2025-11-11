@@ -1,10 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  @apply bg-lightGray transition-all duration-100 ease-linear m-0 p-0;
-  font-family: "Inter", sans-serif;
+  @apply bg-lightGray transition-all duration-100 ease-linear m-0 p-0 text-darkGray text-base font-instrumentSans;
 }
 
 @layer components {

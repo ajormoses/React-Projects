@@ -3,14 +3,14 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     fontFamily: {
-      sans: ["Inter"],
-      serif: ["Inter"],
-      body: ["Inter"],
+      instrumentSans: ["Instrument Sans", "sans-serif"],
     },
     extend: {
       colors: {
         lightGray: "#FAFAFA",
         primary: "#633CFF",
+        darkGray: "#333333",
+        grey: "#737373",
       },
       keyframes: {
         slideFadeIn: {
