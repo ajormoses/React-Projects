@@ -5,7 +5,7 @@ import {
   Route,
   useLocation,
   Navigate,
-} from "react-router";
+} from "react-router-dom";
 import { useEffect } from "react";
 import "./assets/tailwind.css";
 import "@mdi/font/css/materialdesignicons.css";
