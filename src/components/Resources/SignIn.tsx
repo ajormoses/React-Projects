@@ -5,6 +5,7 @@ import InputField from "../Ui/InputField";
 import Btn from "../Ui/Btn";
 import { AiTwotoneMail } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 const SignIn = () => {
   const schema = Yup.object({
@@ -21,12 +22,22 @@ const SignIn = () => {
     resolver: yupResolver(schema),
   });
 
-  // ✅ Watch form fields
+  // ✅ Local state to track typing and button status
+  const [isDisabled, setIsDisabled] = useState(false);
+
   const email = watch("email");
   const password = watch("password");
 
-  // ✅ Disable button if email or password is empty
-  const isDisabled = !email || !password;
+  // ✅ useEffect triggers only when user types
+  useEffect(() => {
+    if (email || password) {
+      // if any field has a value, recheck
+      setIsDisabled(!email || !password);
+    } else {
+      // all empty initially
+      setIsDisabled(false);
+    }
+  }, [email, password]);
 
   const handleFormData = (data: any) => {
     console.log(data);
