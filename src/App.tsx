@@ -1,8 +1,15 @@
 import { PrimeReactProvider } from "primereact/api";
-import { Routes, Route, useLocation, Navigate } from "react-router";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useLocation,
+  Navigate,
+} from "react-router";
 import { useEffect } from "react";
 import "./assets/tailwind.css";
 import "@mdi/font/css/materialdesignicons.css";
+import Home from "./pages/Home";
 
 function App() {
   const ScrollToTop = () => {
@@ -17,11 +24,11 @@ function App() {
 
   return (
     <PrimeReactProvider value={{ unstyled: true }}>
-      <>
+      <BrowserRouter>
         <ScrollToTop />
         <Routes>
-          {/* <Route path="/" element={<Home />} />
-          <Route path="/product" element={<Product />} />
+          <Route path="/" element={<Home />} />
+          {/* <Route path="/product" element={<Product />} />
           <Route path="/shopping-carts" element={<ShoppingCarts />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/filters" element={<Filters />} /> */}
@@ -29,7 +36,7 @@ function App() {
           {/* Catch-all route */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-      </>
+      </BrowserRouter>
     </PrimeReactProvider>
   );
 }
