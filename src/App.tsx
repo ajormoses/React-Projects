@@ -9,7 +9,8 @@ import {
 import { useEffect } from "react";
 import "./assets/tailwind.css";
 import "@mdi/font/css/materialdesignicons.css";
-import Home from "./pages/Home";
+import AuthSignIn from "./pages/auth/SignIn";
+import AuthCreateAccount from "./pages/auth/CreateAccount";
 
 function App() {
   const ScrollToTop = () => {
@@ -27,14 +28,15 @@ function App() {
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/auth/signin" element={<AuthSignIn />} />
+          <Route path="/auth/create-account" element={<AuthCreateAccount />} />
           {/* <Route path="/product" element={<Product />} />
           <Route path="/shopping-carts" element={<ShoppingCarts />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/filters" element={<Filters />} /> */}
 
           {/* Catch-all route */}
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<Navigate to="/auth/signin" replace />} />
         </Routes>
       </BrowserRouter>
     </PrimeReactProvider>

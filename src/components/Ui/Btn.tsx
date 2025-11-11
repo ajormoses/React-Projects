@@ -23,7 +23,7 @@ const Btn: React.FC<BtnProps> = ({
       <button
         onClick={onClick}
         className={clsx(
-          `!border flex items-center justify-center border-white py-4 px-14 bg-primary text-white font-medium text-base rounded-lg ease-in-out duration-300 hover:scale-95 hover:opacity-90 `,
+          `!border flex items-center justify-center border-white py-3 px-7 bg-primary text-white font-medium text-base rounded-lg ease-in-out duration-300 hover:scale-95 hover:opacity-90 `,
           (prependIcon || appendIcon) && "gap-4",
           customClass
         )}

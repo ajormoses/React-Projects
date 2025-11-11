@@ -1,6 +1,8 @@
 import { ReactNode } from "react";
 import Btn from "./Btn";
 import clsx from "clsx";
+import { useState } from "react";
+import { GiPadlock, GiPadlockOpen } from "react-icons/gi";
 
 interface InputFieldProps {
   label?: string;
@@ -13,6 +15,7 @@ interface InputFieldProps {
   customBtn?: any;
   error?: any;
   required?: boolean;
+  prependIcon?: ReactNode;
 }
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -26,7 +29,9 @@ const InputField: React.FC<InputFieldProps> = ({
   customBtn,
   error,
   required,
+  prependIcon,
 }) => {
+  const [isPasswordVisible, setIsPasswordVisible] = useState(true);
   return (
     <>
       <div className="form-group">
@@ -34,9 +39,45 @@ const InputField: React.FC<InputFieldProps> = ({
           {label} {required && <span className="required-mark">*</span>}
         </label>
         <div className="relative">
+          {/* Password Icon */}
+          {type === "password" && (
+            <div
+              onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+              className={clsx(
+                "absolute left-4 top-1/2 -translate-y-1/2 inset-y-auto text-grey cursor-pointer",
+                {
+                  "text-red-500": error,
+                }
+              )}
+            >
+              {isPasswordVisible ? <GiPadlock /> : <GiPadlockOpen />}
+            </div>
+          )}
+
+          {/* Prepend Icon */}
+          {prependIcon && (
+            <div
+              className={clsx(
+                "absolute left-4 top-1/2 -translate-y-1/2 inset-y-auto text-grey",
+                { "text-red-500": error }
+              )}
+            >
+              {prependIcon}
+            </div>
+          )}
           <input
-            type={type}
-            className={`inputField ${error && `input-error`}`}
+            type={
+              type === "password"
+                ? isPasswordVisible
+                  ? "password"
+                  : "text"
+                : type
+            }
+            className={clsx(
+              `inputField`,
+              { "input-error": error },
+              { "!pl-10": prependIcon || type === "password" }
+            )}
             placeholder={placeholder}
             {...register}
           />

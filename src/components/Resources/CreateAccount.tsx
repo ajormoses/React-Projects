@@ -6,10 +6,17 @@ import Btn from "../Ui/Btn";
 import { AiTwotoneMail } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 
-const SignIn = () => {
+const CreateAccount = () => {
   const schema = Yup.object({
     email: Yup.string().email("Invalid email").required("Email is required"),
-    password: Yup.string().min(6, "Password must be at least 6 characters"),
+
+    createPassword: Yup.string()
+      .min(6, "Password must be at least 6 characters")
+      .required("Password is required"),
+
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("createPassword")], "Passwords must match")
+      .required("Please confirm your password"),
   });
 
   const {
@@ -43,9 +50,9 @@ const SignIn = () => {
             className="bg-white w-full max-w-[500px] p-10 flex flex-col gap-5 rounded-lg shadow-sm"
             onSubmit={handleSubmit(handleFormData)}
           >
-            <h1 className="font-bold text-[32px]">Login</h1>
+            <h1 className="font-bold text-[32px]">Create Account</h1>
             <p className="text-grey mb-4">
-              Add your details below to get back into the app
+              Let’s get you started sharing your links!
             </p>
 
             <InputField
@@ -62,24 +69,35 @@ const SignIn = () => {
 
             <InputField
               type="password"
-              label="Password"
-              placeholder="Enter your password"
-              register={register("password", {
+              label="Create password"
+              placeholder="At least 8 characters"
+              register={register("createPassword", {
                 required: true,
               })}
               required
-              error={errors?.password?.message}
+              error={errors?.createPassword?.message}
             />
 
-            <Btn type="submit" label="Login" />
+            <InputField
+              type="password"
+              label="Confirm Password"
+              placeholder="At least 8 characters"
+              register={register("confirmPassword", {
+                required: true,
+              })}
+              required
+              error={errors?.confirmPassword?.message}
+            />
+
+            <Btn type="submit" label="Create new account" />
 
             <p className="text-center mt-2.5">
               Don’t have an account?{" "}
               <span
+                onClick={() => navigate("/auth/signin")}
                 className="text-primary cursor-pointer"
-                onClick={() => navigate("/auth/create-account")}
               >
-                Create account
+                Login
               </span>
             </p>
           </form>
@@ -89,4 +107,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default CreateAccount;
