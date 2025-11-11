@@ -21,11 +21,20 @@ const CreateAccount = () => {
 
   const {
     register,
+    watch,
     handleSubmit,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
+
+  // ✅ Watch form fields
+  const email = watch("email");
+  const createPassword = watch("createPassword");
+  const confirmPassword = watch("confirmPassword");
+
+  // ✅ Disable button if email or password is empty
+  const isDisabled = !email || !createPassword || !confirmPassword;
 
   const handleFormData = (data: any) => {
     console.log(data);
@@ -89,7 +98,11 @@ const CreateAccount = () => {
               error={errors?.confirmPassword?.message}
             />
 
-            <Btn type="submit" label="Create new account" />
+            <Btn
+              disabled={isDisabled}
+              type="submit"
+              label="Create new account"
+            />
 
             <p className="text-center mt-2.5">
               Don’t have an account?{" "}

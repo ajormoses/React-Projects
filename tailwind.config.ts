@@ -9,8 +9,12 @@ export default {
       colors: {
         lightGray: "#FAFAFA",
         primary: "#633CFF",
+        purpleHover: "#BEADFF",
         darkGray: "#333333",
         grey: "#737373",
+        border: {
+          primary: "#D9D9D9",
+        },
       },
       keyframes: {
         slideFadeIn: {
@@ -26,6 +30,9 @@ export default {
           "50%": { transform: "scale(1.02)" },
           "100%": { transform: "scale(1)" },
         },
+      },
+      boxShadow: {
+        activeSelection: "0px 0px 32px 0px #633CFF40",
       },
       animation: {
         slideFadeIn: "slideFadeIn 0.4s ease-out forwards",

@@ -15,10 +15,18 @@ const SignIn = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
+
+  // ✅ Watch form fields
+  const email = watch("email");
+  const password = watch("password");
+
+  // ✅ Disable button if email or password is empty
+  const isDisabled = !email || !password;
 
   const handleFormData = (data: any) => {
     console.log(data);
@@ -71,7 +79,7 @@ const SignIn = () => {
               error={errors?.password?.message}
             />
 
-            <Btn type="submit" label="Login" />
+            <Btn disabled={isDisabled} type="submit" label="Login" />
 
             <p className="text-center mt-2.5">
               Don’t have an account?{" "}

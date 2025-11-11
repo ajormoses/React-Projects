@@ -8,6 +8,7 @@ interface BtnProps {
   prependIcon?: ReactNode;
   appendIcon?: ReactNode;
   type?: "button" | "submit" | "reset";
+  disabled?: boolean;
 }
 
 const Btn: React.FC<BtnProps> = ({
@@ -17,6 +18,7 @@ const Btn: React.FC<BtnProps> = ({
   prependIcon,
   appendIcon,
   type,
+  disabled,
 }) => {
   return (
     <>
@@ -25,9 +27,12 @@ const Btn: React.FC<BtnProps> = ({
         className={clsx(
           `!border flex items-center justify-center border-white py-3 px-7 bg-primary text-white font-medium text-base rounded-lg ease-in-out duration-300 hover:scale-95 hover:opacity-90 `,
           (prependIcon || appendIcon) && "gap-4",
+          disabled &&
+            "shadow-activeSelection bg-purpleHover cursor-not-allowed border-none",
           customClass
         )}
         type={type || "button"}
+        disabled={disabled}
       >
         {/* Prepend Icon */}
         {prependIcon && prependIcon}
