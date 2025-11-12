@@ -1,4 +1,6 @@
 import { PrimeReactProvider } from "primereact/api";
+import { AuthProvider } from "./contexts/authContext";
+import PrivateRoute from "./components/PrivateRoute";
 import {
   BrowserRouter,
   Routes,
@@ -12,6 +14,7 @@ import "@mdi/font/css/materialdesignicons.css";
 import AuthSignIn from "./pages/auth/SignIn";
 import AuthCreateAccount from "./pages/auth/CreateAccount";
 import Dashboard from "./pages/dashboard";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const ScrollToTop = () => {
@@ -25,23 +28,34 @@ function App() {
   };
 
   return (
-    <PrimeReactProvider value={{ unstyled: true }}>
-      <BrowserRouter>
-        <ScrollToTop />
-        <Routes>
-          <Route path="/auth/signin" element={<AuthSignIn />} />
-          <Route path="/auth/create-account" element={<AuthCreateAccount />} />
-          <Route path="/" element={<Dashboard />} />
-          {/* <Route path="/product" element={<Product />} />
-          <Route path="/shopping-carts" element={<ShoppingCarts />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/filters" element={<Filters />} /> */}
+    <AuthProvider>
+      <PrimeReactProvider value={{ unstyled: true }}>
+        <BrowserRouter>
+          <ScrollToTop />
+          <Toaster position="top-right" reverseOrder={false} />
+          <Routes>
+            <Route path="/auth/signin" element={<AuthSignIn />} />
+            <Route
+              path="/auth/create-account"
+              element={<AuthCreateAccount />}
+            />
 
-          {/* Catch-all route */}
-          <Route path="*" element={<Navigate to="/auth/signin" replace />} />
-        </Routes>
-      </BrowserRouter>
-    </PrimeReactProvider>
+            {/* Protected route */}
+            <Route
+              path="/"
+              element={
+                <PrivateRoute>
+                  <Dashboard />
+                </PrivateRoute>
+              }
+            />
+
+            {/* Catch-all route */}
+            <Route path="*" element={<Navigate to="/auth/signin" replace />} />
+          </Routes>
+        </BrowserRouter>
+      </PrimeReactProvider>
+    </AuthProvider>
   );
 }
 

@@ -1,5 +1,8 @@
-import { signInWithPopup } from "firebase/auth";
-import { auth, googleProvider } from "../../config/firebase";
+import toast from "react-hot-toast";
+import {
+  doSignInWithGoogle,
+  doSignInWithEmailAndPassword,
+} from "../../config/auth";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
@@ -12,6 +15,7 @@ import { useState, useEffect } from "react";
 
 const SignIn = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const schema = Yup.object({
     email: Yup.string().email("Invalid email").required("Email is required"),
@@ -44,8 +48,17 @@ const SignIn = () => {
     }
   }, [email, password]);
 
-  const handleFormData = (data: any) => {
-    console.log(data);
+  const handleFormData = async (values: any) => {
+    try {
+      setLoading(true);
+      await doSignInWithEmailAndPassword(values.email, values.password);
+      toast.success("Successfully signed in!");
+      navigate("/");
+    } catch (error: any) {
+      toast.error(error.message || "Sign-in failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const navigate = useNavigate();
@@ -53,10 +66,11 @@ const SignIn = () => {
   const googleSignin = async () => {
     try {
       setIsLoading(true);
-      await signInWithPopup(auth, googleProvider);
+      await doSignInWithGoogle();
+      toast.success("Successfully signed in!");
       navigate("/");
-    } catch (error) {
-      console.error("Google sign-in error:", error);
+    } catch (error: any) {
+      toast.error(error.message || "Sign-in failed. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -107,7 +121,12 @@ const SignIn = () => {
               error={errors?.password?.message}
             />
 
-            <Btn disabled={isDisabled} type="submit" label="Login" />
+            <Btn
+              isLoading={loading}
+              disabled={isDisabled}
+              type="submit"
+              label="Login"
+            />
             <Btn
               onClick={googleSignin}
               prependIcon={<FcGoogle />}

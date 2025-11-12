@@ -1,5 +1,7 @@
+import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { doCreateUserWithEmailAndPassword } from "../../config/auth";
 import * as Yup from "yup";
 import InputField from "../Ui/InputField";
 import Btn from "../Ui/Btn";
@@ -8,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 const CreateAccount = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const schema = Yup.object({
     email: Yup.string().email("Invalid email").required("Email is required"),
 
@@ -47,8 +50,20 @@ const CreateAccount = () => {
     }
   }, [email, createPassword, confirmPassword]);
 
-  const handleFormData = (data: any) => {
-    console.log(data);
+  const handleFormData = async (values: any) => {
+    try {
+      setIsLoading(true);
+      await doCreateUserWithEmailAndPassword(
+        values.email,
+        values.createPassword
+      );
+      navigate("/auth/signin");
+      toast.success("Account created successfully! Please sign in.");
+    } catch (e: any) {
+      toast.error(e.message || "Account creation failed. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const navigate = useNavigate();
@@ -109,6 +124,7 @@ const CreateAccount = () => {
               error={errors?.confirmPassword?.message}
             />
             <Btn
+              isLoading={isLoading}
               disabled={isDisabled}
               type="submit"
               label="Create new account"
