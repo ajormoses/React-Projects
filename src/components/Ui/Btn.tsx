@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
 import clsx from "clsx";
+import { TbLoader2 } from "react-icons/tb";
 
 interface BtnProps {
   label: string;
@@ -9,6 +10,7 @@ interface BtnProps {
   appendIcon?: ReactNode;
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
+  isLoading?: boolean;
 }
 
 const Btn: React.FC<BtnProps> = ({
@@ -19,6 +21,7 @@ const Btn: React.FC<BtnProps> = ({
   appendIcon,
   type,
   disabled,
+  isLoading,
 }) => {
   return (
     <>
@@ -34,12 +37,18 @@ const Btn: React.FC<BtnProps> = ({
         type={type || "button"}
         disabled={disabled}
       >
-        {/* Prepend Icon */}
-        {prependIcon && prependIcon}
-        {/* label */}
-        {label}
-        {/* Append Icon */}
-        {appendIcon && appendIcon}
+        {!isLoading ? (
+          <>
+            {/* Prepend Icon */}
+            {prependIcon && prependIcon}
+            {/* label */}
+            {label}
+            {/* Append Icon */}
+            {appendIcon && appendIcon}
+          </>
+        ) : (
+          <TbLoader2 className="animate-spin" />
+        )}
       </button>
     </>
   );

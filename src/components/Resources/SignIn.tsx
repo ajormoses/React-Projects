@@ -1,13 +1,18 @@
+import { signInWithPopup } from "firebase/auth";
+import { auth, googleProvider } from "../../config/firebase";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import InputField from "../Ui/InputField";
 import Btn from "../Ui/Btn";
 import { AiTwotoneMail } from "react-icons/ai";
+import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 const SignIn = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const schema = Yup.object({
     email: Yup.string().email("Invalid email").required("Email is required"),
     password: Yup.string().min(6, "Password must be at least 6 characters"),
@@ -44,6 +49,18 @@ const SignIn = () => {
   };
 
   const navigate = useNavigate();
+
+  const googleSignin = async () => {
+    try {
+      setIsLoading(true);
+      await signInWithPopup(auth, googleProvider);
+      navigate("/");
+    } catch (error) {
+      console.error("Google sign-in error:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="container">
@@ -91,6 +108,14 @@ const SignIn = () => {
             />
 
             <Btn disabled={isDisabled} type="submit" label="Login" />
+            <Btn
+              onClick={googleSignin}
+              prependIcon={<FcGoogle />}
+              isLoading={isLoading}
+              customClass="bg-white !text-grey border !border-grey"
+              type="button"
+              label="Sign in with Google"
+            />
 
             <p className="text-center mt-2.5">
               Don’t have an account?{" "}

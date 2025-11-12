@@ -30,6 +30,11 @@ export default {
           "50%": { transform: "scale(1.02)" },
           "100%": { transform: "scale(1)" },
         },
+        spin: {
+          to: {
+            transform: "rotate(360deg)",
+          },
+        },
       },
       boxShadow: {
         activeSelection: "0px 0px 32px 0px #633CFF40",
@@ -38,6 +43,7 @@ export default {
         slideFadeIn: "slideFadeIn 0.4s ease-out forwards",
         "slide-up": "slide-up 0.4s ease-out",
         "slow-bounce": "slowBounce 4s infinite", // Slow bounce animation
+        spin: "spin 1s linear infinite",
       },
       // backgroundImage: {
       //   primary: "linear-gradient(90.7deg, #211C24 0.64%, #211C24 101%)",

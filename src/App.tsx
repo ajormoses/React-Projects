@@ -11,6 +11,7 @@ import "./assets/tailwind.css";
 import "@mdi/font/css/materialdesignicons.css";
 import AuthSignIn from "./pages/auth/SignIn";
 import AuthCreateAccount from "./pages/auth/CreateAccount";
+import Dashboard from "./pages/dashboard";
 
 function App() {
   const ScrollToTop = () => {
@@ -30,6 +31,7 @@ function App() {
         <Routes>
           <Route path="/auth/signin" element={<AuthSignIn />} />
           <Route path="/auth/create-account" element={<AuthCreateAccount />} />
+          <Route path="/" element={<Dashboard />} />
           {/* <Route path="/product" element={<Product />} />
           <Route path="/shopping-carts" element={<ShoppingCarts />} />
           <Route path="/checkout" element={<Checkout />} />
