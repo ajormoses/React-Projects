@@ -10,6 +10,7 @@ export default {
         lightGray: "#FAFAFA",
         primary: "#633CFF",
         purpleHover: "#BEADFF",
+        lightPurple: "#EFEBFF",
         darkGray: "#333333",
         grey: "#737373",
         border: {

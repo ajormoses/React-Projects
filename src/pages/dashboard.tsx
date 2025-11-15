@@ -1,24 +1,51 @@
-import { useAuth } from "../contexts/authContext";
-import { doSignOut } from "../config/auth";
-import toast from "react-hot-toast";
+import { useState } from "react";
+import { FaLink } from "react-icons/fa6";
+import { RxAvatar } from "react-icons/rx";
+import TopBar from "../components/Nav/TopBar";
+import PhoneDemo from "../components/Resources/PhoneDemo";
+import ProfileDetails from "../components/Resources/ProfileDetails";
 
 const dashboard = () => {
-  const { currentUser } = useAuth() || { currentUser: null };
-  const signOutUser = async () => {
-    try {
-      await doSignOut();
-      toast.success("Signed out successfully");
-    } catch (error: any) {
-      toast.error(error.message || "Error signing out");
-    }
-  };
+  const [currentTab, setCurrentTab] = useState("Links");
+  const [tabs, setTabs] = useState([
+    {
+      label: "Links",
+      icon: <FaLink />,
+      isActive: true,
+    },
+    {
+      label: "Profile Details",
+      icon: <RxAvatar />,
+      isActive: false,
+    },
+  ]);
+
+  function switchTab(label: string) {
+    setTabs((prev) =>
+      prev.map((tab) => ({
+        ...tab,
+        isActive: tab.label === label,
+      }))
+    );
+    setCurrentTab(label);
+  }
 
   return (
     <>
-      <p>Hello {currentUser?.displayName || currentUser?.email}</p>
-      <button className="bg-red-200" onClick={signOutUser} type="button">
-        Logout
-      </button>
+      <div className="dashboard-wrapper grid gap-4">
+        <TopBar tabs={tabs} switchTab={switchTab} />
+        <div className="grid grid-col-1 md:grid-cols-2 gap-4">
+          <PhoneDemo>dkdk</PhoneDemo>
+
+          <ProfileDetails>
+            {currentTab === "Links" ? (
+              <div>Hello</div>
+            ) : (
+              <div>Profile Details Content</div>
+            )}
+          </ProfileDetails>
+        </div>
+      </div>
     </>
   );
 };
