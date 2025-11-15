@@ -6,7 +6,7 @@ interface Props {
 const ProfileDetails: React.FC<Props> = ({ children }) => {
   return (
     <>
-      <div className="rounded-xl bg-white">{children}</div>
+      <div className="rounded-xl bg-white p-10 relative">{children}</div>
     </>
   );
 };

@@ -4,6 +4,7 @@ import { RxAvatar } from "react-icons/rx";
 import TopBar from "../components/Nav/TopBar";
 import PhoneDemo from "../components/Resources/PhoneDemo";
 import ProfileDetails from "../components/Resources/ProfileDetails";
+import FooterSheet from "../components/Ui/FooterSheet";
 
 const dashboard = () => {
   const [currentTab, setCurrentTab] = useState("Links");
@@ -43,6 +44,7 @@ const dashboard = () => {
             ) : (
               <div>Profile Details Content</div>
             )}
+            <FooterSheet>dkdkd</FooterSheet>
           </ProfileDetails>
         </div>
       </div>
