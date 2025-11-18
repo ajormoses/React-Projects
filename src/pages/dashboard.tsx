@@ -5,6 +5,8 @@ import TopBar from "../components/Nav/TopBar";
 import PhoneDemo from "../components/Resources/PhoneDemo";
 import ProfileDetails from "../components/Resources/ProfileDetails";
 import FooterSheet from "../components/Ui/FooterSheet";
+import Btn from "../components/Ui/Btn";
+import { IoReorderTwoOutline } from "react-icons/io5";
 
 const dashboard = () => {
   const [currentTab, setCurrentTab] = useState("Links");
@@ -40,7 +42,36 @@ const dashboard = () => {
 
           <ProfileDetails>
             {currentTab === "Links" ? (
-              <div>Hello</div>
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-4">
+                  <h1 className="font-bold text-[32px]">
+                    Customize your links
+                  </h1>
+                  <p>
+                    Add/edit/remove links below and then share all your profiles
+                    with the world!
+                  </p>
+                </div>
+                <Btn
+                  customClass="!bg-white !border-primary !text-primary !font-semibold hover:!bg-purpleHover !gap-2 w-full my-4"
+                  label="+ Add New Link"
+                />
+
+                <div className="rounded-xl bg-lightGray p-5 flex flex-col gap-4">
+                  <div className="flex justify-between items-center">
+                    <div className="flex gap-2.5 items-center">
+                      <IoReorderTwoOutline />
+                      <p className="font-bold">Link #1</p>
+                    </div>
+                    <span>Remove</span>
+                  </div>
+                  {/* <Dropdown
+                    label="Title"
+
+                    placeholder="e.g. My Portfolio"
+                  /> */}
+                </div>
+              </div>
             ) : (
               <div>Profile Details Content</div>
             )}
