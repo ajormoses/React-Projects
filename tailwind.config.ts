@@ -13,6 +13,13 @@ export default {
         lightPurple: "#EFEBFF",
         darkGray: "#333333",
         grey: "#737373",
+        paleGray: "#EEEEEE",
+        dullBlack: "#1A1A1A",
+        warningRed: "#EE3939",
+        skyBlue: "#2D68FF",
+        whatsappGreen: "#25D366",
+        fbBlue: "#1877F2",
+        orange: "#F58529",
         border: {
           primary: "#D9D9D9",
         },

@@ -8,7 +8,7 @@ interface InputFieldProps {
   label?: string;
   type: string;
   placeholder?: string;
-  register: object;
+  register?: object;
   showBtn?: ReactNode;
   btnLabel?: string;
   handleBtnClick?: () => void;
@@ -35,7 +35,7 @@ const InputField: React.FC<InputFieldProps> = ({
   return (
     <>
       <div className="form-group">
-        <label className={`text-[#545454] text-sm ${error && `error`}`}>
+        <label className={`text-[#545454] text-xs ${error && `error`}`}>
           {label} {required && <span className="required-mark">*</span>}
         </label>
         <div className="relative">
