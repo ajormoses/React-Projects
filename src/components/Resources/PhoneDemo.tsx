@@ -2,21 +2,31 @@ import { PiGithubLogoFill } from "react-icons/pi";
 import { FaYoutube, FaLinkedin, FaFacebook } from "react-icons/fa";
 import { LuInstagram } from "react-icons/lu";
 
-interface Props {
-  githubUrl?: string;
-  youtubeUrl?: string;
-  linkedinUrl?: string;
-  facebookUrl?: string;
-  instagramUrl?: string;
+interface LinkPreview {
+  platform: "github" | "youtube" | "linkedin" | "instagram" | "facebook";
+  url: string;
 }
 
-const PhoneDemo: React.FC<Props> = ({
-  githubUrl,
-  youtubeUrl,
-  linkedinUrl,
-  facebookUrl,
-  instagramUrl,
-}) => {
+interface Props {
+  links: LinkPreview[];
+}
+const PhoneDemo: React.FC<Props> = ({ links }) => {
+  const icons = {
+    github: <PiGithubLogoFill />,
+    youtube: <FaYoutube />,
+    linkedin: <FaLinkedin />,
+    instagram: <LuInstagram />,
+    facebook: <FaFacebook />,
+  };
+
+  const colors = {
+    github: "!bg-dullBlack",
+    youtube: "!bg-warningRed",
+    linkedin: "bg-skyBlue",
+    instagram: "!bg-orange",
+    facebook: "!bg-fbBlue",
+  };
+
   return (
     <div className="p-20 rounded-xl bg-white flex justify-center items-center">
       <div className="relative">
@@ -34,111 +44,46 @@ const PhoneDemo: React.FC<Props> = ({
                 <div className="bg-paleGray h-[16px] w-[160px] rounded-[104px] mt-2"></div>
                 <div className="bg-paleGray h-[8px] w-[72px] rounded-[104px]"></div>
               </div>
+
               <div className="flex flex-col gap-4 justify-center items-center mt-4">
-                <div
-                  className={`bg-paleGray h-[44px] w-[237px] rounded-lg ${
-                    githubUrl && "!bg-dullBlack"
-                  }`}
-                >
-                  {githubUrl && (
-                    <a
-                      href={githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="h-full w-full flex justify-between items-center text-white font-medium px-4"
-                    >
-                      <p className="flex items-center gap-2">
-                        <PiGithubLogoFill />
-                        <span className="text-xs font-normal">GitHub</span>
-                      </p>
-                      <span className="mdi mdi-arrow-right"></span>
-                    </a>
-                  )}
-                </div>
+                {Array.from({ length: 5 }).map((_, index) => {
+                  // If there's a link for this index, show the actual link
+                  const link = links[index];
 
-                <div
-                  className={`bg-paleGray h-[44px] w-[237px] rounded-lg ${
-                    youtubeUrl && "!bg-warningRed"
-                  }`}
-                >
-                  {youtubeUrl && (
-                    <a
-                      href={youtubeUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="h-full w-full flex justify-between items-center text-white font-medium px-4"
-                    >
-                      <p className="flex items-center gap-2">
-                        <FaYoutube />
-                        <span className="text-xs font-normal">YouTube</span>
-                      </p>
-                      <span className="mdi mdi-arrow-right"></span>
-                    </a>
-                  )}
-                </div>
+                  if (link) {
+                    return (
+                      <div
+                        key={index}
+                        className={`h-[44px] w-[237px] rounded-lg ${
+                          colors[link.platform]
+                        }`}
+                      >
+                        <a
+                          href={link.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="h-full w-full flex justify-between items-center text-white font-medium px-4"
+                        >
+                          <p className="flex items-center gap-2">
+                            {icons[link.platform]}
+                            <span className="text-xs font-normal capitalize">
+                              {link.platform}
+                            </span>
+                          </p>
+                          <span className="mdi mdi-arrow-right"></span>
+                        </a>
+                      </div>
+                    );
+                  }
 
-                <div
-                  className={`bg-paleGray h-[44px] w-[237px] rounded-lg ${
-                    linkedinUrl && "bg-skyBlue"
-                  }`}
-                >
-                  {linkedinUrl && (
-                    <a
-                      href={linkedinUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="h-full w-full flex justify-between items-center text-white font-medium px-4"
-                    >
-                      <p className="flex items-center gap-2">
-                        <FaLinkedin />
-                        <span className="text-xs font-normal">LinkedIn</span>
-                      </p>
-                      <span className="mdi mdi-arrow-right"></span>
-                    </a>
-                  )}
-                </div>
-
-                <div
-                  className={`bg-paleGray h-[44px] w-[237px] rounded-lg ${
-                    instagramUrl && "bg-orange"
-                  }`}
-                >
-                  {instagramUrl && (
-                    <a
-                      href={instagramUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="h-full w-full flex justify-between items-center text-white font-medium px-4"
-                    >
-                      <p className="flex items-center gap-2">
-                        <LuInstagram />
-                        <span className="text-xs font-normal">Instagram</span>
-                      </p>
-                      <span className="mdi mdi-arrow-right"></span>
-                    </a>
-                  )}
-                </div>
-
-                <div
-                  className={`bg-paleGray h-[44px] w-[237px] rounded-lg ${
-                    facebookUrl && "!bg-fbBlue"
-                  }`}
-                >
-                  {facebookUrl && (
-                    <a
-                      href={facebookUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="h-full w-full flex justify-between items-center text-white font-medium px-4"
-                    >
-                      <p className="flex items-center gap-2">
-                        <FaFacebook />
-                        <span className="text-xs font-normal">Facebook</span>
-                      </p>
-                      <span className="mdi mdi-arrow-right"></span>
-                    </a>
-                  )}
-                </div>
+                  // Otherwise show a placeholder
+                  return (
+                    <div
+                      key={index}
+                      className="bg-paleGray h-[44px] w-[237px] rounded-lg"
+                    ></div>
+                  );
+                })}
               </div>
             </div>
           </div>

@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { Dropdown } from "primereact/dropdown";
-import { useState } from "react";
+// import { useState } from "react";
 
 interface Option {
   label: string;
@@ -11,6 +11,7 @@ interface Option {
 interface Props {
   options: Option[];
   label: string;
+  value: string | null;
   customField?: string;
   placeholder?: string;
   onChange?: (value: Option | null) => void;
@@ -21,26 +22,27 @@ interface Props {
 const UiDropdown: React.FC<Props> = ({
   options,
   label,
+  value,
   customField,
   placeholder = "Select an option",
   onChange,
   showClear,
   error,
 }) => {
-  const [selected, setSelected] = useState<Option | null>(null);
+  // const [selected, setSelected] = useState<Option | null>(null);
 
-  const handleChange = (e: any) => {
-    setSelected(e.value);
-    if (onChange) onChange(e.value);
-  };
+  // const handleChange = (e: any) => {
+  //   setSelected(e.value);
+  //   if (onChange) onChange(e.value);
+  // };
 
   return (
     <>
       <div className="flex flex-col gap-2">
         <label className="text-xs">{label}</label>
         <Dropdown
-          value={selected}
-          onChange={handleChange}
+          value={value}
+          onChange={(e) => onChange?.(e.value)}
           options={options}
           optionLabel="label"
           showClear={showClear}

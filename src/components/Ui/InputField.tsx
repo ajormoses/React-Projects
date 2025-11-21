@@ -34,7 +34,7 @@ const InputField: React.FC<InputFieldProps> = ({
   const [isPasswordVisible, setIsPasswordVisible] = useState(true);
   return (
     <>
-      <div className="form-group">
+      <div className="form-group relative">
         <label className={`text-[#545454] text-xs ${error && `error`}`}>
           {label} {required && <span className="required-mark">*</span>}
         </label>
@@ -92,7 +92,9 @@ const InputField: React.FC<InputFieldProps> = ({
             />
           )}
         </div>
-        <p className="error-message">{error}</p>
+        <p className="error-message absolute right-2 top-[50px] -translate-y-1/2 ">
+          {error}
+        </p>
       </div>
     </>
   );
