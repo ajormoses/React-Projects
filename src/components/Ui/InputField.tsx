@@ -16,6 +16,8 @@ interface InputFieldProps {
   error?: any;
   required?: boolean;
   prependIcon?: ReactNode;
+  sideError?: boolean;
+  customSideError?: string;
 }
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -30,6 +32,8 @@ const InputField: React.FC<InputFieldProps> = ({
   error,
   required,
   prependIcon,
+  sideError,
+  customSideError,
 }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(true);
   return (
@@ -92,9 +96,18 @@ const InputField: React.FC<InputFieldProps> = ({
             />
           )}
         </div>
-        <p className="error-message absolute right-2 top-[50px] -translate-y-1/2 ">
-          {error}
-        </p>
+        {sideError ? (
+          <p
+            className={clsx(
+              "error-message absolute right-2 top-[50px] -translate-y-1/2",
+              customSideError
+            )}
+          >
+            {error}
+          </p>
+        ) : (
+          <p className="error-message">{error}</p>
+        )}
       </div>
     </>
   );

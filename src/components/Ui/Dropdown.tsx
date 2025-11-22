@@ -29,17 +29,12 @@ const UiDropdown: React.FC<Props> = ({
   showClear,
   error,
 }) => {
-  // const [selected, setSelected] = useState<Option | null>(null);
-
-  // const handleChange = (e: any) => {
-  //   setSelected(e.value);
-  //   if (onChange) onChange(e.value);
-  // };
-
   return (
     <>
-      <div className="flex flex-col gap-2">
-        <label className="text-xs">{label}</label>
+      <div className="flex flex-col gap-2 ">
+        <label className={clsx("text-xs", error && "!text-red-500")}>
+          {label}
+        </label>
         <Dropdown
           value={value}
           onChange={(e) => onChange?.(e.value)}
@@ -96,9 +91,8 @@ const UiDropdown: React.FC<Props> = ({
             },
           }}
         />
-        <small v-if="error" className="p-error">
-          {error}
-        </small>
+
+        <small className="p-error">{error}</small>
       </div>
     </>
   );
