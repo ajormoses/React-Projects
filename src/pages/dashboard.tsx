@@ -34,11 +34,35 @@ interface Link {
 const dashboard = () => {
   const [image, setImage] = useState<string | null>(null);
 
+  const [imageError, setImageError] = useState<string | null>(null);
+
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const [currentTab, setCurrentTab] = useState("Profile Details");
 
   const [links, setLinks] = useState<Link[]>([]);
+
+  const schema = yup
+    .object({
+      email: yup.string().email("Invalid email").required("Can't be empty"),
+      firstName: yup.string().required("Can't be empty"),
+      lastName: yup.string().required("Can't be empty"),
+    })
+    .required();
+  type FormData = yup.InferType<typeof schema>;
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
+  });
+
+  const watchedFirstName = watch("firstName");
+  const watchedLastName = watch("lastName");
+  const watchedEmail = watch("email");
 
   const [tabs, setTabs] = useState([
     {
@@ -179,25 +203,18 @@ const dashboard = () => {
       url: link.url,
     }));
 
-  const schema = yup
-    .object({
-      email: yup.string().email("Invalid email").required("Can't be empty"),
-      firstName: yup.string().required("Can't be empty"),
-      lastName: yup.string().required("Can't be empty"),
-    })
-    .required();
-  type FormData = yup.InferType<typeof schema>;
+  function handleFormData(values: any) {
+    if (!image) {
+      setImageError("Please upload a profile image.");
+      return;
+    }
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({
-    resolver: yupResolver(schema),
-  });
+    if (imageError) {
+      return; // prevent submit
+    }
 
-  function handleFormData(value: any) {
-    console.log(value);
+    // All validations passed
+    console.log("Submitting:", values);
   }
 
   // Upload image
@@ -205,9 +222,31 @@ const dashboard = () => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = () => setImage(reader.result as string);
-    reader.readAsDataURL(file);
+    // Reset
+    setImageError(null);
+
+    if (!["image/png", "image/jpeg"].includes(file.type)) {
+      setImageError("Only PNG and JPG formats are allowed.");
+      return;
+    }
+
+    if (file.size > 1024 * 1024) {
+      setImageError("Image must be less than 1MB.");
+      return;
+    }
+
+    const img = new Image();
+    img.onload = () => {
+      if (img.width > 1024 || img.height > 1024) {
+        setImageError("Image dimensions must not exceed 1024x1024px.");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = () => setImage(reader.result as string);
+      reader.readAsDataURL(file);
+    };
+    img.src = URL.createObjectURL(file);
   };
 
   return (
@@ -215,7 +254,16 @@ const dashboard = () => {
       <div className="dashboard-wrapper grid gap-4">
         <TopBar tabs={tabs} switchTab={switchTab} />
         <div className="grid grid-col-1 md:grid-cols-2 gap-4">
-          <PhoneDemo links={phoneDemoLinks} />
+          <PhoneDemo
+            imageUrl={image}
+            links={phoneDemoLinks}
+            name={
+              watchedFirstName &&
+              watchedLastName &&
+              watchedFirstName + " " + watchedLastName
+            }
+            email={watchedEmail}
+          />
 
           <ProfileDetails>
             <form onSubmit={handleSubmit(handleFormData)}>
@@ -329,7 +377,7 @@ const dashboard = () => {
                     {/* Upload Box */}
                     <div
                       onClick={() => fileInputRef.current?.click()}
-                      className="h-[193px] w-full max-w-[193px] rounded-xl bg-lightPurple flex flex-col justify-center items-center cursor-pointer overflow-hidden"
+                      className="group h-[193px] w-full max-w-[193px] rounded-xl bg-lightPurple flex flex-col justify-center items-center cursor-pointer overflow-hidden relative"
                     >
                       {/* If image exists, show preview */}
                       {image ? (
@@ -346,10 +394,35 @@ const dashboard = () => {
                           </span>
                         </>
                       )}
+
+                      {image && (
+                        <div
+                          className="
+                        absolute inset-0 bg-black/50 z-10 
+                        opacity-0 group-hover:opacity-100 
+                        flex justify-center items-center 
+                        transition-opacity duration-300
+                      "
+                        >
+                          <div className="flex flex-col gap-1.5 items-center justify-center">
+                            <SlPicture className="w-[32.5px] h-[27.5px] text-white" />
+                            <span className="font-semibold mt-2 text-white text-sm">
+                              Change Image
+                            </span>
+                          </div>
+                        </div>
+                      )}
                     </div>
 
                     <p className="text-sm">
-                      Image must be below 1024x1024px. Use PNG or JPG format.
+                      {imageError ? (
+                        <p className="text-red-500">{imageError}</p>
+                      ) : (
+                        <p>
+                          Image must be below 1024x1024px. Use PNG or JPG
+                          format.
+                        </p>
+                      )}
                     </p>
 
                     {/* Hidden File Input */}

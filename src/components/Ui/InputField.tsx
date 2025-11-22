@@ -18,6 +18,7 @@ interface InputFieldProps {
   prependIcon?: ReactNode;
   sideError?: boolean;
   customSideError?: string;
+  value?: string | number;
 }
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -34,6 +35,7 @@ const InputField: React.FC<InputFieldProps> = ({
   prependIcon,
   sideError,
   customSideError,
+  value,
 }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(true);
   return (
@@ -70,6 +72,7 @@ const InputField: React.FC<InputFieldProps> = ({
             </div>
           )}
           <input
+            value={value}
             type={
               type === "password"
                 ? isPasswordVisible

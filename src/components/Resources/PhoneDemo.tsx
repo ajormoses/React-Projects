@@ -9,8 +9,11 @@ interface LinkPreview {
 
 interface Props {
   links: LinkPreview[];
+  imageUrl?: any;
+  name?: string;
+  email?: string;
 }
-const PhoneDemo: React.FC<Props> = ({ links }) => {
+const PhoneDemo: React.FC<Props> = ({ links, imageUrl, name, email }) => {
   const icons = {
     github: <PiGithubLogoFill />,
     youtube: <FaYoutube />,
@@ -39,13 +42,30 @@ const PhoneDemo: React.FC<Props> = ({ links }) => {
 
             {/* 👉 Screen content here */}
             <div className="h-full w-full p-4 flex flex-col gap-10 justify-center items-center">
-              <div className="flex flex-col gap-4 justify-center items-center">
-                <div className="bg-paleGray h-[96px] w-[96px] rounded-full"></div>
-                <div className="bg-paleGray h-[16px] w-[160px] rounded-[104px] mt-2"></div>
-                <div className="bg-paleGray h-[8px] w-[72px] rounded-[104px]"></div>
+              <div className="flex flex-col gap-2 justify-center items-center">
+                {imageUrl ? (
+                  <img
+                    className="rounded-full h-[96px] w-[96px]"
+                    src={imageUrl}
+                  />
+                ) : (
+                  <div className="bg-paleGray h-[96px] w-[96px] rounded-full"></div>
+                )}
+
+                {name ? (
+                  <p className="text-lg font-semibold mt-4">{name} </p>
+                ) : (
+                  <div className="bg-paleGray h-[16px] w-[160px] rounded-[104px] mt-4"></div>
+                )}
+
+                {email ? (
+                  <p className="text-sm">{email}</p>
+                ) : (
+                  <div className="bg-paleGray h-[8px] w-[72px] rounded-[104px]"></div>
+                )}
               </div>
 
-              <div className="flex flex-col gap-4 justify-center items-center mt-4">
+              <div className="flex flex-col gap-4 justify-center items-center ">
                 {Array.from({ length: 5 }).map((_, index) => {
                   // If there's a link for this index, show the actual link
                   const link = links[index];
