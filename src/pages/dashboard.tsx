@@ -1,25 +1,25 @@
+import * as yup from "yup";
+import clsx from "clsx";
 import { useState } from "react";
 import { FaLink } from "react-icons/fa6";
 import { RxAvatar } from "react-icons/rx";
-import TopBar from "../components/Nav/TopBar";
-import PhoneDemo from "../components/Resources/PhoneDemo";
-import ProfileDetails from "../components/Resources/ProfileDetails";
-import FooterSheet from "../components/Ui/FooterSheet";
-import Btn from "../components/Ui/Btn";
 import { IoReorderTwoOutline } from "react-icons/io5";
-import Dropdown from "../components/Ui/Dropdown";
 import { TbBrandGithubFilled } from "react-icons/tb";
 import { FaYoutube, FaFacebook } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa6";
 import { LuInstagram } from "react-icons/lu";
 import { SlPicture } from "react-icons/sl";
-import InputField from "../components/Ui/InputField";
-import EmptyField from "../components/Ui/EmptyField";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import clsx from "clsx";
 import { useRef } from "react";
+import TopBar from "../components/Nav/TopBar";
+import PhoneDemo from "../components/Resources/PhoneDemo";
+import ProfileDetails from "../components/Resources/ProfileDetails";
+import FooterSheet from "../components/Ui/FooterSheet";
+import InputField from "../components/Ui/InputField";
+import EmptyField from "../components/Ui/EmptyField";
+import Btn from "../components/Ui/Btn";
+import Dropdown from "../components/Ui/Dropdown";
 
 interface Link {
   id: string;
@@ -38,7 +38,7 @@ const dashboard = () => {
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const [currentTab, setCurrentTab] = useState("Profile Details");
+  const [currentTab, setCurrentTab] = useState("Links");
 
   const [links, setLinks] = useState<Link[]>([]);
 
@@ -68,25 +68,38 @@ const dashboard = () => {
     {
       label: "Links",
       icon: <FaLink />,
-      isActive: false,
+      isActive: true,
     },
     {
       label: "Profile Details",
       icon: <RxAvatar />,
-      isActive: true,
+      isActive: false,
     },
   ]);
 
   function switchTab(label: string) {
+    // If trying to leave the "Links" tab
+    if (label !== "Links") {
+      const hasAtLeastOneValidLink = links.some(
+        (link) => Object.keys(validateLink(link)).length === 0
+      );
+
+      if (!hasAtLeastOneValidLink) {
+        // block navigation
+        return;
+      }
+    }
+
+    // Allow navigation if above condition passed
     setTabs((prev) =>
       prev.map((tab) => ({
         ...tab,
         isActive: tab.label === label,
       }))
     );
+
     setCurrentTab(label);
   }
-
   const validateLink = (link: Link) => {
     const errors: any = {};
 
@@ -511,6 +524,7 @@ const dashboard = () => {
                 {currentTab === "Links" ? (
                   <Btn
                     type="button"
+                    onClick={() => switchTab("Profile Details")}
                     disabled={!allLinksValid}
                     customClass="!w-[91px] ml-auto !h-[46px]"
                     label="Save"
