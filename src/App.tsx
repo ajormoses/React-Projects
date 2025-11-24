@@ -14,6 +14,7 @@ import "@mdi/font/css/materialdesignicons.css";
 import AuthSignIn from "./pages/auth/SignIn";
 import AuthCreateAccount from "./pages/auth/CreateAccount";
 import Dashboard from "./pages/dashboard";
+import Preview from "./pages/preview";
 import { Toaster } from "react-hot-toast";
 
 function App() {
@@ -46,6 +47,15 @@ function App() {
               element={
                 <PrivateRoute>
                   <Dashboard />
+                </PrivateRoute>
+              }
+            />
+
+            <Route
+              path="/preview"
+              element={
+                <PrivateRoute>
+                  <Preview />
                 </PrivateRoute>
               }
             />
