@@ -1,5 +1,4 @@
 import Btn from "../Ui/Btn";
-import { useMediaQuery } from "../../composables/useMediaQuery";
 
 interface TabProps {
   label: string;
@@ -11,8 +10,6 @@ const SwitchTabs: React.FC<{
   tabs: TabProps[];
   switchTab: (label: string) => void;
 }> = ({ tabs, switchTab }) => {
-  const mediaMd = useMediaQuery("(min-width: 768px)");
-
   return (
     <>
       <div className="flex items-center">
@@ -25,9 +22,8 @@ const SwitchTabs: React.FC<{
                 ? "!bg-lightPurple !text-primary hover:!bg-purpleHover"
                 : "!bg-white !text-grey"
             }`}
-            label={mediaMd ? tab.label : ""}
+            label={tab.label}
             prependIcon={tab.icon}
-            customIcon="text-xl"
           />
         ))}
       </div>

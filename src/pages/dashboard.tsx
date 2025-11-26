@@ -22,6 +22,8 @@ import InputField from "../components/Ui/InputField";
 import EmptyField from "../components/Ui/EmptyField";
 import Btn from "../components/Ui/Btn";
 import Dropdown from "../components/Ui/Dropdown";
+import DialogModal from "../components/Ui/DialogModal";
+import SwitchTabs from "../components/Ui/SwitchTabs";
 
 interface Link {
   id: string;
@@ -41,6 +43,8 @@ const dashboard = () => {
   const [image, setImage] = useState<string | null>(null);
 
   const [imageError, setImageError] = useState<string | null>(null);
+
+  const [isModalOpen, setModalOpen] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -371,8 +375,12 @@ const dashboard = () => {
   return (
     <>
       <div className="dashboard-wrapper grid gap-4">
-        <TopBar tabs={tabs} switchTab={switchTab} />
-        <div className="grid grid-col-1 md:grid-cols-2 gap-4">
+        <TopBar
+          openDialog={() => setModalOpen(true)}
+          tabs={tabs}
+          switchTab={switchTab}
+        />
+        <div className="grid grid-col-1 md:grid-cols-2 gap-4 mt-[100px]">
           {mediaMd && (
             <PhoneDemo
               imageUrl={image}
@@ -650,6 +658,24 @@ const dashboard = () => {
               </FooterSheet>
             </form>
           </ProfileDetails>
+
+          {/* Diagonal Modal */}
+          <DialogModal
+            isOpen={isModalOpen}
+            onClose={() => setModalOpen(false)}
+            headerContent={<SwitchTabs tabs={tabs} switchTab={switchTab} />}
+          >
+            <PhoneDemo
+              imageUrl={image}
+              links={phoneDemoLinks}
+              name={
+                watchedFirstName &&
+                watchedLastName &&
+                watchedFirstName + " " + watchedLastName
+              }
+              email={watchedEmail}
+            />
+          </DialogModal>
         </div>
       </div>
     </>
