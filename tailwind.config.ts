@@ -29,6 +29,10 @@ export default {
           "0%": { opacity: 0, transform: "translateY(10px)" },
           "100%": { opacity: 1, transform: "translateY(0)" },
         },
+        slideInLeft: {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(0)" },
+        },
         "slide-up": {
           "0%": { opacity: "0", transform: "translateY(20px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
@@ -49,6 +53,7 @@ export default {
       },
       animation: {
         slideFadeIn: "slideFadeIn 0.4s ease-out forwards",
+        slideInLeft: "slideInLeft 0.3s ease-out forwards",
         "slide-up": "slide-up 0.4s ease-out",
         "slow-bounce": "slowBounce 4s infinite", // Slow bounce animation
         spin: "spin 1s linear infinite",
