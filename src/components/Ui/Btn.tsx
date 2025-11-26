@@ -11,6 +11,7 @@ interface BtnProps {
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
   isLoading?: boolean;
+  customIcon?: string;
 }
 
 const Btn: React.FC<BtnProps> = ({
@@ -22,6 +23,7 @@ const Btn: React.FC<BtnProps> = ({
   type,
   disabled,
   isLoading,
+  customIcon,
 }) => {
   return (
     <>
@@ -40,11 +42,11 @@ const Btn: React.FC<BtnProps> = ({
         {!isLoading ? (
           <>
             {/* Prepend Icon */}
-            {prependIcon && prependIcon}
+            {prependIcon && <span className={customIcon}>{prependIcon}</span>}
             {/* label */}
             {label}
             {/* Append Icon */}
-            {appendIcon && appendIcon}
+            {appendIcon && <span className={customIcon}>{appendIcon}</span>}
           </>
         ) : (
           <TbLoader2 className="animate-spin" />

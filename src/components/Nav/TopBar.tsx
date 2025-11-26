@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Btn from "../Ui/Btn";
 import UserDropdown from "../Resources/UserDropdown";
 import SwitchTabs from "../Ui/SwitchTabs";
+import { useMediaQuery } from "../../composables/useMediaQuery";
 
 interface TabProps {
   label: string;
@@ -16,7 +17,12 @@ const TopBar: React.FC<{
   return (
     <>
       <div className="bg-white p-4 rounded-xl flex justify-between items-center">
-        <img src="/img/devlinks.svg" alt="Logo" className="h-8" />
+        <img
+          src="/img/devlinks.svg"
+          alt="Logo"
+          className="h-8 hidden md:block"
+        />
+        <img src="/img/logo.svg" alt="Logo" className="h-[46px]  md:hidden " />
 
         <SwitchTabs tabs={tabs} switchTab={switchTab} />
 
