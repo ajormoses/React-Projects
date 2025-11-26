@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import Btn from "../Ui/Btn";
 import UserDropdown from "../Resources/UserDropdown";
 import SwitchTabs from "../Ui/SwitchTabs";
@@ -11,6 +12,7 @@ const TopBar: React.FC<{
   tabs: TabProps[];
   switchTab: (label: string) => void;
 }> = ({ tabs, switchTab }) => {
+  const navigate = useNavigate();
   return (
     <>
       <div className="bg-white p-4 rounded-xl flex justify-between items-center">
@@ -20,6 +22,7 @@ const TopBar: React.FC<{
 
         <div className="flex gap-2 items-center">
           <Btn
+            onClick={() => navigate("/preview")}
             customClass="!bg-white !border-primary !text-primary !font-semibold hover:!bg-purpleHover !gap-2"
             label="Preview"
           />

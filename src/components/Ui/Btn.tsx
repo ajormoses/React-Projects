@@ -5,7 +5,7 @@ import { TbLoader2 } from "react-icons/tb";
 interface BtnProps {
   label: string;
   customClass?: string;
-  onClick?: () => void;
+  onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
   prependIcon?: ReactNode;
   appendIcon?: ReactNode;
   type?: "button" | "submit" | "reset";

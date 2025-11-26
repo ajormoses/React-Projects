@@ -27,8 +27,18 @@ const UserDropdown = () => {
 
   const handleSignOut = async () => {
     try {
+      const activeTab = localStorage.getItem("activeTab");
+      const profileDetails = localStorage.getItem("profileData");
+
       await doSignOut();
       setOpen(false);
+
+      if (activeTab) {
+        localStorage.removeItem("activeTab");
+      }
+      if (profileDetails) {
+        localStorage.removeItem("profileData");
+      }
     } catch (error) {
       console.error("Error signing out:", error);
     }

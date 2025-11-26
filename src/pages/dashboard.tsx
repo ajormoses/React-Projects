@@ -11,7 +11,8 @@ import { LuInstagram } from "react-icons/lu";
 import { SlPicture } from "react-icons/sl";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import TopBar from "../components/Nav/TopBar";
 import PhoneDemo from "../components/Resources/PhoneDemo";
 import ProfileDetails from "../components/Resources/ProfileDetails";
@@ -32,6 +33,10 @@ interface Link {
 }
 
 const dashboard = () => {
+  const navigate = useNavigate();
+
+  const [hydrated, setHydrated] = useState(false);
+
   const [image, setImage] = useState<string | null>(null);
 
   const [imageError, setImageError] = useState<string | null>(null);
@@ -56,6 +61,7 @@ const dashboard = () => {
     handleSubmit,
     formState: { errors },
     watch,
+    setValue,
   } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
@@ -85,12 +91,11 @@ const dashboard = () => {
       );
 
       if (!hasAtLeastOneValidLink) {
-        // block navigation
-        return;
+        return; // block navigation
       }
     }
 
-    // Allow navigation if above condition passed
+    // Update tabs
     setTabs((prev) =>
       prev.map((tab) => ({
         ...tab,
@@ -99,7 +104,26 @@ const dashboard = () => {
     );
 
     setCurrentTab(label);
+
+    // 🔥 Save active tab to localStorage
+    localStorage.setItem("activeTab", label);
   }
+
+  useEffect(() => {
+    const savedTab = localStorage.getItem("activeTab");
+
+    if (savedTab) {
+      setCurrentTab(savedTab);
+
+      setTabs((prev) =>
+        prev.map((tab) => ({
+          ...tab,
+          isActive: tab.label === savedTab,
+        }))
+      );
+    }
+  }, []);
+
   const validateLink = (link: Link) => {
     const errors: any = {};
 
@@ -212,11 +236,12 @@ const dashboard = () => {
       return Object.keys(errors).length === 0; // include only valid links
     })
     .map((link) => ({
+      id: link.id,
       platform: link.platform as any, // Provide a default value if platform is null
       url: link.url,
     }));
 
-  function handleFormData(values: any) {
+  function handleFormData() {
     if (!image) {
       setImageError("Please upload a profile image.");
       return;
@@ -226,8 +251,7 @@ const dashboard = () => {
       return; // prevent submit
     }
 
-    // All validations passed
-    console.log("Submitting:", values);
+    navigate("/preview");
   }
 
   // Upload image
@@ -261,6 +285,85 @@ const dashboard = () => {
     };
     img.src = URL.createObjectURL(file);
   };
+
+  useEffect(() => {
+    const saved = localStorage.getItem("profileData");
+    if (!saved) {
+      setHydrated(true);
+      return;
+    }
+
+    try {
+      const parsed = JSON.parse(saved);
+
+      // Restore image
+      if (parsed.image) setImage(parsed.image);
+
+      // Restore name
+      if (parsed.name) {
+        const [first = "", last = ""] = parsed.name.split(" ");
+        setValue("firstName", first);
+        setValue("lastName", last);
+      }
+
+      // Restore email
+      if (parsed.email) {
+        setValue("email", parsed.email);
+      }
+
+      // Restore links EXACTLY as saved
+      if (Array.isArray(parsed.phoneDemoLinks)) {
+        setLinks(
+          parsed.phoneDemoLinks.map((item: any) => ({
+            id: item.id ?? crypto.randomUUID(),
+            platform: item.platform ?? null,
+            url: item.url ?? "",
+            errors: {}, // TEMP — we will validate AFTER hydration
+          }))
+        );
+      }
+    } catch (err) {
+      console.error("Failed to load profileData:", err);
+    } finally {
+      setHydrated(true); // allow save + validation now
+    }
+  }, []);
+
+  // ---------------------------------------------
+  // 2. RUN VALIDATION ONLY AFTER HYDRATION
+  // ---------------------------------------------
+  useEffect(() => {
+    if (!hydrated) return;
+
+    setLinks((prev) =>
+      prev.map((link) => ({
+        ...link,
+        errors: validateLink(link),
+      }))
+    );
+  }, [hydrated]);
+
+  // ---------------------------------------------
+  // 3. Save only AFTER hydration
+  // ---------------------------------------------
+  useEffect(() => {
+    if (!hydrated) return;
+
+    const name = `${watchedFirstName ?? ""} ${watchedLastName ?? ""}`.trim();
+
+    const profileData = {
+      image,
+      name,
+      email: watchedEmail ?? "",
+      phoneDemoLinks: links.map((l) => ({
+        id: l.id,
+        platform: l.platform,
+        url: l.url,
+      })),
+    };
+
+    localStorage.setItem("profileData", JSON.stringify(profileData));
+  }, [hydrated, image, links, watchedFirstName, watchedLastName, watchedEmail]);
 
   return (
     <>
@@ -524,7 +627,10 @@ const dashboard = () => {
                 {currentTab === "Links" ? (
                   <Btn
                     type="button"
-                    onClick={() => switchTab("Profile Details")}
+                    onClick={(e: any) => {
+                      e.preventDefault(); // 🛑 stops form validation + submit
+                      switchTab("Profile Details");
+                    }}
                     disabled={!allLinksValid}
                     customClass="!w-[91px] ml-auto !h-[46px]"
                     label="Save"
