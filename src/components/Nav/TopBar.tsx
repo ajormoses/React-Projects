@@ -14,6 +14,7 @@ const TopBar: React.FC<{
   switchTab: (label: string) => void;
 }> = ({ tabs, switchTab }) => {
   const navigate = useNavigate();
+  const mediaMd = useMediaQuery("(min-width: 768px)");
   return (
     <>
       <div className="bg-white p-4 rounded-xl flex justify-between items-center">
@@ -24,7 +25,7 @@ const TopBar: React.FC<{
         />
         <img src="/img/logo.svg" alt="Logo" className="h-[46px]  md:hidden " />
 
-        <SwitchTabs tabs={tabs} switchTab={switchTab} />
+        {mediaMd && <SwitchTabs tabs={tabs} switchTab={switchTab} />}
 
         <div className="flex gap-2 items-center">
           <Btn

@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useMediaQuery } from "../composables/useMediaQuery";
 import TopBar from "../components/Nav/TopBar";
 import PhoneDemo from "../components/Resources/PhoneDemo";
 import ProfileDetails from "../components/Resources/ProfileDetails";
@@ -46,6 +47,8 @@ const dashboard = () => {
   const [currentTab, setCurrentTab] = useState("Links");
 
   const [links, setLinks] = useState<Link[]>([]);
+
+  const mediaMd = useMediaQuery("(min-width: 768px)");
 
   const schema = yup
     .object({
@@ -370,23 +373,25 @@ const dashboard = () => {
       <div className="dashboard-wrapper grid gap-4">
         <TopBar tabs={tabs} switchTab={switchTab} />
         <div className="grid grid-col-1 md:grid-cols-2 gap-4">
-          <PhoneDemo
-            imageUrl={image}
-            links={phoneDemoLinks}
-            name={
-              watchedFirstName &&
-              watchedLastName &&
-              watchedFirstName + " " + watchedLastName
-            }
-            email={watchedEmail}
-          />
+          {mediaMd && (
+            <PhoneDemo
+              imageUrl={image}
+              links={phoneDemoLinks}
+              name={
+                watchedFirstName &&
+                watchedLastName &&
+                watchedFirstName + " " + watchedLastName
+              }
+              email={watchedEmail}
+            />
+          )}
 
           <ProfileDetails>
-            <form onSubmit={handleSubmit(handleFormData)}>
+            <form onSubmit={handleSubmit(handleFormData)} className="pb-20">
               {currentTab === "Links" ? (
                 <div className="flex flex-col gap-4">
                   <div className="flex flex-col gap-4">
-                    <h1 className="font-bold text-[32px]">
+                    <h1 className="font-bold text-[32px] leading-8">
                       Customize your links
                     </h1>
                     <p>

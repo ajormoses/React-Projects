@@ -15,7 +15,7 @@ body {
   }
 
   .dashboard-wrapper {
-    @apply 2xl:w-[1500px] m-auto overflow-hidden p-5;
+    @apply 2xl:w-[1500px] m-auto overflow-hidden w-[90%] py-5;
   }
 
   .section {
