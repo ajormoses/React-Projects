@@ -12,7 +12,7 @@ const Preview = () => {
   const image = savedData.image || "";
   const phoneDemoLinks = savedData.phoneDemoLinks || [];
   const email = savedData.email || "email";
-  const name = savedData.name !== " " ? savedData.name : "Your Name";
+  const name = savedData.name !== "" ? savedData.name : "Your Name";
 
   // Icons for each platform
   const icons: any = {
