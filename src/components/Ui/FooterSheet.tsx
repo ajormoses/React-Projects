@@ -11,7 +11,7 @@ const FooterSheet: React.FC<Props> = ({ children, customClass }) => {
     <>
       <div
         className={clsx(
-          "absolute bottom-0 right-0 left-0 bg-white px-10 py-6 flex justify-end border-t z-50 rounded-b-xl",
+          "absolute bottom-0 right-0 left-0 bg-white py-6 px-6 lg:px-10 flex justify-end border-t z-50 rounded-b-xl",
           customClass
         )}
       >
