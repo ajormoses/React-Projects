@@ -9,6 +9,7 @@ import { FaYoutube, FaFacebook } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa6";
 import { LuInstagram } from "react-icons/lu";
 import { SlPicture } from "react-icons/sl";
+import { MdDelete } from "react-icons/md";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRef, useEffect } from "react";
@@ -533,6 +534,10 @@ const dashboard = () => {
                         transition-opacity duration-300
                       "
                         >
+                          <MdDelete
+                            onClick={() => setImage(null)}
+                            className="text-white absolute top-3 right-3 text-lg"
+                          />
                           <div className="flex flex-col gap-1.5 items-center justify-center">
                             <SlPicture className="w-[32.5px] h-[27.5px] text-white" />
                             <span className="font-semibold mt-2 text-white text-sm">
