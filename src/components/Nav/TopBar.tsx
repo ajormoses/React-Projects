@@ -1,8 +1,12 @@
 import { useNavigate } from "react-router-dom";
+import { useMediaQuery } from "../../composables/useMediaQuery";
+import { writeUserData } from "../../config/firebase";
+import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import Btn from "../Ui/Btn";
 import UserDropdown from "../Resources/UserDropdown";
 import SwitchTabs from "../Ui/SwitchTabs";
-import { useMediaQuery } from "../../composables/useMediaQuery";
+import { useLocation } from "react-router-dom";
 
 interface TabProps {
   label: string;
@@ -13,9 +17,27 @@ const TopBar: React.FC<{
   tabs: TabProps[];
   switchTab: (label: string) => void;
   openDialog: () => void;
-}> = ({ tabs, switchTab, openDialog }) => {
+  isPreviewDisabled: boolean;
+}> = ({ tabs, switchTab, openDialog, isPreviewDisabled }) => {
   const navigate = useNavigate();
   const mediaMd = useMediaQuery("(min-width: 768px)");
+  const [isLoading, setIsLoading] = useState(false);
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+  const queryId = query.get("id"); // <-- THIS gets the ?id=123
+
+  const handlePreview = async () => {
+    try {
+      const id = queryId || uuidv4();
+      setIsLoading(true);
+      await writeUserData(id);
+      navigate(`/preview/${id}`);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsLoading(false);
+    }
+  };
   return (
     <>
       <div className="fixed top-0 left-0 right-0 w-full z-50 bg-lightGray">
@@ -36,9 +58,11 @@ const TopBar: React.FC<{
 
           <div className="flex gap-2 items-center">
             <Btn
-              onClick={() => navigate("/preview")}
+              onClick={handlePreview}
               customClass="!bg-white !border-primary !text-primary !font-semibold hover:!bg-purpleHover !gap-2"
               label="Preview"
+              isLoading={isLoading}
+              disabled={isPreviewDisabled}
             />
             <UserDropdown />
           </div>

@@ -40,6 +40,7 @@ function App() {
               path="/auth/create-account"
               element={<AuthCreateAccount />}
             />
+            <Route path="/public-preview/:id" element={<Preview />} />
 
             {/* Protected route */}
             <Route
@@ -52,7 +53,7 @@ function App() {
             />
 
             <Route
-              path="/preview"
+              path="/preview/:id"
               element={
                 <PrivateRoute>
                   <Preview />

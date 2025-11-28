@@ -12,9 +12,12 @@ import { SlPicture } from "react-icons/sl";
 import { MdDelete } from "react-icons/md";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "../composables/useMediaQuery";
+import { v4 as uuidv4 } from "uuid";
+import { writeUserData } from "../config/firebase";
+import { useLocation } from "react-router-dom";
 import TopBar from "../components/Nav/TopBar";
 import PhoneDemo from "../components/Resources/PhoneDemo";
 import ProfileDetails from "../components/Resources/ProfileDetails";
@@ -41,6 +44,8 @@ const dashboard = () => {
 
   const [hydrated, setHydrated] = useState(false);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const [image, setImage] = useState<string | null>(null);
 
   const [imageError, setImageError] = useState<string | null>(null);
@@ -52,6 +57,12 @@ const dashboard = () => {
   const [currentTab, setCurrentTab] = useState("Links");
 
   const [links, setLinks] = useState<Link[]>([]);
+
+  const location = useLocation();
+
+  const query = new URLSearchParams(location.search);
+
+  const queryId = query.get("id");
 
   const mediaMd = useMediaQuery("(min-width: 768px)");
 
@@ -249,7 +260,7 @@ const dashboard = () => {
       url: link.url,
     }));
 
-  function handleFormData() {
+  async function handleFormData() {
     if (!image) {
       setImageError("Please upload a profile image.");
       return;
@@ -259,7 +270,16 @@ const dashboard = () => {
       return; // prevent submit
     }
 
-    navigate("/preview");
+    const id = queryId || uuidv4();
+    try {
+      setIsLoading(true);
+      await writeUserData(id);
+      navigate(`/preview/${id}`);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   // Upload image
@@ -294,6 +314,104 @@ const dashboard = () => {
     img.src = URL.createObjectURL(file);
   };
 
+  // useEffect(() => {
+  //   const saved = localStorage.getItem("profileData");
+  //   if (!saved) {
+  //     setHydrated(true);
+  //     return;
+  //   }
+
+  //   try {
+  //     const parsed = JSON.parse(saved);
+
+  //     // Restore image
+  //     if (parsed.image) setImage(parsed.image);
+
+  //     // Restore name
+  //     if (parsed.name) {
+  //       const [first = "", last = ""] = parsed.name.split(" ");
+  //       setValue("firstName", first);
+  //       setValue("lastName", last);
+  //     }
+
+  //     // Restore email
+  //     if (parsed.email) {
+  //       setValue("email", parsed.email);
+  //     }
+
+  //     // Restore links EXACTLY as saved
+  //     if (Array.isArray(parsed.phoneDemoLinks)) {
+  //       setLinks(
+  //         parsed.phoneDemoLinks.map((item: any) => ({
+  //           id: item.id ?? crypto.randomUUID(),
+  //           platform: item.platform ?? null,
+  //           url: item.url ?? "",
+  //           errors: {}, // TEMP — we will validate AFTER hydration
+  //         }))
+  //       );
+  //     }
+  //   } catch (err) {
+  //     console.error("Failed to load profileData:", err);
+  //   } finally {
+  //     setHydrated(true); // allow save + validation now
+  //   }
+  // }, []);
+
+  // // ---------------------------------------------
+  // // 2. RUN VALIDATION ONLY AFTER HYDRATION
+  // // ---------------------------------------------
+  // useEffect(() => {
+  //   if (!hydrated) return;
+
+  //   setLinks((prev) =>
+  //     prev.map((link) => ({
+  //       ...link,
+  //       errors: validateLink(link),
+  //     }))
+  //   );
+  // }, [hydrated]);
+
+  // // ---------------------------------------------
+  // // 3. Save only AFTER hydration
+  // // ---------------------------------------------
+  // useEffect(() => {
+  //   if (!hydrated) return;
+
+  //   const name = `${watchedFirstName ?? ""} ${watchedLastName ?? ""}`.trim();
+
+  //   const profileData = {
+  //     image,
+  //     name,
+  //     email: watchedEmail ?? "",
+  //     phoneDemoLinks: links.map((l) => ({
+  //       id: l.id,
+  //       platform: l.platform,
+  //       url: l.url,
+  //     })),
+  //   };
+
+  //   localStorage.setItem("profileData", JSON.stringify(profileData));
+  // }, [hydrated, image, links, watchedFirstName, watchedLastName, watchedEmail]);
+
+  // ---------------------------------------------
+  // 0. BUILD PROFILE DATA ON EVERY RENDER
+  // ---------------------------------------------
+  const profileData = useMemo(() => {
+    return {
+      image,
+      name: `${watchedFirstName ?? ""} ${watchedLastName ?? ""}`.trim(),
+      email: watchedEmail ?? "",
+      phoneDemoLinks: links.map((l) => ({
+        id: l.id,
+        platform: l.platform,
+        url: l.url,
+      })),
+    };
+  }, [image, watchedFirstName, watchedLastName, watchedEmail, links]);
+
+  // ---------------------------------------------
+  // 1. LOAD FROM LOCALSTORAGE
+  // ---------------------------------------------
   useEffect(() => {
     const saved = localStorage.getItem("profileData");
     if (!saved) {
@@ -304,41 +422,37 @@ const dashboard = () => {
     try {
       const parsed = JSON.parse(saved);
 
-      // Restore image
       if (parsed.image) setImage(parsed.image);
 
-      // Restore name
       if (parsed.name) {
         const [first = "", last = ""] = parsed.name.split(" ");
         setValue("firstName", first);
         setValue("lastName", last);
       }
 
-      // Restore email
       if (parsed.email) {
         setValue("email", parsed.email);
       }
 
-      // Restore links EXACTLY as saved
       if (Array.isArray(parsed.phoneDemoLinks)) {
         setLinks(
           parsed.phoneDemoLinks.map((item: any) => ({
             id: item.id ?? crypto.randomUUID(),
             platform: item.platform ?? null,
             url: item.url ?? "",
-            errors: {}, // TEMP — we will validate AFTER hydration
+            errors: {},
           }))
         );
       }
     } catch (err) {
       console.error("Failed to load profileData:", err);
     } finally {
-      setHydrated(true); // allow save + validation now
+      setHydrated(true);
     }
   }, []);
 
   // ---------------------------------------------
-  // 2. RUN VALIDATION ONLY AFTER HYDRATION
+  // 2. VALIDATE LINKS AFTER HYDRATION
   // ---------------------------------------------
   useEffect(() => {
     if (!hydrated) return;
@@ -352,26 +466,34 @@ const dashboard = () => {
   }, [hydrated]);
 
   // ---------------------------------------------
-  // 3. Save only AFTER hydration
+  // 3. SAVE TO LOCALSTORAGE AFTER HYDRATION
   // ---------------------------------------------
   useEffect(() => {
     if (!hydrated) return;
 
-    const name = `${watchedFirstName ?? ""} ${watchedLastName ?? ""}`.trim();
-
-    const profileData = {
-      image,
-      name,
-      email: watchedEmail ?? "",
-      phoneDemoLinks: links.map((l) => ({
-        id: l.id,
-        platform: l.platform,
-        url: l.url,
-      })),
-    };
-
     localStorage.setItem("profileData", JSON.stringify(profileData));
-  }, [hydrated, image, links, watchedFirstName, watchedLastName, watchedEmail]);
+  }, [hydrated, profileData]);
+
+  // ---------------------------------------------
+  // 4. COMPUTE IF PROFILE IS COMPLETE (BUTTON USE)
+  // ---------------------------------------------
+  const isProfileDataComplete = useMemo(() => {
+    return (
+      Boolean(profileData.image) &&
+      Boolean(profileData.name) &&
+      Boolean(profileData.email) &&
+      Array.isArray(profileData.phoneDemoLinks) &&
+      profileData.phoneDemoLinks.length > 0
+    );
+  }, [
+    profileData.image,
+    profileData.name,
+    profileData.email,
+    links.length, // always reliable
+  ]);
+  // ---------------------------------------------
+  // RETURN JSX
+  // ---------------------------------------------
 
   return (
     <>
@@ -380,6 +502,7 @@ const dashboard = () => {
           openDialog={() => setModalOpen(true)}
           tabs={tabs}
           switchTab={switchTab}
+          isPreviewDisabled={!isProfileDataComplete}
         />
         <div className="grid grid-col-1 md:grid-cols-2 gap-4 mt-[100px]">
           {mediaMd && (
@@ -658,6 +781,7 @@ const dashboard = () => {
                     type="submit"
                     customClass="!w-[91px] ml-auto !h-[46px]"
                     label="Save"
+                    isLoading={isLoading}
                   />
                 )}
               </FooterSheet>

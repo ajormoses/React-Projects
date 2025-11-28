@@ -2,10 +2,11 @@ import { PiGithubLogoFill } from "react-icons/pi";
 import { FaYoutube, FaLinkedin, FaFacebook } from "react-icons/fa";
 import { LuInstagram } from "react-icons/lu";
 import Btn from "../components/Ui/Btn";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Preview = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
 
   // Load saved data from localStorage
   const savedData = JSON.parse(localStorage.getItem("profileData") || "{}");
@@ -38,7 +39,9 @@ const Preview = () => {
         <div className="bg-primary p-5 h-[357px] rounded-b-[32px]">
           <header className="rounded-xl bg-white p-4 flex justify-between items-center">
             <Btn
-              onClick={() => navigate("/")}
+              onClick={() => {
+                navigate(`/?id=${id}`);
+              }}
               label="Back to Editor"
               customClass="!bg-white !text-primary !border-primary"
             />
@@ -47,7 +50,7 @@ const Preview = () => {
         </div>
 
         <div className="flex justify-center items-center">
-          <div className="bg-white shadow-card py-12 px-14 rounded-3xl w-[349px] -mt-10 flex flex-col gap-8 justify-center items-center">
+          <div className="bg-white shadow-card py-12 px-14 rounded-3xl w-[349px] -mt-10 flex flex-col gap-6 justify-center items-center">
             {/* Profile Image */}
             <div className="border-4 border-primary h-[104px] w-[104px] rounded-full flex justify-center items-center">
               <img
@@ -58,10 +61,12 @@ const Preview = () => {
             </div>
 
             {/* Dynamic Name */}
-            <h1 className="font-bold text-[32px]">{name}</h1>
+            <h1 className="font-bold text-[32px] text-center leading-8">
+              {name}
+            </h1>
 
             {/* Email */}
-            <p>{email}</p>
+            <p className="text-center">{email}</p>
 
             {/* Links (up to 5) */}
             <div className="flex flex-col gap-4 justify-center items-center ">
