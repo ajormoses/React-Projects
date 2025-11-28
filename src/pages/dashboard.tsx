@@ -64,7 +64,7 @@ const dashboard = () => {
 
   const queryId = query.get("id");
 
-  const mediaMd = useMediaQuery("(min-width: 768px)");
+  const mediaXl = useMediaQuery("(min-width: 1280px)");
 
   const schema = yup
     .object({
@@ -504,8 +504,8 @@ const dashboard = () => {
           switchTab={switchTab}
           isPreviewDisabled={!isProfileDataComplete}
         />
-        <div className="grid grid-col-1 md:grid-cols-2 gap-4 mt-[100px]">
-          {mediaMd && (
+        <div className="grid grid-col-1 xl:grid-cols-2 gap-4 mt-[100px]">
+          {mediaXl && (
             <PhoneDemo
               imageUrl={image}
               links={phoneDemoLinks}
@@ -624,7 +624,7 @@ const dashboard = () => {
                     </p>
                   </div>
 
-                  <div className="rounded-xl bg-lightGray p-5 grid grid-cols-3 gap-4 place-items-center">
+                  <div className="rounded-xl bg-lightGray p-5 grid md:grid-cols-3 gap-4 place-items-center">
                     <p className="text-sm">Profile picture</p>
 
                     {/* Upload Box */}
@@ -671,7 +671,7 @@ const dashboard = () => {
                       )}
                     </div>
 
-                    <p className="text-sm">
+                    <p className="text-sm text-center">
                       {imageError ? (
                         <p className="text-red-500">{imageError}</p>
                       ) : (
@@ -692,11 +692,11 @@ const dashboard = () => {
                     />
                   </div>
 
-                  <div className="rounded-xl bg-lightGray p-5 ">
-                    <div className="flex items-center gap-4">
+                  <div className="rounded-xl bg-lightGray p-5 flex flex-col gap-4">
+                    <div className="flex flex-col md:flex-row md:items-center md:gap-4">
                       <span
                         className={clsx(
-                          "basis-[32%]",
+                          "basis-[32%] text-sm md:text-base",
                           errors.firstName?.message && "text-red-500"
                         )}
                       >
@@ -716,10 +716,10 @@ const dashboard = () => {
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-4">
+                    <div className="flex flex-col md:flex-row md:items-center md:gap-4">
                       <span
                         className={clsx(
-                          "basis-[32%]",
+                          "basis-[32%] text-sm md:text-base",
                           errors.lastName?.message && "text-red-500"
                         )}
                       >
@@ -739,10 +739,10 @@ const dashboard = () => {
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-4">
+                    <div className="flex flex-col md:flex-row md:items-center md:gap-4">
                       <span
                         className={clsx(
-                          "basis-[32%]",
+                          "basis-[32%] text-sm md:text-base",
                           errors.email?.message && "text-red-500"
                         )}
                       >

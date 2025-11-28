@@ -39,8 +39,8 @@ const Preview = () => {
 
   return (
     <>
-      <div>
-        <div className="bg-primary p-5 h-[357px] rounded-b-[32px]">
+      <div className="md:h-screen md:flex md:justify-center md:items-center pb-4 md:pb-0">
+        <div className="bg-primary p-5 h-[357px] md:h-[40%] rounded-b-[32px] md:absolute md:top-0 md:right-0 md:left-0">
           {location.pathname.startsWith("/preview") && (
             <header className="rounded-xl bg-white p-4 flex justify-between items-center">
               <Btn
@@ -62,7 +62,7 @@ const Preview = () => {
         </div>
 
         <div className="flex justify-center items-center">
-          <div className="bg-white shadow-card py-12 px-14 rounded-3xl w-[349px] -mt-10 flex flex-col gap-6 justify-center items-center">
+          <div className="bg-white shadow-card py-12 px-14 rounded-3xl w-[349px] -mt-20 md:mt-0 md:relative md:z-10 flex flex-col gap-6 justify-center items-center">
             {/* Profile Image */}
             <div className="border-4 border-primary h-[104px] w-[104px] rounded-full flex justify-center items-center">
               <img

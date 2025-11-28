@@ -45,13 +45,13 @@ const TopBar: React.FC<{
           <img
             src="/img/devlinks.svg"
             alt="Logo"
-            className="h-8 hidden md:block"
+            className="h-8 hidden xl:block"
           />
           <img
             onClick={openDialog}
             src="/img/logo.svg"
             alt="Logo"
-            className="h-[46px]  md:hidden"
+            className="h-[46px]  xl:hidden"
           />
 
           {mediaMd && <SwitchTabs tabs={tabs} switchTab={switchTab} />}
