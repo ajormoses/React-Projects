@@ -2,7 +2,7 @@ import { PiGithubLogoFill } from "react-icons/pi";
 import { FaYoutube, FaLinkedin, FaFacebook } from "react-icons/fa";
 import { LuInstagram } from "react-icons/lu";
 import Btn from "../components/Ui/Btn";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 
 const Preview = () => {
   const navigate = useNavigate();
@@ -14,6 +14,8 @@ const Preview = () => {
   const phoneDemoLinks = savedData.phoneDemoLinks || [];
   const email = savedData.email || "email";
   const name = savedData.name !== "" ? savedData.name : "Your Name";
+  const location = useLocation();
+  console.log(location.pathname);
 
   // Icons for each platform
   const icons: any = {
@@ -33,20 +35,30 @@ const Preview = () => {
     facebook: "!bg-fbBlue",
   };
 
+  const shareUrl = `${window.location.origin}/public-preview/${id}`;
+
   return (
     <>
       <div>
         <div className="bg-primary p-5 h-[357px] rounded-b-[32px]">
-          <header className="rounded-xl bg-white p-4 flex justify-between items-center">
-            <Btn
-              onClick={() => {
-                navigate(`/?id=${id}`);
-              }}
-              label="Back to Editor"
-              customClass="!bg-white !text-primary !border-primary"
-            />
-            <Btn label="Share Link" />
-          </header>
+          {location.pathname.startsWith("/preview") && (
+            <header className="rounded-xl bg-white p-4 flex justify-between items-center">
+              <Btn
+                onClick={() => {
+                  navigate(`/?id=${id}`);
+                }}
+                label="Back to Editor"
+                customClass="!bg-white !text-primary !border-primary"
+              />
+              <Btn
+                onClick={() => {
+                  navigator.clipboard.writeText(shareUrl);
+                  alert("Link copied!");
+                }}
+                label="Share Link"
+              />
+            </header>
+          )}
         </div>
 
         <div className="flex justify-center items-center">
