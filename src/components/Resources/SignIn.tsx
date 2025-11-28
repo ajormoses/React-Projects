@@ -14,7 +14,6 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 const SignIn = () => {
-  const [isLoading, setIsLoading] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const schema = Yup.object({
@@ -65,14 +64,12 @@ const SignIn = () => {
 
   const googleSignin = async () => {
     try {
-      setIsLoading(true);
       await doSignInWithGoogle();
       toast.success("Successfully signed in!");
       navigate("/");
     } catch (error: any) {
       toast.error(error.message || "Sign-in failed. Please try again.");
     } finally {
-      setIsLoading(false);
     }
   };
 
@@ -130,8 +127,7 @@ const SignIn = () => {
             <Btn
               onClick={googleSignin}
               prependIcon={<FcGoogle />}
-              isLoading={isLoading}
-              customClass="bg-white !text-grey border !border-grey"
+              customClass="!bg-white !text-grey !border !border-grey"
               type="button"
               label="Sign in with Google"
             />
