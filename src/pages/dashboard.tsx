@@ -180,6 +180,14 @@ const dashboard = () => {
     return errors;
   };
 
+  const platformPlaceholders: Record<string, string> = {
+    github: "e.g. https://github.com/ajormoses",
+    youtube: "e.g. https://youtube.com/username",
+    linkedin: "e.g. https://linkedin.com/in/username",
+    instagram: "e.g. https://instagram.com/username",
+    facebook: "e.g. https://facebook.com/username",
+  };
+
   const allLinksValid =
     links.length > 0 &&
     links.every((link) => Object.keys(validateLink(link)).length === 0);
@@ -314,85 +322,6 @@ const dashboard = () => {
     img.src = URL.createObjectURL(file);
   };
 
-  // useEffect(() => {
-  //   const saved = localStorage.getItem("profileData");
-  //   if (!saved) {
-  //     setHydrated(true);
-  //     return;
-  //   }
-
-  //   try {
-  //     const parsed = JSON.parse(saved);
-
-  //     // Restore image
-  //     if (parsed.image) setImage(parsed.image);
-
-  //     // Restore name
-  //     if (parsed.name) {
-  //       const [first = "", last = ""] = parsed.name.split(" ");
-  //       setValue("firstName", first);
-  //       setValue("lastName", last);
-  //     }
-
-  //     // Restore email
-  //     if (parsed.email) {
-  //       setValue("email", parsed.email);
-  //     }
-
-  //     // Restore links EXACTLY as saved
-  //     if (Array.isArray(parsed.phoneDemoLinks)) {
-  //       setLinks(
-  //         parsed.phoneDemoLinks.map((item: any) => ({
-  //           id: item.id ?? crypto.randomUUID(),
-  //           platform: item.platform ?? null,
-  //           url: item.url ?? "",
-  //           errors: {}, // TEMP — we will validate AFTER hydration
-  //         }))
-  //       );
-  //     }
-  //   } catch (err) {
-  //     console.error("Failed to load profileData:", err);
-  //   } finally {
-  //     setHydrated(true); // allow save + validation now
-  //   }
-  // }, []);
-
-  // // ---------------------------------------------
-  // // 2. RUN VALIDATION ONLY AFTER HYDRATION
-  // // ---------------------------------------------
-  // useEffect(() => {
-  //   if (!hydrated) return;
-
-  //   setLinks((prev) =>
-  //     prev.map((link) => ({
-  //       ...link,
-  //       errors: validateLink(link),
-  //     }))
-  //   );
-  // }, [hydrated]);
-
-  // // ---------------------------------------------
-  // // 3. Save only AFTER hydration
-  // // ---------------------------------------------
-  // useEffect(() => {
-  //   if (!hydrated) return;
-
-  //   const name = `${watchedFirstName ?? ""} ${watchedLastName ?? ""}`.trim();
-
-  //   const profileData = {
-  //     image,
-  //     name,
-  //     email: watchedEmail ?? "",
-  //     phoneDemoLinks: links.map((l) => ({
-  //       id: l.id,
-  //       platform: l.platform,
-  //       url: l.url,
-  //     })),
-  //   };
-
-  //   localStorage.setItem("profileData", JSON.stringify(profileData));
-  // }, [hydrated, image, links, watchedFirstName, watchedLastName, watchedEmail]);
-
   // ---------------------------------------------
   // 0. BUILD PROFILE DATA ON EVERY RENDER
   // ---------------------------------------------
@@ -491,9 +420,6 @@ const dashboard = () => {
     profileData.email,
     links.length, // always reliable
   ]);
-  // ---------------------------------------------
-  // RETURN JSX
-  // ---------------------------------------------
 
   return (
     <>
@@ -601,7 +527,10 @@ const dashboard = () => {
                             type="text"
                             label="Link"
                             prependIcon={<FaLink />}
-                            placeholder="e.g. https://github.com/ajormoses"
+                            placeholder={
+                              platformPlaceholders[link.platform!] ||
+                              "Enter your link"
+                            }
                             error={link?.errors?.url}
                             register={{
                               value: link.url,
