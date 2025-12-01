@@ -3,21 +3,58 @@ import { FaYoutube, FaLinkedin, FaFacebook } from "react-icons/fa";
 import { LuInstagram } from "react-icons/lu";
 import Btn from "../components/Ui/Btn";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+// Firebase imports for Realtime DB
+import { getDatabase, ref, get } from "firebase/database";
 
 const Preview = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-
-  // Load saved data from localStorage
-  const savedData = JSON.parse(localStorage.getItem("profileData") || "{}");
-  const image = savedData.image || "";
-  const phoneDemoLinks = savedData.phoneDemoLinks || [];
-  const email = savedData.email || "email";
-  const name = savedData.name !== "" ? savedData.name : "Your Name";
   const location = useLocation();
-  console.log(location.pathname);
 
-  // Icons for each platform
+  const [profile, setProfile] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const db = getDatabase();
+
+      // PUBLIC PREVIEW → fetch from Firebase
+      if (location.pathname.startsWith("/public-preview")) {
+        const reference = ref(db, `profiles/${id}`);
+        const snap = await get(reference);
+
+        if (snap.exists()) {
+          setProfile(snap.val());
+        } else {
+          console.error("Profile not found in Realtime DB");
+        }
+      } else {
+        // PRIVATE PREVIEW → fetch from localStorage
+        const saved = JSON.parse(localStorage.getItem("profileData") || "{}");
+        setProfile(saved);
+      }
+    };
+
+    fetchProfile();
+  }, [id, location.pathname]);
+
+  // Loading State
+  if (!profile) {
+    return (
+      <div className="w-full h-screen flex justify-center items-center">
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
+  // Extract Profile Data
+  const image = profile.image || "";
+  const phoneDemoLinks = profile.phoneDemoLinks || [];
+  const email = profile.email || "email";
+  const name = profile.name || "Your Name";
+
+  // Icons
   const icons: any = {
     github: <PiGithubLogoFill />,
     youtube: <FaYoutube />,
@@ -26,7 +63,7 @@ const Preview = () => {
     facebook: <FaFacebook />,
   };
 
-  // Colors for each platform button
+  // Colors
   const colors: any = {
     github: "!bg-dullBlack",
     youtube: "!bg-warningRed",
